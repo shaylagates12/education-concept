@@ -1,0 +1,19 @@
+.parent-only {
+    padding: 20px;
+    background: #fdf9ff;
+    border: 2px solid #e0d4f7;
+    border-radius: 12px;
+    margin: 20px;
+}
+
+.parent-stats { display: flex; gap: 15px; margin-top: 10px; }
+.stat-card { background: white; padding: 15px; border-radius: 8px; flex: 1; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+
+/* Chat Bubble Enhancements */
+.msg { margin-bottom: 8px; padding: 8px; border-radius: 6px; font-size: 0.9rem; }
+.msg.system { background: #e3f2fd; color: #1976d2; font-style: italic; }
+.msg.parent { background: #f3e5f5; color: #7b1fa2; align-self: flex-start; }
+.msg.student { background: #fff; border: 1px solid #ddd; }
+
+.chat-input-area { display: flex; gap: 5px; margin-top: 10px; }
+.btn-send { background: var(--accent); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
