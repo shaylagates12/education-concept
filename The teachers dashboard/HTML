@@ -1,0 +1,33 @@
+<section id="teacher-dashboard" class="teacher-only" style="display:none;">
+    <h3>Classroom Overview: Financial Literacy 101</h3>
+    <table class="progress-table">
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Current Topic</th>
+                <th>Status</th>
+                <th>Progress</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Alex Johnson</td>
+                <td>Stock Valuation</td>
+                <td><span class="status-tag yellow">In-Progress</span></td>
+                <td>65%</td>
+            </tr>
+            <tr>
+                <td>Maria Garcia</td>
+                <td>Tax Brackets</td>
+                <td><span class="status-tag green">Mastered</span></td>
+                <td>100%</td>
+            </tr>
+            <tr>
+                <td>Sam Lee</td>
+                <td>Life Insurance</td>
+                <td><span class="status-tag red">Stuck (4+ days)</span></td>
+                <td>12%</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
