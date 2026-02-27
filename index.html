@@ -3,78 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexusLearn | Adaptive Learning Hub</title>
+    <title>Seedling | Adaptive Learning Garden</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="independent-mode"> <div id="quiz-container" class="modal-overlay">
+<body>
+
+    <div id="quiz-container" class="modal-overlay" style="display:flex;">
         <div class="modal-content quiz-box">
-            <h2>Welcome to NexusLearn</h2>
-            <p>Let's calibrate the system to your brain's unique needs.</p>
+            <div class="brand-icon">🌱</div>
+            <h2>Welcome to Seedling</h2>
+            <p>Every expert started as a sprout. Let's set your soil.</p>
             <form id="style-quiz">
                 <div class="quiz-q">
-                    <p><strong>1. Role Selection:</strong></p>
-                    <select id="role-selector" class="quiz-select">
+                    <p><strong>Your Role:</strong></p>
+                    <select id="role-selector">
                         <option value="independent">Independent Learner</option>
-                        <option value="college">College Student</option>
-                        <option value="teacher">Teacher / Instructor</option>
                         <option value="student">K-12 Student</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="parent">Parent</option>
                     </select>
                 </div>
                 <div class="quiz-q">
-                    <p><strong>2. Your Focus Sweet Spot:</strong></p>
-                    <label><input type="radio" name="focus" value="15" checked> 15 Min (Busy Mind)</label><br>
-                    <label><input type="radio" name="focus" value="30"> 30 Min (Standard)</label><br>
-                    <label><input type="radio" name="focus" value="60"> 60 Min (Deep Work)</label>
+                    <p><strong>Focus Sunlight:</strong></p>
+                    <label><input type="radio" name="focus" value="15" checked> 15m</label>
+                    <label><input type="radio" name="focus" value="30"> 30m</label>
+                    <label><input type="radio" name="focus" value="60"> 60m</label>
                 </div>
-                <div class="quiz-q">
-                    <p><strong>3. Learning Preference:</strong></p>
-                    <label><input type="radio" name="input" value="visual"> Visual (Diagrams/Sketch)</label><br>
-                    <label><input type="radio" name="input" value="text"> Analytic (Notes/Reading)</label>
-                </div>
-                <button type="button" onclick="calibrateSystem()" class="btn-confirm">Launch My Hub</button>
+                <button type="button" onclick="calibrateSystem()" class="btn-confirm">Start Growing</button>
             </form>
         </div>
     </div>
 
     <div class="app-container">
         <aside class="sidebar">
-            <div class="logo">NX</div>
+            <div class="logo">S</div>
             <nav class="subject-icons">
-                <button class="nav-btn active" title="Stocks">📈</button>
-                <button class="nav-btn" title="Finance">💰</button>
-                <button class="nav-btn" title="Insurance">🛡️</button>
-                <button class="nav-btn" title="Taxes">📝</button>
+                <button class="nav-btn active">📈</button>
+                <button class="nav-btn">💰</button>
+                <button class="nav-btn">🛡️</button>
+                <button class="nav-btn">📝</button>
             </nav>
         </aside>
 
         <main class="content">
             <header class="top-bar">
-                <h2 id="current-topic">Stock Market: Fundamentals</h2>
+                <h2 id="current-topic">My Garden</h2>
                 <div class="timer-section">
                     <span id="timer">00:00</span>
-                    <button id="timer-toggle">Start Session</button>
+                    <button id="timer-toggle" class="btn-timer">Start Sun</button>
                 </div>
             </header>
 
+            <div id="teacher-dashboard" class="view-panel" style="display:none;">
+                <h3>Teacher Overview</h3>
+                <div class="stat-card">Student "Alex" is currently in <strong>The Sprout</strong> stage.</div>
+            </div>
+
             <div class="kanban-actions">
-                <div class="add-card-group">
-                    <input type="text" id="new-card-text" placeholder="Add new topic...">
-                    <button onclick="addNewCard()" class="btn-add">Add to Backlog</button>
-                </div>
+                <input type="text" id="new-card-text" placeholder="Plant a new idea seed...">
+                <button onclick="addNewCard()" class="btn-add">Plant Seed</button>
                 <button onclick="showClearModal()" class="btn-danger">Reset All</button>
             </div>
 
             <section class="kanban-board">
                 <div class="kanban-column" id="to-learn">
-                    <h4>Backlog</h4>
+                    <h4>The Packet</h4>
                     <div class="kanban-cards" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                 </div>
                 <div class="kanban-column" id="in-progress">
-                    <h4>Active (Max 2)</h4>
+                    <h4>The Sprout (Max 2)</h4>
                     <div class="kanban-cards" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                 </div>
                 <div class="kanban-column" id="mastered">
-                    <h4>Mastered</h4>
+                    <h4>The Bloom</h4>
                     <div class="kanban-cards" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                 </div>
             </section>
@@ -82,30 +83,50 @@
 
         <aside class="details-sidebar" id="details-sidebar">
             <button onclick="closeDetails()" class="close-btn">×</button>
-            <h3 id="details-title">Topic Details</h3>
+            <h3 id="details-title">Node Details</h3>
             <div class="tabs">
-                <button class="tab-link active" onclick="openTab('notes')">Private Notes</button>
-                <button class="tab-link" onclick="openTab('chat')">Shared Chat</button>
+                <button class="tab-link active" onclick="openTab('notes')">Notes</button>
+                <button class="tab-link" onclick="openTab('flashcards')">Memory</button>
             </div>
+            
             <div id="notes-tab" class="tab-content">
-                <textarea id="card-notes" placeholder="Write your breakdown here..."></textarea>
-                <button onclick="saveNotes()" class="btn-add">Save Locally</button>
+                <textarea id="card-notes"></textarea>
+                <button onclick="saveNotes()" class="btn-confirm">Save Notes</button>
             </div>
-            <div id="chat-tab" class="tab-content" style="display:none;">
-                <div id="group-chat-box" class="chat-display"></div>
-                <input type="text" id="group-chat-input" placeholder="Message group...">
+
+            <div id="flashcards-tab" class="tab-content" style="display:none;">
+                <div class="flashcard-container" onclick="flipCard()">
+                    <div id="flashcard-inner" class="flashcard-inner">
+                        <div class="flashcard-front"><p id="card-front-text"></p></div>
+                        <div class="flashcard-back">
+                            <p id="card-back-text"></p>
+                            <div class="mastery-rating">
+                                <span onclick="rateMastery(1, event)">⭐</span>
+                                <span onclick="rateMastery(2, event)">⭐</span>
+                                <span onclick="rateMastery(3, event)">⭐</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fc-controls">
+                    <button onclick="prevCard()">←</button>
+                    <span id="fc-counter">0/0</span>
+                    <button onclick="nextCard()">→</button>
+                </div>
+                <div class="add-fc">
+                    <input type="text" id="fc-f" placeholder="Front">
+                    <input type="text" id="fc-b" placeholder="Back">
+                    <button onclick="addFlashcard()" class="btn-confirm">+ Add Card</button>
+                </div>
             </div>
         </aside>
     </div>
 
     <div id="clearModal" class="modal-overlay">
         <div class="modal-content">
-            <h3>Wipe All Data?</h3>
-            <p>This will erase your cards and settings forever.</p>
-            <div class="modal-btns">
-                <button onclick="hideClearModal()" class="btn-secondary">Cancel</button>
-                <button onclick="clearAllProgress()" class="btn-confirm">Yes, Clear</button>
-            </div>
+            <h3>Reset?</h3>
+            <button onclick="clearAllProgress()">Yes</button>
+            <button onclick="hideClearModal()">No</button>
         </div>
     </div>
 
