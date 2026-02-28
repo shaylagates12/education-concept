@@ -1,28 +1,34 @@
+/* Earthy Foundation */
 :root {
-    --soil: #4b3621; --leaf: #2ecc71; --sky: #f0f7f4; --sun: #f1c40f;
+    --earth: #4b3621; --leaf: #2ecc71; --sand: #f0f7f4; --terracotta: #e67e22;
 }
 
-body { font-family: sans-serif; margin: 0; background: var(--sky); }
-.app-container { display: flex; height: 100vh; overflow: hidden; }
-.sidebar { width: 70px; background: var(--soil); display: flex; flex-direction: column; align-items: center; padding: 20px 0; }
-.nav-btn { font-size: 1.5rem; margin: 15px 0; background: none; border: none; cursor: pointer; opacity: 0.5; }
-.active { opacity: 1; transform: scale(1.2); }
+body { margin: 0; background: var(--sand); font-family: 'Inter', sans-serif; overflow: hidden; }
 
-.content { flex: 1; padding: 20px; overflow-y: auto; }
-.kanban-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px; }
-.kanban-column { background: #e8edea; border-radius: 15px; padding: 15px; min-height: 400px; }
-.card { background: white; padding: 15px; border-radius: 8px; margin-bottom: 10px; cursor: grab; border-left: 5px solid var(--leaf); }
+/* ONBOARDING DESIGN */
+.onboarding-container {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--earth); display: flex; align-items: center; justify-content: center; z-index: 5000;
+}
+.onboarding-card {
+    background: white; padding: 40px; border-radius: 30px; text-align: center;
+    max-width: 500px; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+.role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+.role-grid button {
+    padding: 15px; border: 2px solid #eee; border-radius: 15px; background: none; cursor: pointer; transition: 0.3s;
+}
+.role-grid button:hover { border-color: var(--leaf); background: #f9fffb; }
 
-.details-sidebar { position: fixed; right: -400px; top: 0; width: 350px; height: 100%; background: white; transition: 0.4s; padding: 20px; box-shadow: -5px 0 15px rgba(0,0,0,0.1); }
-.details-sidebar.open { right: 0; }
+/* APP LAYOUT */
+.app-shell { display: none; height: 100vh; }
+body.onboarding-complete .app-shell { display: flex; }
+body.onboarding-complete .onboarding-container { display: none; }
 
-/* FLASHCARDS */
-.flashcard-container { perspective: 1000px; height: 200px; cursor: pointer; margin: 15px 0; }
-.flashcard-inner { position: relative; width: 100%; height: 100%; transition: 0.6s; transform-style: preserve-3d; }
-.flashcard-inner.flipped { transform: rotateY(180deg); }
-.flashcard-front, .flashcard-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid var(--leaf); padding: 10px; box-sizing: border-box; }
-.flashcard-back { transform: rotateY(180deg); background: #f9f9f9; }
+.nav-column { width: 100px; background: var(--earth); color: white; display: flex; flex-direction: column; align-items: center; }
+.nav-item { background: none; border: none; color: white; margin: 15px 0; cursor: pointer; font-size: 0.7rem; opacity: 0.5; }
+.nav-item.active { opacity: 1; color: var(--leaf); }
 
-.mastery-rating { margin-top: 10px; }
-.mastery-rating span { font-size: 1.5rem; cursor: pointer; opacity: 0.3; transition: 0.3s; }
-.mastery-rating span.active { opacity: 1; filter: drop-shadow(0 0 5px var(--sun)); }
+.main-stage { flex: 1; padding: 30px; overflow-y: auto; }
+.page { display: none; }
+.page.active { display: block; }
