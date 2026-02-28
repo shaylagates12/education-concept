@@ -116,4 +116,20 @@ function returnToRoots() {
     
     // 4. (Optional) Clear the saved profile if you want a total fresh start
     // localStorage.removeItem('seedling_user_profile');
+}// Add to the bottom of script.js
+function confirmReset() {
+    const text = "Are you sure you want to return to the beginning? Your garden progress will remain, but you will need to recalibrate your persona.";
+    if (confirm(text) == true) {
+        returnToRoots();
+    }
+}
+
+function returnToRoots() {
+    // Show the onboarding overlay and hide the main app
+    document.getElementById('onboarding-overlay').style.display = 'flex';
+    document.getElementById('app-shell').style.display = 'none';
+    
+    // Reset the onboarding steps to the start
+    document.getElementById('step-1').style.display = 'block';
+    document.getElementById('step-2').style.display = 'none';
 }
