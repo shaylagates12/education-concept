@@ -26,3 +26,15 @@ body { font-family: sans-serif; margin: 0; background: var(--sky); }
 .mastery-rating { margin-top: 10px; }
 .mastery-rating span { font-size: 1.5rem; cursor: pointer; opacity: 0.3; transition: 0.3s; }
 .mastery-rating span.active { opacity: 1; filter: drop-shadow(0 0 5px var(--sun)); }
+/* Add to the bottom of style.css */
+.nav-item.reset-roots {
+    margin-top: auto; /* Pushes the button to the bottom of the column */
+    color: var(--gold-frame);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 20px;
+}
+
+.nav-item.reset-roots:hover {
+    color: var(--egyptian-earth);
+    filter: drop-shadow(0 0 8px var(--gold-frame));
+}
