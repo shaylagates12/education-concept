@@ -3,131 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seedling | Adaptive Learning Garden</title>
+    <title>Seedling | The Independent Learner Suite</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="show-onboarding">
 
-    <div id="quiz-container" class="modal-overlay" style="display:flex;">
-        <div class="modal-content quiz-box">
-            <div class="brand-icon">🌱</div>
-            <h2>Welcome to Seedling</h2>
-            <p>Every expert started as a sprout. Let's set your soil.</p>
+    <div id="onboarding-overlay" class="onboarding-container">
+        <div id="step-1" class="onboarding-card">
+            <div class="pip-mascot">🌱</div>
+            <h1>Who are you planting as?</h1>
+            <div class="role-grid">
+                <button onclick="nextOnboarding('independent')">Independent Learner</button>
+                <button onclick="nextOnboarding('student')">K-12 Student</button>
+                <button onclick="nextOnboarding('teacher')">Teacher / Mentor</button>
+                <button onclick="nextOnboarding('parent')">Parent / Supporter</button>
+            </div>
+        </div>
+
+        <div id="step-2" class="onboarding-card" style="display:none;">
+            <h2>Calibrate Your Sunlight</h2>
+            <p>How do you absorb information best?</p>
             <form id="style-quiz">
                 <div class="quiz-q">
-                    <p><strong>Your Role:</strong></p>
-                    <select id="role-selector">
-                        <option value="independent">Independent Learner</option>
-                        <option value="student">K-12 Student</option>
-                        <option value="teacher">Teacher</option>
-                        <option value="parent">Parent</option>
-                    </select>
+                    <label>Focus Sprint: 
+                        <select id="focus-pref">
+                            <option value="15">15m (Short Bursts)</option>
+                            <option value="30">30m (Steady Growth)</option>
+                            <option value="60">60m (Deep Focus)</option>
+                        </select>
+                    </label>
                 </div>
                 <div class="quiz-q">
-                    <p><strong>Focus Sunlight:</strong></p>
-                    <label><input type="radio" name="focus" value="15" checked> 15m</label>
-                    <label><input type="radio" name="focus" value="30"> 30m</label>
-                    <label><input type="radio" name="focus" value="60"> 60m</label>
+                    <label>Layout Style: 
+                        <select id="layout-pref">
+                            <option value="visual">Visual (More Icons/Cards)</option>
+                            <option value="text">Analytic (Clean/Spacious)</option>
+                        </select>
+                    </label>
                 </div>
-                <button type="button" onclick="calibrateSystem()" class="btn-confirm">Start Growing</button>
+                <button type="button" onclick="completeOnboarding()" class="btn-action">Enter the Garden</button>
             </form>
         </div>
     </div>
 
-    <div class="app-container">
-        <aside class="sidebar">
-            <div class="logo">S</div>
-            <nav class="subject-icons">
-                <button class="nav-btn active">📈</button>
-                <button class="nav-btn">💰</button>
-                <button class="nav-btn">🛡️</button>
-                <button class="nav-btn">📝</button>
+    <div class="app-shell">
+        <aside class="nav-column">
+            <div class="pip-logo">S</div>
+            <nav>
+                <button class="nav-item active" onclick="showPage('lesson-page')">📖 <span>Lessons</span></button>
+                <button class="nav-item" onclick="showPage('garden-page')">🏡 <span>Garden</span></button>
+                <button class="nav-item" onclick="showPage('grove-page')">🧪 <span>Study Grove</span></button>
             </nav>
+            <div class="user-badge" id="rank-display">Novice</div>
         </aside>
 
-        <main class="content">
-            <header class="top-bar">
-                <h2 id="current-topic">My Garden</h2>
-                <div class="timer-section">
-                    <span id="timer">00:00</span>
-                    <button id="timer-toggle" class="btn-timer">Start Sun</button>
+        <main class="main-stage">
+            <section id="lesson-page" class="page active">
+                <div class="lesson-layout">
+                    <div class="lesson-content">
+                        <header>
+                            <h1 id="lesson-title">Lesson: Financial Ecosystems</h1>
+                            <button onclick="toggleFocusMode()">✨ Focus Mode</button>
+                        </header>
+                        <article class="reading-material">
+                            <p>Select a seed from your Garden to begin a lesson here.</p>
+                        </article>
+                    </div>
+                    <aside class="lesson-tools">
+                        <div class="tool-box"><h4>AI Assistant</h4><div id="ai-chat"></div></div>
+                        <div class="tool-box"><h4>Notes</h4><textarea placeholder="Nurture ideas..."></textarea></div>
+                    </aside>
                 </div>
-            </header>
+            </section>
 
-            <div id="teacher-dashboard" class="view-panel" style="display:none;">
-                <h3>Teacher Overview</h3>
-                <div class="stat-card">Student "Alex" is currently in <strong>The Sprout</strong> stage.</div>
-            </div>
-
-            <div class="kanban-actions">
-                <input type="text" id="new-card-text" placeholder="Plant a new idea seed...">
-                <button onclick="addNewCard()" class="btn-add">Plant Seed</button>
-                <button onclick="showClearModal()" class="btn-danger">Reset All</button>
-            </div>
-
-            <section class="kanban-board">
-                <div class="kanban-column" id="to-learn">
-                    <h4>The Packet</h4>
-                    <div class="kanban-cards" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <section id="garden-page" class="page">
+                <h2>The Kanban Garden</h2>
+                <div class="kanban-board">
+                    <div class="kanban-col"><h4>Seeds</h4><div class="drop-zone"></div></div>
+                    <div class="kanban-col"><h4>Sprouting</h4><div class="drop-zone"></div></div>
+                    <div class="kanban-col"><h4>Blooming</h4><div class="drop-zone"></div></div>
                 </div>
-                <div class="kanban-column" id="in-progress">
-                    <h4>The Sprout (Max 2)</h4>
-                    <div class="kanban-cards" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                </div>
-                <div class="kanban-column" id="mastered">
-                    <h4>The Bloom</h4>
-                    <div class="kanban-cards" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            </section>
+
+            <section id="grove-page" class="page">
+                <h2>The Study Grove</h2>
+                <div class="grove-grid">
+                    <div class="grove-card"><h3>Flashcards</h3><p>Select a Bloom to test recall.</p></div>
+                    <div class="grove-card"><h3>Rank Test</h3><button onclick="takeQuiz()">Level Up</button></div>
                 </div>
             </section>
         </main>
-
-        <aside class="details-sidebar" id="details-sidebar">
-            <button onclick="closeDetails()" class="close-btn">×</button>
-            <h3 id="details-title">Node Details</h3>
-            <div class="tabs">
-                <button class="tab-link active" onclick="openTab('notes')">Notes</button>
-                <button class="tab-link" onclick="openTab('flashcards')">Memory</button>
-            </div>
-            
-            <div id="notes-tab" class="tab-content">
-                <textarea id="card-notes"></textarea>
-                <button onclick="saveNotes()" class="btn-confirm">Save Notes</button>
-            </div>
-
-            <div id="flashcards-tab" class="tab-content" style="display:none;">
-                <div class="flashcard-container" onclick="flipCard()">
-                    <div id="flashcard-inner" class="flashcard-inner">
-                        <div class="flashcard-front"><p id="card-front-text"></p></div>
-                        <div class="flashcard-back">
-                            <p id="card-back-text"></p>
-                            <div class="mastery-rating">
-                                <span onclick="rateMastery(1, event)">⭐</span>
-                                <span onclick="rateMastery(2, event)">⭐</span>
-                                <span onclick="rateMastery(3, event)">⭐</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="fc-controls">
-                    <button onclick="prevCard()">←</button>
-                    <span id="fc-counter">0/0</span>
-                    <button onclick="nextCard()">→</button>
-                </div>
-                <div class="add-fc">
-                    <input type="text" id="fc-f" placeholder="Front">
-                    <input type="text" id="fc-b" placeholder="Back">
-                    <button onclick="addFlashcard()" class="btn-confirm">+ Add Card</button>
-                </div>
-            </div>
-        </aside>
-    </div>
-
-    <div id="clearModal" class="modal-overlay">
-        <div class="modal-content">
-            <h3>Reset?</h3>
-            <button onclick="clearAllProgress()">Yes</button>
-            <button onclick="hideClearModal()">No</button>
-        </div>
     </div>
 
     <script src="script.js"></script>
