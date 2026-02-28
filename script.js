@@ -1,111 +1,105 @@
-let timeLeft = 900, timerId = null, currentCardId = null;
-let currentDeck = [], currentFCIndex = 0;
+let currentSubject = "";
+let userProfile = { role: '', focusPref: '', rank: '🌱 Novice', masteredSeeds: [] };
 
-// 1. SYSTEM LOGIC
-function calibrateSystem() {
-    const role = document.getElementById('role-selector').value;
-    const focus = document.querySelector('input[name="focus"]:checked').value;
-    timeLeft = parseInt(focus) * 60;
-    updateTimer();
-    localStorage.setItem('seedlingProfile', JSON.stringify({role, focus}));
-    document.getElementById('teacher-dashboard').style.display = (role === 'teacher') ? 'block' : 'none';
-    document.getElementById('quiz-container').style.display = 'none';
-    initializeGarden();
+// 1. GERMINATION PHASE (Onboarding)
+function nextStepOnboarding(role) {
+    userProfile.role = role;
+    document.getElementById('step-1').style.display = 'none';
+    document.getElementById('step-2').style.display = 'block';
 }
 
-// 2. FLASHCARD LOGIC
-function addFlashcard() {
-    const f = document.getElementById('fc-f').value;
-    const b = document.getElementById('fc-b').value;
-    if (!f || !b) return;
-    let deck = JSON.parse(localStorage.getItem('fc-' + currentCardId)) || [];
-    deck.push({ front: f, back: b, mastery: 0 }); // Mastery added
-    localStorage.setItem('fc-' + currentCardId, JSON.stringify(deck));
-    document.getElementById('fc-f').value = ''; document.getElementById('fc-b').value = '';
-    renderFlashcards();
+function germinate() {
+    userProfile.focusPref = document.querySelector('input[name="focus"]:checked').value;
+    
+    // Save to Local Storage for Persistence
+    localStorage.setItem('seedling_user_profile', JSON.stringify(userProfile));
+    
+    // Switch Views
+    document.getElementById('onboarding-overlay').style.display = 'none';
+    document.getElementById('app-shell').style.display = 'flex';
 }
 
-function renderFlashcards() {
-    currentDeck = JSON.parse(localStorage.getItem('fc-' + currentCardId)) || [];
-    currentFCIndex = 0;
-    updateCardDisplay();
+// 2. KANBAN GARDEN LOGIC (Connected Subjects)
+function plantNewSeed() {
+    const name = document.getElementById('subject-seed-input').value;
+    if (!name) return;
+    
+    // Create the hand-drawn "Sticky Note" card
+    const card = document.createElement('div');
+    card.className = 'doodle-card';
+    card.id = 'seed-' + Date.now();
+    card.textContent = name;
+    card.onclick = () => activateSubjectJourney(name);
+    card.draggable = true;
+    card.ondragstart = drag;
+    
+    document.getElementById('kanban-todo').querySelector('.drop-zone').appendChild(card);
+    document.getElementById('subject-seed-input').value = "";
+    saveGarden();
 }
 
-function updateCardDisplay() {
-    const inner = document.getElementById('flashcard-inner');
-    inner.classList.remove('flipped');
-    if (currentDeck.length === 0) {
-        document.getElementById('card-front-text').textContent = "No seeds yet.";
-        document.getElementById('card-back-text').textContent = "Add a question below.";
-    } else {
-        const card = currentDeck[currentFCIndex];
-        document.getElementById('card-front-text').textContent = card.front;
-        document.getElementById('card-back-text').textContent = card.back;
-        updateStars(card.mastery);
-    }
-    document.getElementById('fc-counter').textContent = `${currentDeck.length > 0 ? currentFCIndex + 1 : 0} / ${currentDeck.length}`;
+// Connect Kanban Choice to Learning Area
+function activateSubjectJourney(name) {
+    currentSubject = name;
+    
+    // Switch to Learning Area
+    showPage('lesson-page');
+    
+    // Update the Ornate Picture Frame Content
+    document.getElementById('current-lesson-topic').textContent = name;
+    
+    // Simulate Opening Summary (This would pull from a database in a real app)
+    document.getElementById('lesson-content-summary').innerHTML = `
+        <p><strong>Opening Summary:</strong> The subject of ${name} is a cornerstone of this learning garden. Before you can unlock the full breadth of the topic, you must absorb this introductory concept.</p>
+        <p>This is the soil that Pip will use to nurture your understanding.</p>
+    `;
+    
+    // Show the "Continue" Button (Unlocking the lesson)
+    document.getElementById('lesson-continue-btn').style.display = 'block';
 }
 
-function rateMastery(level, event) {
-    event.stopPropagation(); // Don't flip card when clicking stars
-    currentDeck[currentFCIndex].mastery = level;
-    localStorage.setItem('fc-' + currentCardId, JSON.stringify(currentDeck));
-    updateStars(level);
+function continueJourney() {
+    // Reveal the rest of the lesson
+    document.getElementById('lesson-content-summary').innerHTML += `
+        <p><strong>Lesson Continued:</strong> Excellent. Now that you have grasped the initial concepts, Pip can help you explore technical details.</p>
+        <p>Write your detailed conceptual thoughts in the Field Notes area to the right.</p>
+    `;
+    document.getElementById('lesson-continue-btn').style.display = 'none';
 }
 
-function updateStars(level) {
-    const stars = document.querySelectorAll('.mastery-rating span');
-    stars.forEach((s, i) => s.classList.toggle('active', i < level));
+// 3. PAGE LOGIC
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    
+    // Sync Nav Column state
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    // (Nav button syncing logic needed here based on the index of the page)
 }
 
-// 3. CORE FUNCTIONS (Merged)
-function allowDrop(ev) { ev.preventDefault(); }
+// 4. PERSISTENCE SYSTEMS (Persistence)
+function saveGarden() {
+    const gardenState = {
+        todo: getCardData('#kanban-todo'),
+        doing: getCardData('#kanban-doing'),
+        done: getCardData('#kanban-done')
+    };
+    localStorage.setItem('seedling_garden', JSON.stringify(gardenState));
+}
+
+function getCardData(colId) {
+    return Array.from(document.querySelector(colId).querySelectorAll('.doodle-card')).map(c => ({ id: c.id, text: c.textContent }));
+}
+
+// Drag & Drop
 function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+function allowDrop(ev) { ev.preventDefault(); }
 function drop(ev) {
     ev.preventDefault();
     const data = ev.dataTransfer.getData("text");
-    const targetCol = ev.target.closest('.kanban-cards');
+    const targetCol = ev.target.closest('.doodle-col');
     if (targetCol) {
-        if (targetCol.parentElement.id === 'in-progress' && targetCol.children.length >= 2) return alert("Focus!");
-        targetCol.appendChild(document.getElementById(data));
+        targetCol.querySelector('.drop-zone').appendChild(document.getElementById(data));
         saveGarden();
     }
 }
-
-function saveGarden() {
-    const board = {
-        'to-learn': getCData('#to-learn'),
-        'in-progress': getCData('#in-progress'),
-        'mastered': getCData('#mastered')
-    };
-    localStorage.setItem('seedlingBoard', JSON.stringify(board));
-}
-
-function getCData(sel) {
-    return Array.from(document.querySelector(sel + ' .kanban-cards').children).map(c => ({id: c.id, text: c.textContent}));
-}
-
-function openDetails(id, text) {
-    currentCardId = id;
-    document.getElementById('details-title').textContent = text;
-    document.getElementById('card-notes').value = localStorage.getItem('notes-' + id) || "";
-    document.getElementById('details-sidebar').classList.add('open');
-    renderFlashcards();
-}
-
-function openTab(t) {
-    document.getElementById('notes-tab').style.display = (t === 'notes') ? 'block' : 'none';
-    document.getElementById('flashcards-tab').style.display = (t === 'flashcards') ? 'block' : 'none';
-}
-
-function flipCard() { document.getElementById('flashcard-inner').classList.toggle('flipped'); }
-function nextCard() { if (currentFCIndex < currentDeck.length - 1) { currentFCIndex++; updateCardDisplay(); } }
-function prevCard() { if (currentFCIndex > 0) { currentFCIndex--; updateCardDisplay(); } }
-function closeDetails() { document.getElementById('details-sidebar').classList.remove('open'); }
-function updateTimer() {
-    const m = Math.floor(timeLeft / 60), s = timeLeft % 60;
-    document.getElementById('timer').textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
-}
-
-// Initialize
-window.onload = () => { if (localStorage.getItem('seedlingProfile')) calibrateSystem(); };
