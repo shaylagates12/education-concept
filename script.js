@@ -103,3 +103,17 @@ function drop(ev) {
         saveGarden();
     }
 }
+function returnToRoots() {
+    // 1. Show the onboarding overlay again
+    document.getElementById('onboarding-overlay').style.display = 'flex';
+    
+    // 2. Hide the main app shell
+    document.getElementById('app-shell').style.display = 'none';
+    
+    // 3. Reset the onboarding to the first step
+    document.getElementById('step-1').style.display = 'block';
+    document.getElementById('step-2').style.display = 'none';
+    
+    // 4. (Optional) Clear the saved profile if you want a total fresh start
+    // localStorage.removeItem('seedling_user_profile');
+}
