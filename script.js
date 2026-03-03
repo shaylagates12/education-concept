@@ -1,3 +1,4 @@
+alert("the garden is awake!");
 let currentSubject = "";
 let userProfile = { role: '', focusPref: '', rank: '🌱 Novice', masteredSeeds: [] };
 
