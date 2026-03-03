@@ -214,3 +214,9 @@ function returnToRoots() {
     document.getElementById('step-1').style.display = 'block';
     document.getElementById('step-2').style.display = 'none';
 }
+// --- FLASHCARD LOGIC ---
+function flipCard(cardElement) {
+    // This finds the "inner" part of the card and toggles the 'flipped' class
+    const inner = cardElement.querySelector('.flashcard-inner');
+    inner.classList.toggle('flipped');
+}
