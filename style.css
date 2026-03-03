@@ -1,3 +1,52 @@
+/* Previous Variables and Body styles remain same... */
+:root {
+    --egyptian-earth: #BB6830;
+    --emerald-green: #284139;
+    --wasabi: #809076;
+    --creased-khaki: #F8F794;
+    --noir-de-vigne: #111A19;
+    --gold-frame: #D4AF37;
+    --parchment-text: #fffef0;
+}
+
+/* AI CHAT STYLES */
+.ai-container {
+    display: flex; flex-direction: column; height: 350px;
+}
+.pip-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.pip-avatar {
+    width: 35px; height: 35px; background: var(--egyptian-earth);
+    color: white; border-radius: 50%; display: flex; 
+    align-items: center; justify-content: center; font-weight: bold;
+}
+.chat-display {
+    flex: 1; background: #fdfaf0; border: 1px inset #ddd;
+    padding: 10px; overflow-y: auto; font-size: 0.9rem; border-radius: 5px;
+}
+.pip-msg { color: var(--emerald-green); font-style: italic; margin-bottom: 10px; }
+.user-msg { color: var(--soil); font-weight: bold; text-align: right; margin-bottom: 10px; }
+.chat-input-area { display: flex; gap: 5px; margin-top: 10px; }
+.chat-input-area input { flex: 1; padding: 5px; border: 1px solid var(--wasabi); border-radius: 3px; }
+
+/* GROVE PROGRESS VIZ */
+.grove-container { display: flex; gap: 50px; align-items: center; margin-top: 40px; }
+.growth-ring-viz {
+    position: relative; width: 200px; height: 200px;
+    display: flex; align-items: center; justify-content: center;
+}
+.tree-core { font-size: 3rem; z-index: 10; }
+.ring {
+    position: absolute; border-radius: 50%;
+    border: 2px solid var(--wasabi); opacity: 0.3;
+}
+.ring-1 { width: 80px; height: 80px; }
+.ring-2 { width: 140px; height: 140px; }
+.ring-3 { width: 200px; height: 200px; }
+
+/* LAYOUT FOR LESSON PAGE */
+.journey-frame-layout { display: grid; grid-template-columns: 1fr 320px; gap: 30px; }
+
+/* All other previous styles (Onboarding, Kanban, etc.) go here... */
 :root {
     --soil: #4b3621; --leaf: #2ecc71; --sky: #f0f7f4; --sun: #f1c40f;
 }
