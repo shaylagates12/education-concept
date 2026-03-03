@@ -43,7 +43,7 @@ function plantNewSeed() {
     if (!name) return;
     
     const card = document.createElement('div');
-    card.className = 'doodle-card';
+    card.className = 'doodle-card sprouting-card'; // Added the animation class here
     card.id = 'seed-' + Date.now();
     card.textContent = name;
     
@@ -54,14 +54,21 @@ function plantNewSeed() {
     card.draggable = true;
     card.ondragstart = drag;
     
-    document.getElementById('kanban-todo').querySelector('.drop-zone').appendChild(card);
-    input.value = "";
+    const todoZone = document.getElementById('kanban-todo').querySelector('.drop-zone');
+    todoZone.appendChild(card);
     
+    // Clear input and update stats
+    input.value = "";
     userProfile.masteredSeeds++;
     document.getElementById('stat-planted').innerText = userProfile.masteredSeeds;
+    
+    // Remove the animation class after it plays so it doesn't interfere with dragging
+    setTimeout(() => {
+        card.classList.remove('sprouting-card');
+    }, 700);
+
     saveGarden();
 }
-
 // --- 3. DRAG & DROP SYSTEM ---
 function drag(ev) { 
     ev.dataTransfer.setData("text", ev.target.id); 
