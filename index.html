@@ -12,7 +12,7 @@
     <div id="onboarding-overlay" class="germination-overlay">
         <div id="step-1" class="ornate-3d-frame">
             <h1 class="vintage-title">Welcome, Artisan</h1>
-            <p>Your journey with multiple intricate subjects begins here.</p>
+            <p>Your journey begins here. Who are you planting as today?</p>
             <div class="role-picker">
                 <button onclick="nextStepOnboarding('Independent')" class="vintage-btn">Independent Learner</button>
                 <button onclick="nextStepOnboarding('Student')" class="vintage-btn">Student</button>
@@ -23,18 +23,18 @@
 
         <div id="step-2" class="ornate-3d-frame" style="display:none;">
             <h2 class="vintage-title">Nurture Your Seedling</h2>
+            <p>Select your sunlight (Focus Level):</p>
             <form id="seedling-calibration">
-                <p><strong>Your Focus Sprint Level:</strong></p>
-                <label><input type="radio" name="focus" value="15" checked> 15m</label>
-                <label><input type="radio" name="focus" value="30"> 30m</label>
-                <label><input type="radio" name="focus" value="60"> 60m</label>
+                <label><input type="radio" name="focus" value="15" checked> 15m Sprint</label>
+                <label><input type="radio" name="focus" value="30"> 30m Growth</label>
+                <label><input type="radio" name="focus" value="60"> 60m Deep Dive</label>
                 <br><br>
-                <button type="button" onclick="germinate()" class="vintage-btn">Plant and Enter Garden</button>
+                <button type="button" onclick="germinate()" class="vintage-btn">Enter the Garden</button>
             </form>
         </div>
     </div>
 
-    <div class="app-shell" id="app-shell">
+    <div class="app-shell" id="app-shell" style="display:none;">
         <aside class="nav-column">
             <div class="site-seal">S</div>
             <nav>
@@ -43,7 +43,7 @@
                 <button class="nav-item" onclick="showPage('grove-page')">🌳</button>
             </nav>
             <div class="rank-seal" id="rank-badge">🌱 Novice</div>
-            <button class="nav-item reset-roots" onclick="returnToRoots()">
+            <button class="nav-item reset-roots" onclick="confirmReset()">
                 🔄 <span class="reset-text">Reset</span>
             </button>
         </aside>
@@ -52,27 +52,24 @@
             <section id="lesson-page" class="page active">
                 <div class="journey-frame-layout">
                     <div class="ornate-text-frame">
-                        <h2 id="current-lesson-topic">Choose Your Subject Seed</h2>
+                        <h2 id="current-lesson-topic">Select a Seed</h2>
                         <div id="lesson-content-summary" class="parchment-summary">
                             <p>Pick a subject from your Drawing Board to begin.</p>
                         </div>
+                        <button id="lesson-continue-btn" class="vintage-btn" style="display:none;" onclick="continueJourney()">Nurture Topic</button>
                     </div>
 
                     <aside class="field-tools">
-                        <div class="tool-box">
-                            <h4>Field Notes</h4>
-                            <textarea id="field-notes" placeholder="Jot down a conceptual thought..."></textarea>
+                        <div class="tool-box timer-box">
+                            <h4>Sun Dial</h4>
+                            <div id="timer-display">00:00</div>
+                            <button id="timer-btn" class="vintage-btn" onclick="toggleTimer()">Start Sprint</button>
                         </div>
                         <div class="tool-box ai-container">
-                            <div class="pip-header">
-                                <div class="pip-avatar">P</div>
-                                <h4>Ask Pip</h4>
-                            </div>
-                            <div id="ai-chat" class="chat-display">
-                                <p class="pip-msg">Hello! I'm Pip. What shall we grow today?</p>
-                            </div>
+                            <div class="pip-header"><div class="pip-avatar">P</div><h4>Ask Pip</h4></div>
+                            <div id="ai-chat" class="chat-display"></div>
                             <div class="chat-input-area">
-                                <input type="text" id="ai-input" placeholder="Ask a question...">
+                                <input type="text" id="ai-input" placeholder="Ask Pip...">
                                 <button onclick="askPip()">➔</button>
                             </div>
                         </div>
@@ -83,13 +80,19 @@
             <section id="kanban-page" class="page">
                 <h2>The Drawing Board</h2>
                 <div class="kanban-entry">
-                    <input type="text" id="subject-seed-input" placeholder="New subject...">
+                    <input type="text" id="subject-seed-input" placeholder="Name your subject...">
                     <button class="vintage-btn" onclick="plantNewSeed()">Plant Seed</button>
                 </div>
                 <div class="doodle-board">
-                    <div class="doodle-col" id="kanban-todo"><h3>The Packet</h3><div class="drop-zone"></div></div>
-                    <div class="doodle-col" id="kanban-doing"><h3>Sprouting</h3><div class="drop-zone"></div></div>
-                    <div class="doodle-col" id="kanban-done"><h3>Blooming</h3><div class="drop-zone"></div></div>
+                    <div class="doodle-col" id="kanban-todo" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <h3>The Packet</h3><div class="drop-zone"></div>
+                    </div>
+                    <div class="doodle-col" id="kanban-doing" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <h3>Sprouting</h3><div class="drop-zone"></div>
+                    </div>
+                    <div class="doodle-col" id="kanban-done" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <h3>Blooming</h3><div class="drop-zone"></div>
+                    </div>
                 </div>
             </section>
 
@@ -97,14 +100,12 @@
                 <h2>The Artisan's Grove</h2>
                 <div class="grove-container">
                     <div class="growth-ring-viz">
-                        <div class="ring ring-3"></div>
-                        <div class="ring ring-2"></div>
-                        <div class="ring ring-1"></div>
+                        <div class="ring ring-3"></div><div class="ring ring-2"></div><div class="ring ring-1"></div>
                         <div class="tree-core">🌳</div>
                     </div>
                     <div class="stats-card">
                         <h3 id="grove-role">Artisan</h3>
-                        <p>Total Seeds Planted: <span id="stat-planted">0</span></p>
+                        <p>Seeds Planted: <span id="stat-planted">0</span></p>
                         <p>Current Rank: <span id="stat-rank">Novice</span></p>
                     </div>
                 </div>
