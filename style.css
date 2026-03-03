@@ -86,4 +86,17 @@ body { font-family: sans-serif; margin: 0; background: var(--sky); }
 .nav-item.reset-roots:hover {
     color: var(--egyptian-earth);
     filter: drop-shadow(0 0 8px var(--gold-frame));
+}/* ADD THIS TO THE BOTTOM OF YOUR STYLE.CSS */
+.timer-box {
+    text-align: center;
+    border: 2px solid var(--gold-frame) !important;
+    background: #fffef0;
 }
+
+#timer-display {
+    font-size: 2.8rem;
+    color: var(--egyptian-earth);
+    margin: 10px 0;
+    font-family: serif;
+}
+
