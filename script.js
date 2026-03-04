@@ -1,135 +1,89 @@
+// --- DATA: The "Seeds" of knowledge ---
+const subjectData = {
+    "Botany": {
+        lessons: [
+            { title: "The Seed's Awakening", text: "Germination is the process where a seed turns into a sprout.", type: "video", content: "https://www.w3schools.com/html/mov_bbb.mp4", defs: ["Germination", "Dormancy"] },
+            { title: "Photosynthesis", text: "Plants convert light into energy.", type: "image", content: "https://via.placeholder.com/600x300?text=Photosynthesis+Chart", defs: ["Chlorophyll", "Glucose"] }
+        ],
+        flashcards: [{ q: "What is the green pigment in plants?", a: "Chlorophyll" }],
+        quiz: [{ q: "Which gas do plants absorb?", options: ["Oxygen", "CO2", "Nitrogen"], correct: 1 }]
+    }
+};
+
 let currentSubject = "";
-let userProfile = { role: '', focusPref: '', rank: '🌱 Novice', masteredSeeds: [] };
 
-// 1. GERMINATION PHASE (Onboarding)
-function nextStepOnboarding(role) {
-    userProfile.role = role;
-    document.getElementById('step-1').style.display = 'none';
-    document.getElementById('step-2').style.display = 'block';
-}
+// 1. NAVIGATION
+function enterGarden() { document.getElementById('welcome-screen').style.display = 'none'; document.getElementById('app-shell').style.display = 'flex'; }
+function showPage(id) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); }
 
-function germinate() {
-    userProfile.focusPref = document.querySelector('input[name="focus"]:checked').value;
-    
-    // Save to Local Storage for Persistence
-    localStorage.setItem('seedling_user_profile', JSON.stringify(userProfile));
-    
-    // Switch Views
-    document.getElementById('onboarding-overlay').style.display = 'none';
-    document.getElementById('app-shell').style.display = 'flex';
-}
-
-// 2. KANBAN GARDEN LOGIC (Connected Subjects)
-function plantNewSeed() {
-    const name = document.getElementById('subject-seed-input').value;
+// 2. KANBAN
+function plantSeed() {
+    const name = document.getElementById('new-subject').value;
     if (!name) return;
-    
-    // Create the hand-drawn "Sticky Note" card
     const card = document.createElement('div');
-    card.className = 'doodle-card';
-    card.id = 'seed-' + Date.now();
+    card.className = 'card';
     card.textContent = name;
-    card.onclick = () => activateSubjectJourney(name);
     card.draggable = true;
-    card.ondragstart = drag;
-    
-    document.getElementById('kanban-todo').querySelector('.drop-zone').appendChild(card);
-    document.getElementById('subject-seed-input').value = "";
-    saveGarden();
+    card.onclick = () => loadLesson(name);
+    card.ondragstart = (e) => e.dataTransfer.setData("text", name);
+    document.querySelector('#todo .zone').appendChild(card);
+    document.getElementById('new-subject').value = "";
 }
 
-// Connect Kanban Choice to Learning Area
-function activateSubjectJourney(name) {
+function allow(e) { e.preventDefault(); }
+function drop(e) { e.preventDefault(); const name = e.dataTransfer.getData("text"); /* Simplified drop logic */ }
+
+// 3. LESSON ENGINE
+function loadLesson(name) {
     currentSubject = name;
-    
-    // Switch to Learning Area
+    const data = subjectData[name] ? subjectData[name].lessons[0] : null;
     showPage('lesson-page');
+    if (!data) { document.getElementById('lesson-title').innerText = name + " (No data yet)"; return; }
+
+    document.getElementById('lesson-title').innerText = data.title;
+    document.getElementById('lesson-text').innerText = data.text;
     
-    // Update the Ornate Picture Frame Content
-    document.getElementById('current-lesson-topic').textContent = name;
-    
-    // Simulate Opening Summary (This would pull from a database in a real app)
-    document.getElementById('lesson-content-summary').innerHTML = `
-        <p><strong>Opening Summary:</strong> The subject of ${name} is a cornerstone of this learning garden. Before you can unlock the full breadth of the topic, you must absorb this introductory concept.</p>
-        <p>This is the soil that Pip will use to nurture your understanding.</p>
-    `;
-    
-    // Show the "Continue" Button (Unlocking the lesson)
-    document.getElementById('lesson-continue-btn').style.display = 'block';
-}
+    // Media logic
+    const mc = document.getElementById('media-container');
+    mc.innerHTML = data.type === "video" ? `<video controls width="100%"><src src="${data.content}"></video>` : `<img src="${data.content}" style="width:100%">`;
 
-function continueJourney() {
-    // Reveal the rest of the lesson
-    document.getElementById('lesson-content-summary').innerHTML += `
-        <p><strong>Lesson Continued:</strong> Excellent. Now that you have grasped the initial concepts, Pip can help you explore technical details.</p>
-        <p>Write your detailed conceptual thoughts in the Field Notes area to the right.</p>
-    `;
-    document.getElementById('lesson-continue-btn').style.display = 'none';
-}
-
-// 3. PAGE LOGIC
-function showPage(pageId) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(pageId).classList.add('active');
-    
-    // Sync Nav Column state
-    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-    // (Nav button syncing logic needed here based on the index of the page)
-}
-
-// 4. PERSISTENCE SYSTEMS (Persistence)
-function saveGarden() {
-    const gardenState = {
-        todo: getCardData('#kanban-todo'),
-        doing: getCardData('#kanban-doing'),
-        done: getCardData('#kanban-done')
-    };
-    localStorage.setItem('seedling_garden', JSON.stringify(gardenState));
-}
-
-function getCardData(colId) {
-    return Array.from(document.querySelector(colId).querySelectorAll('.doodle-card')).map(c => ({ id: c.id, text: c.textContent }));
-}
-
-// Drag & Drop
-function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
-function allowDrop(ev) { ev.preventDefault(); }
-function drop(ev) {
-    ev.preventDefault();
-    const data = ev.dataTransfer.getData("text");
-    const targetCol = ev.target.closest('.doodle-col');
-    if (targetCol) {
-        targetCol.querySelector('.drop-zone').appendChild(document.getElementById(data));
-        saveGarden();
+    // Definitions
+    const dl = document.getElementById('definitions-list');
+    const db = document.getElementById('definitions-box');
+    dl.innerHTML = "";
+    if (data.defs) {
+        db.style.display = 'block';
+        data.defs.forEach(d => dl.innerHTML += `<li>${d}</li>`);
     }
-}
-function returnToRoots() {
-    // 1. Show the onboarding overlay again
-    document.getElementById('onboarding-overlay').style.display = 'flex';
-    
-    // 2. Hide the main app shell
-    document.getElementById('app-shell').style.display = 'none';
-    
-    // 3. Reset the onboarding to the first step
-    document.getElementById('step-1').style.display = 'block';
-    document.getElementById('step-2').style.display = 'none';
-    
-    // 4. (Optional) Clear the saved profile if you want a total fresh start
-    // localStorage.removeItem('seedling_user_profile');
-}// Add to the bottom of script.js
-function confirmReset() {
-    const text = "Are you sure you want to return to the beginning? Your garden progress will remain, but you will need to recalibrate your persona.";
-    if (confirm(text) == true) {
-        returnToRoots();
-    }
+
+    // Load Flashcard & Quiz for this subject
+    loadHarvest(name);
 }
 
-function returnToRoots() {
-    // Show the onboarding overlay and hide the main app
-    document.getElementById('onboarding-overlay').style.display = 'flex';
-    document.getElementById('app-shell').style.display = 'none';
+function loadHarvest(name) {
+    const data = subjectData[name];
+    if (!data) return;
+    document.getElementById('card-front').innerText = data.flashcards[0].q;
+    document.getElementById('card-back').innerText = data.flashcards[0].a;
     
-    // Reset the onboarding steps to the start
-    document.getElementById('step-1').style.display = 'block';
-    document.getElementById('step-2').style.display = 'none';
+    const quiz = data.quiz[0];
+    document.getElementById('quiz-question').innerText = quiz.q;
+    const options = document.getElementById('quiz-options');
+    options.innerHTML = "";
+    quiz.options.forEach((opt, i) => {
+        options.innerHTML += `<button onclick="checkQuiz(${i}, ${quiz.correct})">${opt}</button>`;
+    });
+}
+
+function checkQuiz(choice, correct) {
+    alert(choice === correct ? "Correct! Your garden grows." : "Not quite. Try tending to the lesson again.");
+}
+
+// 4. PIP
+function askPip() {
+    const input = document.getElementById('pip-input');
+    const chat = document.getElementById('chat-display');
+    chat.innerHTML += `<p><strong>You:</strong> ${input.value}</p>`;
+    setTimeout(() => { chat.innerHTML += `<p><em>Pip:</em> I see you're learning about ${currentSubject}! That's a great seed to plant.</p>`; }, 600);
+    input.value = "";
 }
