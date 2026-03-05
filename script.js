@@ -75,6 +75,45 @@ function loadLesson(name) {
 
     document.getElementById('lesson-title').innerText = data.title;
     document.getElementById('lesson-text').innerText = data.text;
+    function loadLesson(name, index = 0) {
+    saveNotes();
+    currentSubject = name;
+    currentLessonIndex = index;
+    
+    const subject = subjectData[name];
+    if (!subject) return;
+    
+    const data = subject.lessons[index];
+
+    // --- PROGRESS VINE CALCULATION ---
+    const totalLessons = subject.lessons.length;
+    // Calculate percentage (e.g., Lesson 1 of 4 = 25%)
+    const progressPercent = ((index + 1) / totalLessons) * 100;
+    
+    const vine = document.getElementById('progress-vine');
+    const leaf = document.querySelector('.vine-leaf');
+    
+    if (vine && leaf) {
+        vine.style.width = progressPercent + "%";
+        leaf.style.left = `calc(${progressPercent}% - 10px)`;
+    }
+
+    // --- REMAINDER OF UI UPDATE ---
+    loadNotes(name);
+    document.getElementById('lesson-title').innerText = data.title;
+    document.getElementById('lesson-text').innerText = data.text;
+    
+    const mc = document.getElementById('media-container');
+    mc.innerHTML = data.type === "video" 
+        ? `<video controls width="100%"><source src="${data.content}" type="video/mp4"></video>` 
+        : `<img src="${data.content}" style="width:100%">`;
+
+    const dl = document.getElementById('definitions-list');
+    dl.innerHTML = "";
+    data.defs.forEach(d => dl.innerHTML += `<li>${d}</li>`);
+    
+    showPage('lesson-page');
+}
     
     // Media logic
     const mc = document.getElementById('media-container');
