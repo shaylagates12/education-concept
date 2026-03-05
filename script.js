@@ -203,3 +203,64 @@ function enterGarden() {
         console.error("Could not find the welcome screen or app shell IDs.");
     }
 }
+let currentLessonIndex = 0;
+
+// Function to save notes to LocalStorage
+function saveNotes() {
+    if (currentSubject) {
+        const notes = document.getElementById('field-notes').value;
+        localStorage.setItem(`notes_${currentSubject}`, notes);
+    }
+}
+
+// Function to load notes from LocalStorage
+function loadNotes(subjectName) {
+    const savedNotes = localStorage.getItem(`notes_${subjectName}`);
+    document.getElementById('field-notes').value = savedNotes || "";
+}
+
+// Updated loadLesson function
+function loadLesson(name, index = 0) {
+    // 1. Save notes from the PREVIOUS subject before switching
+    saveNotes();
+
+    currentSubject = name;
+    currentLessonIndex = index;
+    
+    const subject = subjectData[name];
+    const data = subject ? subject.lessons[index] : null;
+
+    if (!data) return;
+
+    // 2. Load the new notes for THIS subject
+    loadNotes(name);
+
+    // Update UI elements
+    document.getElementById('lesson-title').innerText = data.title;
+    document.getElementById('lesson-text').innerText = data.text;
+    
+    const mc = document.getElementById('media-container');
+    mc.innerHTML = data.type === "video" 
+        ? `<video controls width="100%"><source src="${data.content}" type="video/mp4"></video>` 
+        : `<img src="${data.content}" style="width:100%">`;
+
+    // Update Definitions
+    const dl = document.getElementById('definitions-list');
+    dl.innerHTML = "";
+    data.defs.forEach(d => dl.innerHTML += `<li>${d}</li>`);
+    
+    showPage('lesson-page');
+}
+
+// Logic for the "Next Lesson" Button
+function nextLesson() {
+    const subject = subjectData[currentSubject];
+    if (!subject) return;
+
+    // Check if there is another lesson in the array
+    if (currentLessonIndex < subject.lessons.length - 1) {
+        loadLesson(currentSubject, currentLessonIndex + 1);
+    } else {
+        alert("You've reached the end of this 'branch'. Check back soon for more growth!");
+    }
+}
