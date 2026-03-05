@@ -87,3 +87,20 @@ function askPip() {
     setTimeout(() => { chat.innerHTML += `<p><em>Pip:</em> I see you're learning about ${currentSubject}! That's a great seed to plant.</p>`; }, 600);
     input.value = "";
 }
+function drag(e) {
+    e.dataTransfer.setData("text", e.target.id);
+}
+
+function drop(e) {
+    e.preventDefault();
+    const data = e.dataTransfer.getData("text");
+    const draggedElement = document.getElementById(data);
+    
+    // Find the closest drop zone
+    let target = e.target;
+    if (!target.classList.contains('zone')) {
+        target = target.closest('.col').querySelector('.zone');
+    }
+    
+    target.appendChild(draggedElement);
+}
