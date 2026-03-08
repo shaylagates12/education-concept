@@ -253,3 +253,27 @@ textarea {
     z-index: 2;
     text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.9); /* Makes text "pop" */
 }
+/* The Vine's "Crawl" Animation */
+#progress-vine {
+    height: 100%;
+    background: linear-gradient(90deg, #2d5a27, #4e9344); /* Forest green gradient */
+    width: 0%; /* Starts at 0 */
+    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth, organic growth speed */
+    box-shadow: 0 0 10px rgba(78, 147, 68, 0.5);
+    border-radius: 10px;
+}
+
+/* The Leaf's "Wiggle" Animation */
+.vine-leaf {
+    position: absolute;
+    top: -10px;
+    font-size: 24px;
+    transition: left 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: leaf-sway 3s ease-in-out infinite; /* Constant gentle swaying */
+    z-index: 5;
+}
+
+@keyframes leaf-sway {
+    0%, 100% { transform: rotate(-5deg) translateY(0); }
+    50% { transform: rotate(15deg) translateY(-2px); }
+}
