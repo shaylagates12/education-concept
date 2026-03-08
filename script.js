@@ -189,16 +189,21 @@ function loadHarvest(name) {
 
     if (!data || !data.flashcards) return;
 
-    // --- FLASHCARD LOGIC (Preserving your styles) ---
+    // 1. Reset classes and apply the specific deck theme
     cardContainer.className = 'flashcard'; 
     if (name === "Life Insurance") cardContainer.classList.add('deck-life-insurance');
     else if (name === "Taxes") cardContainer.classList.add('deck-taxes');
     else if (name === "Stock Market") cardContainer.classList.add('deck-stocks');
     else cardContainer.classList.add('deck-finances');
 
-    front.innerHTML = `<h3>${data.flashcards[0].q}</h3><p style="font-size: 0.8rem; opacity: 0.7;">Click to Flip</p>`;
+    // 2. Insert an 'art-overlay' div so the CSS can tint the background image
+    front.innerHTML = `<div class="art-overlay"></div><h3>${data.flashcards[0].q}</h3>`;
     back.innerHTML = `<h4>Definition:</h4><p>${data.flashcards[0].a}</p>`;
 
+    // Reset and start the 4-question quiz
+    currentQuizIndex = 0; 
+    displayQuizQuestion(name);
+}
     // --- QUIZ LOGIC ---
     currentQuizIndex = 0; // Reset to question 1
     displayQuizQuestion(name);
