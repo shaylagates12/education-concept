@@ -63,3 +63,24 @@ body { margin: 0; font-family: 'Libre Baskerville', serif; background: #f4f1ea; 
 .back { transform: rotateY(180deg); background: #fffef0; }
 
 .journey-btn { width: 100%; padding: 12px; background: var(--leaf); color: white; border: 2px solid var(--gold); cursor: pointer; margin-top: 10px; }
+/* Hide all pages by default */
+.page {
+    display: none; 
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+/* Only show the page that has the 'active' class */
+.page.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Ensure the welcome screen behaves the same way */
+#welcome-screen {
+    display: none;
+}
+
+#welcome-screen.active {
+    display: flex; /* Flex helps center your Crystal box */
+}
