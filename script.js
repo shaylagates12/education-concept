@@ -169,14 +169,24 @@ function updateProgress(name, index) {
     const subject = subjectData[name];
     if (!subject) return;
 
+    // Calculate percentage based on 10 pages
     const progressPercent = ((index + 1) / subject.lessons.length) * 100;
+    
     const vine = document.getElementById('progress-vine');
     const leaf = document.querySelector('.vine-leaf');
     
     if (vine && leaf) {
+        // Triggering the width change allows the CSS 'transition' to take over
         vine.style.width = progressPercent + "%";
-        leaf.style.left = `calc(${progressPercent}% - 12px)`;
+        
+        // Offset the leaf slightly so it sits at the "tip" of the growing vine
+        leaf.style.left = `calc(${progressPercent}% - 15px)`;
+        
+        // Optional: Add a little "pulse" when a new milestone is hit
+        vine.style.filter = "brightness(1.2)";
+        setTimeout(() => { vine.style.filter = "brightness(1)"; }, 300);
     }
+}
 }
 
 let currentQuizIndex = 0; // Tracks which question we are on
