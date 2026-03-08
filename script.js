@@ -119,7 +119,8 @@ function updateProgress(name, index) {
     }
 }
 
-// 4. FLASHCARDS & QUIZ (THE HARVEST)
+let currentQuizIndex = 0; // Tracks which question we are on
+
 function loadHarvest(name) {
     const data = subjectData[name];
     const cardContainer = document.querySelector('.flashcard');
@@ -128,6 +129,7 @@ function loadHarvest(name) {
 
     if (!data || !data.flashcards) return;
 
+    // --- FLASHCARD LOGIC (Preserving your styles) ---
     cardContainer.className = 'flashcard'; 
     if (name === "Life Insurance") cardContainer.classList.add('deck-life-insurance');
     else if (name === "Taxes") cardContainer.classList.add('deck-taxes');
@@ -137,17 +139,40 @@ function loadHarvest(name) {
     front.innerHTML = `<h3>${data.flashcards[0].q}</h3><p style="font-size: 0.8rem; opacity: 0.7;">Click to Flip</p>`;
     back.innerHTML = `<h4>Definition:</h4><p>${data.flashcards[0].a}</p>`;
 
-    const quiz = data.quiz[0];
-    document.getElementById('quiz-question').innerText = quiz.q;
-    const options = document.getElementById('quiz-options');
-    options.innerHTML = "";
+    // --- QUIZ LOGIC ---
+    currentQuizIndex = 0; // Reset to question 1
+    displayQuizQuestion(name);
+}
+
+function displayQuizQuestion(name) {
+    const quiz = subjectData[name].quiz[currentQuizIndex];
+    const qTitle = document.getElementById('quiz-question');
+    const optionsContainer = document.getElementById('quiz-options');
+
+    qTitle.innerText = `Step ${currentQuizIndex + 1} of 4: ${quiz.q}`;
+    optionsContainer.innerHTML = "";
+
     quiz.options.forEach((opt, i) => {
-        options.innerHTML += `<button class="journey-btn" onclick="checkQuiz(${i}, ${quiz.correct})">${opt}</button>`;
+        optionsContainer.innerHTML += `<button class="journey-btn" onclick="checkQuiz(${i}, ${quiz.correct})">${opt}</button>`;
     });
 }
 
 function checkQuiz(choice, correct) {
-    alert(choice === correct ? "Correct! Your garden grows." : "Not quite. Try tending to the lesson again.");
+    if (choice === correct) {
+        currentQuizIndex++; // Move to next question
+        const total = subjectData[currentSubject].quiz.length;
+
+        if (currentQuizIndex < total) {
+            alert("Correct! The garden grows taller...");
+            displayQuizQuestion(currentSubject);
+        } else {
+            alert("Mastery! You have harvested all the knowledge in this subject.");
+        }
+    } else {
+        alert("A weed in the garden! Review the lessons and try again.");
+        currentQuizIndex = 0; // Optional: Reset to start on wrong answer
+        displayQuizQuestion(currentSubject);
+    }
 }
 
 // 5. NOTES & PIP
