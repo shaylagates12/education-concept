@@ -216,3 +216,40 @@ textarea {
     font-size: 1rem;
     cursor: pointer;
 }
+/* 1. The Base Card: Links your uploaded 'flashcards.jpg' */
+.flashcard {
+    position: relative;
+    background-image: url('flashcards.jpg'); 
+    background-size: cover;
+    background-position: center;
+    border: 8px double #d4af37; /* The Gold Art Nouveau frame */
+    border-radius: 15px;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+/* 2. The Reveal Effect: Art fades in when you look at it */
+.flashcard .art-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0.7; /* Start slightly faded */
+    transition: opacity 0.5s ease;
+}
+
+.flashcard:hover .art-overlay {
+    opacity: 1; /* Art becomes vibrant on hover */
+}
+
+/* 3. Color Overlays: Tints based on your 'New #5.jpg' palette */
+.deck-life-insurance .art-overlay { background-color: #A4C0C1; } /* Aspiring Blue */
+.deck-taxes .art-overlay          { background-color: #E17426; } /* Orange Luster */
+.deck-stocks .art-overlay         { background-color: #701B15; } /* Persian Plum */
+.deck-finances .art-overlay       { background-color: #0A4152; } /* Midnight Green */
+
+/* 4. Text Safety: Keeps vocab words visible over the art */
+.flashcard h3, .flashcard h4, .flashcard p {
+    position: relative;
+    z-index: 2;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.9); /* Makes text "pop" */
+}
