@@ -162,6 +162,27 @@ function loadHarvest(name) {
     front.innerHTML = `<h3>${data.flashcards[0].q}</h3>`;
     back.innerHTML = `<p>${data.flashcards[0].a}</p>`;
 }
+        function loadHarvest(name) {
+    const data = subjectData[name];
+    const cardContainer = document.querySelector('.flashcard');
+    const front = document.getElementById('card-front');
+    const back = document.getElementById('card-back');
+
+    if (!data || !data.flashcards) return;
+
+    // Remove any old deck classes
+    cardContainer.classList.remove('deck-life-insurance', 'deck-taxes', 'deck-stocks', 'deck-finances');
+
+    // Apply the new theme based on subject
+    if (name === "Life Insurance") cardContainer.classList.add('deck-life-insurance');
+    else if (name === "Taxes") cardContainer.classList.add('deck-taxes');
+    else if (name === "Stock Market") cardContainer.classList.add('deck-stocks');
+    else cardContainer.classList.add('deck-finances');
+
+    // Update the text
+    front.innerHTML = `<h3>${data.flashcards[0].q}</h3><p style="font-size: 0.8rem; opacity: 0.7;">Click to Flip</p>`;
+    back.innerHTML = `<h4>Definition:</h4><p>${data.flashcards[0].a}</p>`;
+}
     });
 }
 
