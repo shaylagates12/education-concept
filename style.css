@@ -1,33 +1,67 @@
 :root {
+    /* Financial Opaque Palette */
     --caramel-powder: #EDBA97;
     --orange-luster: #E17426;
     --persian-plum: #701B15;
     --aspiring-blue: #A4C0C1;
     --midnight-green: #0A4152;
     --parchment: #fffef0;
+    
+    /* Garden Theme Basics */
+    --earth: #3d2b1f;
+    --leaf: #2d5a27;
+    --wasabi: #a8b59d;
+    --gold: #d4af37;
+    --paper: #fdfaf0;
+    --accent: #bb6830;
 }
 
-body { margin: 0; font-family: 'Libre Baskerville', serif; background: #f4f1ea; color: var(--earth); }
+body { 
+    margin: 0; 
+    font-family: 'Libre Baskerville', serif; 
+    background: #f4f1ea; 
+    color: var(--earth); 
+}
 
-/* Overlays */
-.overlay { position: fixed; inset: 0; background: var(--leaf); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-.vintage-frame { border: 15px solid var(--gold); background: var(--paper); padding: 40px; text-align: center; border-radius: 8px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+/* 1. OVERLAYS & NAVIGATION */
+.overlay { 
+    position: fixed; 
+    inset: 0; 
+    background: var(--leaf); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    z-index: 1000; 
+}
 
-/* Layout */
+.vintage-frame { 
+    border: 15px solid var(--gold); 
+    background: var(--paper); 
+    padding: 40px; 
+    text-align: center; 
+    border-radius: 8px; 
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4); 
+}
+
 #app-shell { display: flex; height: 100vh; }
-/* THE LIFTING EFFECT for Toolboxes & Buttons */
+
+.content-area { flex: 1; padding: 30px; overflow-y: auto; }
+.page { display: none; }
+.page.active { display: block; }
+
+/* 2. LIFTING EFFECTS (Toolboxes & Buttons) */
 .tool-box, .journey-btn {
     transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
                 box-shadow 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Flat state */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .tool-box:hover, .journey-btn:hover {
-    transform: translateY(-5px); /* This is the "Lift" */
-    box-shadow: 0 12px 20px rgba(0,0,0,0.15); /* Deep shadow for depth */
+    transform: translateY(-5px); /* The Lift */
+    box-shadow: 0 12px 20px rgba(0,0,0,0.15); 
 }
 
-/* THE PROGRESS VINE STYLING */
+/* 3. PROGRESS VINE STYLING */
 .progress-container {
     width: 100%;
     height: 10px;
@@ -39,7 +73,7 @@ body { margin: 0; font-family: 'Libre Baskerville', serif; background: #f4f1ea; 
 }
 
 .vine-bar {
-    width: 0%; /* Controlled by JS */
+    width: 0%; 
     height: 100%;
     background: var(--leaf);
     border-radius: 10px;
@@ -49,60 +83,127 @@ body { margin: 0; font-family: 'Libre Baskerville', serif; background: #f4f1ea; 
 .vine-leaf {
     position: absolute;
     top: -10px;
-    left: 0%; /* Moves with the bar */
+    left: 0%; 
     transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     font-size: 1.2rem;
 }
-.content-area { flex: 1; padding: 30px; overflow-y: auto; }
-.page { display: none; }
-.page.active { display: block; }
 
-/* Lesson Grid */
+/* 4. LESSON LAYOUT */
 .lesson-grid { display: grid; grid-template-columns: 1fr 350px; gap: 30px; }
-.media-placeholder { background: #e0e0e0; min-height: 300px; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
-.parchment { background: var(--paper); padding: 25px; border: 1px solid #ddd; border-radius: 5px; line-height: 1.6; }
-.tool-box { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-textarea { width: 100%; height: 120px; font-family: 'Caveat', cursive; font-size: 1.4rem; border: none; background: #fffde7; }
 
-/* Kanban Garden */
-.garden-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.col { background: rgba(0,0,0,0.03); border: 2px dashed var(--wasabi); border-radius: 15px; min-height: 500px; padding: 15px; }
-.card { background: #fff9c4; padding: 15px; margin: 10px 0; border-radius: 4px; cursor: grab; font-family: 'Caveat', cursive; font-size: 1.2rem; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
-
-/* Flashcards */
-.flashcard { width: 100%; height: 250px; perspective: 1000px; margin-bottom: 30px; cursor: pointer; }
-.flashcard-inner { position: relative; width: 100%; height: 100%; transition: 0.6s; transform-style: preserve-3d; }
-.flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
-.front, .back { position: absolute; inset: 0; backface-visibility: hidden; border: 4px solid var(--gold); border-radius: 15px; background: var(--paper); display: flex; align-items: center; justify-content: center; padding: 20px; font-size: 1.2rem; }
-.back { transform: rotateY(180deg); background: var(--wasabi); color: white; }
-/* RESPONSIVE MEDIA CONTAINER */
 .media-placeholder {
     width: 100%;
     max-width: 800px;
     margin: 0 auto 20px auto;
-    background: #000; /* Dark background for videos */
+    background: #000;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .media-placeholder video, 
-.media-placeholder img {
-    width: 100%;
-    height: auto;
-    display: block;
+.media-placeholder img { width: 100%; height: auto; display: block; }
+
+.parchment { 
+    background: var(--paper); 
+    padding: 25px; 
+    border: 1px solid #ddd; 
+    border-radius: 5px; 
+    line-height: 1.6; 
 }
 
-/* Definition Styling */
-#definitions-box {
-    border-left: 5px solid var(--gold);
-    background: #fdfaf0;
-    margin-top: 20px;
+.tool-box { 
+    background: white; 
+    padding: 15px; 
+    border-radius: 8px; 
+    margin-bottom: 20px; 
 }
-#definitions-list li {
-    margin-bottom: 10px;
-    font-style: italic;
+
+textarea { 
+    width: 100%; 
+    height: 120px; 
+    font-family: 'Caveat', cursive; 
+    font-size: 1.4rem; 
+    border: none; 
+    background: #fffde7; 
 }
+
+/* 5. KANBAN GARDEN */
+.garden-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.col { background: rgba(0,0,0,0.03); border: 2px dashed var(--wasabi); border-radius: 15px; min-height: 500px; padding: 15px; }
+.card { 
+    background: #fff9c4; 
+    padding: 15px; 
+    margin: 10px 0; 
+    border-radius: 4px; 
+    cursor: grab; 
+    font-family: 'Caveat', cursive; 
+    font-size: 1.2rem; 
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1); 
+}
+
+/* 6. FLASHCARDS (Art Nouveau Edition) */
+.flashcard { 
+    width: 100%; 
+    height: 350px; 
+    perspective: 1000px; 
+    margin-bottom: 30px; 
+    cursor: pointer; 
+}
+
+.flashcard-inner { 
+    position: relative; 
+    width: 100%; 
+    height: 100%; 
+    transition: 0.6s; 
+    transform-style: preserve-3d; 
+}
+
+.flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+
+.front, .back { 
+    position: absolute; 
+    inset: 0; 
+    backface-visibility: hidden; 
+    border: 4px solid var(--gold); 
+    border-radius: 15px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 20px; 
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+}
+
+.front {
+    /* Faded floral overlay */
+    background-image: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), 
+                      url('flashcards.jpg');
+}
+
+/* Deck Colors Blending */
+.deck-life-insurance .front { background-color: var(--caramel-powder); }
+.deck-taxes .front { background-color: var(--orange-luster); color: white; }
+.deck-stocks .front { background-color: var(--persian-plum); color: white; }
+.deck-finances .front { background-color: var(--midnight-green); color: white; }
+
+.back { 
+    transform: rotateY(180deg); 
+    background-color: var(--parchment); 
+    color: var(--midnight-green); 
+    font-size: 1.1rem;
+}
+
+/* 7. UI ELEMENTS */
+#definitions-box { border-left: 5px solid var(--gold); background: #fdfaf0; margin-top: 20px; }
+#definitions-list li { margin-bottom: 10px; font-style: italic; }
+
 .journey-btn {
     width: 100%;
     padding: 12px;
@@ -114,53 +215,4 @@ textarea { width: 100%; height: 120px; font-family: 'Caveat', cursive; font-size
     font-family: 'Libre Baskerville', serif;
     font-size: 1rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.journey-btn:hover {
-    background-color: var(--accent);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-}
-
-.journey-btn:active {
-    transform: translateY(0);
-}
-.flashcard-inner {
-    width: 100%;
-    height: 300px;
-    transition: 0.6s;
-    transform-style: preserve-3d;
-}
-
-.front, .back {
-    position: absolute;
-    inset: 0;
-    backface-visibility: hidden;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    text-align: center;
-    border: 2px solid rgba(0,0,0,0.1);
-    /* The Floral Background Effect */
-    background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), 
-                      url('flashcards.jpg');
-    background-size: cover;
-    background-position: center;
-}
-
-/* Specific Deck Colors based on your palette */
-.deck-life-insurance .front { background-color: var(--caramel-powder); }
-.deck-taxes .front { background-color: var(--orange-luster); color: white; }
-.deck-stocks .front { background-color: var(--persian-plum); color: white; }
-.deck-finances .front { background-color: var(--midnight-green); color: white; }
-
-.back {
-    transform: rotateY(180deg);
-    background-color: var(--parchment);
-    color: var(--midnight-green);
 }
