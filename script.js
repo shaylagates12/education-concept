@@ -1,87 +1,33 @@
-// --- DATA: The "Seeds" of knowledge ---
-const subjectData = {
-    "Life Insurance": {
-        lessons: [
-            { 
-                title: "The Safety Net", 
-                text: "Life insurance provides a financial payout to beneficiaries upon the death of the insured. It is the foundation of a protective financial plan.", 
-                type: "image", 
-                content: "https://via.placeholder.com/600x350?text=Life+Insurance+Basics", 
-                defs: ["Policy: The contract.", "Premium: The cost."] 
-            },
-            { 
-                title: "Term vs. Whole Life", 
-                text: "Term insurance covers you for a specific period (e.g., 20 years), while Whole Life is permanent and can build cash value.", 
-                type: "image", 
-                content: "https://via.placeholder.com/600x350?text=Term+vs+Whole+Comparison", 
-                defs: ["Cash Value: An investment component.", "Term: The duration."] 
-            }
-        ],
-        flashcards: [{ q: "What is a 'Beneficiary'?", a: "The person or entity designated to receive the death benefit." }],
-        quiz: [{ q: "Which policy builds cash value?", options: ["Term Life", "Whole Life"], correct: 1 }]
-    },
-    "Taxes": {
-        lessons: [
-            { 
-                title: "Tax Brackets 101", 
-                text: "The US uses a progressive tax system. You only pay higher rates on the dollars within that specific bracket.", 
-                type: "image", 
-                content: "https://via.placeholder.com/600x350?text=Tax+Bracket+Flow", 
-                defs: ["Progressive Tax: Higher income = higher rate.", "Marginal Rate: The tax on your last dollar."] 
-            },
-            { 
-                title: "Deductions & Credits", 
-                text: "Deductions lower your taxable income; Credits lower your actual tax bill dollar-for-dollar.", 
-                type: "image", 
-                content: "https://via.placeholder.com/600x350?text=Deductions+vs+Credits", 
-                defs: ["Standard Deduction: A flat reduction.", "Tax Credit: A direct discount on tax owed."] 
-            }
-        ],
-        flashcards: [{ q: "Which is more powerful?", a: "A Tax Credit, because it reduces your bill directly." }],
-        quiz: [{ q: "What does a deduction do?", options: ["Lowers taxable income", "Reduces tax bill directly"], correct: 0 }]
-    },
-    "Stock Market": {
-        lessons: [
-            { 
-                title: "Buying Ownership", 
-                text: "A stock is a share of ownership in a company. You profit through price appreciation or dividends.", 
-                type: "video", 
-                content: "https://www.w3schools.com/html/mov_bbb.mp4", 
-                defs: ["Ticker Symbol: A unique code (e.g., AAPL).", "Equity: Ownership value."] 
-            },
-            { 
-                title: "Market Cycles", 
-                text: "Markets fluctuate. A 'Bull' market is charging up, while a 'Bear' market is hibernating or falling.", 
-                type: "image", 
-                content: "https://via.placeholder.com/600x350?text=Bull+vs+Bear+Market", 
-                defs: ["Volatility: How fast prices change.", "Diversification: Spreading risk."] 
-            }
-        ],
-        flashcards: [{ q: "What is a Dividend?", a: "A reward paid to shareholders from company profits." }],
-        quiz: [{ q: "What animal represents a rising market?", options: ["Bear", "Bull"], correct: 1 }]
-    },
-    "Finances": {
-        lessons: [
-            { 
-                title: "The Magic of Compounding", 
-                text: "Compound interest is when you earn interest on your interest. Time is your greatest asset here.", 
-                type: "image", 
-                content: "https://via.placeholder.com/600x350?text=Compound+Interest+Graph", 
-                defs: ["Principal: Original investment.", "APY: Annual Percentage Yield."] 
-            }
-        ],
-        flashcards: [{ q: "What is Liquidity?", a: "How quickly you can turn an asset into cash." }],
-        quiz: [{ q: "When should you start saving?", options: ["When I'm 40", "As early as possible"], correct: 1 }]
-    }
-};
-
-let currentSubject = "";
-let currentLessonIndex = 0;
 
 // 1. NAVIGATION & INITIALIZATION
 window.onload = () => {
     console.log("Financial Garden Loaded.");
-    const card = document.querySelector('.flashcard');
+    const caconst subjectData = {
+    "Life Insurance": {
+        lessons: [
+            { title: "The Policy", text: "The 'Policy' is the legal contract between the insurer and the owner.", type: "image", content: "https://via.placeholder.com/600x350?text=The+Policy", defs: ["Policy: The legal agreement."] },
+            { title: "The Premium", text: "The 'Premium' is the payment you make to keep the coverage active.", type: "image", content: "https://via.placeholder.com/600x350?text=The+Premium", defs: ["Premium: The cost of insurance."] },
+            { title: "The Beneficiary", text: "The 'Beneficiary' is the person who receives the money if you pass away.", type: "image", content: "https://via.placeholder.com/600x350?text=Beneficiary", defs: ["Beneficiary: Recipient of funds."] },
+            { title: "Underwriting", text: "The process of assessing risk to determine your premium price.", type: "video", content: "https://www.w3schools.com/html/mov_bbb.mp4", defs: ["Underwriting: Risk assessment."] },
+            { title: "The Death Benefit", text: "The total sum of money paid out by the policy.", type: "image", content: "https://via.placeholder.com/600x350?text=Death+Benefit", defs: ["Death Benefit: Payout amount."] },
+            { title: "Term Length", text: "The duration for which a 'Term' policy provides coverage.", type: "image", content: "https://via.placeholder.com/600x350?text=Term+Length", defs: ["Term: A set period of time."] },
+            { title: "Cash Value", text: "The savings portion of a 'Whole Life' policy that grows over time.", type: "image", content: "https://via.placeholder.com/600x350?text=Cash+Value", defs: ["Cash Value: Built-up equity."] },
+            { title: "The Rider", text: "An add-on to a policy that provides extra benefits (like disability).", type: "image", content: "https://via.placeholder.com/600x350?text=The+Rider", defs: ["Rider: Optional add-on."] },
+            { title: "Lapse", text: "When a policy ends because premiums were not paid.", type: "image", content: "https://via.placeholder.com/600x350?text=Lapse", defs: ["Lapse: Policy termination."] },
+            { title: "Grace Period", text: "The extra time you have to pay a late premium before a lapse.", type: "video", content: "https://www.w3schools.com/html/mov_bbb.mp4", defs: ["Grace Period: Payment buffer."] }
+        ],
+        flashcards: [{ q: "What is a Rider?", a: "An optional add-on to a life insurance policy." }],
+        quiz: [
+            { q: "What is the cost of the insurance called?", options: ["Payout", "Premium", "Deduction", "Equity"], correct: 1 },
+            { q: "Who receives the money from a policy?", options: ["Underwriter", "Insurer", "Beneficiary", "Agent"], correct: 2 },
+            { q: "Which term describes risk assessment?", options: ["Underwriting", "Lapsing", "Riding", "Saving"], correct: 0 },
+            { q: "What is the extra time given to pay called?", options: ["Premium Time", "Extension", "Grace Period", "Lapse Window"], correct: 2 }
+        ]
+    },
+    "Taxes": { /* Follow the 10-page pattern here */ },
+    "Stock Market": { /* Follow the 10-page pattern here */ },
+    "Finances": { /* Follow the 10-page pattern here */ }
+};rd = document.querySelector('.flashcard');
     if(card) {
         card.onclick = () => card.classList.toggle('flipped');
     }
