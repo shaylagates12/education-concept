@@ -24,9 +24,69 @@ window.onload = () => {
             { q: "What is the extra time given to pay called?", options: ["Premium Time", "Extension", "Grace Period", "Lapse Window"], correct: 2 }
         ]
     },
-    "Taxes": { /* Follow the 10-page pattern here */ },
-    "Stock Market": { /* Follow the 10-page pattern here */ },
-    "Finances": { /* Follow the 10-page pattern here */ }
+    "Taxes": {
+    lessons: [
+        { title: "Taxable Income", text: "Your total income minus allowable deductions. This is the 'soil' your taxes grow from.", type: "image", content: "https://via.placeholder.com/600x350?text=Taxable+Income", defs: ["Taxable Income: What you actually pay tax on."] },
+        { title: "The W-2 Form", text: "A form your employer sends you that reports your annual wages and taxes withheld.", type: "image", content: "https://via.placeholder.com/600x350?text=W-2+Form", defs: ["W-2: Annual wage report."] },
+        { title: "Standard Deduction", text: "A fixed dollar amount that reduces the income you're taxed on.", type: "image", content: "https://via.placeholder.com/600x350?text=Standard+Deduction", defs: ["Standard Deduction: Automatic tax break."] },
+        { title: "Itemized Deductions", text: "Specific expenses (like medical bills) you list to lower your tax bill.", type: "image", content: "https://via.placeholder.com/600x350?text=Itemized", defs: ["Itemize: Listing specific expenses."] },
+        { title: "Tax Credit", text: "A dollar-for-dollar reduction of your actual tax bill. Very powerful!", type: "video", content: "https://www.w3schools.com/html/mov_bbb.mp4", defs: ["Tax Credit: Direct discount on taxes."] },
+        { title: "Exemption", text: "A fixed amount allowed as a deduction for yourself or dependents.", type: "image", content: "https://via.placeholder.com/600x350?text=Exemption", defs: ["Exemption: Per-person tax reduction."] },
+        { title: "Capital Gains", text: "Profit made from selling an asset like a stock or a home.", type: "image", content: "https://via.placeholder.com/600x350?text=Capital+Gains", defs: ["Capital Gain: Profit from an investment."] },
+        { title: "Audit", text: "An official inspection of your tax return by the IRS.", type: "image", content: "https://via.placeholder.com/600x350?text=Audit", defs: ["Audit: Tax review."] },
+        { title: "FICA", text: "Taxes that fund Social Security and Medicare.", type: "image", content: "https://via.placeholder.com/600x350?text=FICA", defs: ["FICA: Federal Insurance Contributions Act."] },
+        { title: "Extension", text: "Extra time granted by the IRS to file your return (usually until Oct 15).", type: "video", content: "https://www.w3schools.com/html/mov_bbb.mp4", defs: ["Extension: Filing delay."] }
+    ],
+    flashcards: [{ q: "Credit vs Deduction?", a: "Credits lower the tax bill; Deductions lower taxable income." }],
+    quiz: [
+        { q: "Which lowers your tax bill dollar-for-dollar?", options: ["Deduction", "Exemption", "Tax Credit", "Audit"], correct: 2 },
+        { q: "What form reports your annual salary?", options: ["1040", "W-2", "W-4", "1099"], correct: 1 },
+        { q: "What is FICA used for?", options: ["Highways", "Military", "Social Security", "Education"], correct: 2 },
+        { q: "A profit from selling a stock is called:", options: ["Interest", "Dividend", "Capital Gain", "Credit"], correct: 2 }
+    ]
+},
+    "Stock Market": {
+    lessons: [
+        { title: "Initial Public Offering (IPO)", text: "The first time a company sells its stock to the public.", type: "image", content: "https://via.placeholder.com/600x350?text=IPO", defs: ["IPO: Going public."] },
+        { title: "Market Capitalization", text: "The total value of all a company's shares.", type: "image", content: "https://via.placeholder.com/600x350?text=Market+Cap", defs: ["Market Cap: Company size value."] },
+        { title: "P/E Ratio", text: "Price-to-Earnings ratio. A way to see if a stock is overpriced.", type: "image", content: "https://via.placeholder.com/600x350?text=PE+Ratio", defs: ["P/E Ratio: Valuation tool."] },
+        { title: "Dividends", text: "A portion of company profits paid back to you as a shareholder.", type: "video", content: "https://www.w3schools.com/html/mov_bbb.mp4", defs: ["Dividend: Shareholder payout."] },
+        { title: "Blue Chip Stocks", text: "Stocks of large, well-established, and financially sound companies.", type: "image", content: "https://via.placeholder.com/600x350?text=Blue+Chip", defs: ["Blue Chip: Reliable, large stocks."] },
+        { title: "Bear Market", text: "A period where stock prices are falling and investors are pessimistic.", type: "image", content: "https://via.placeholder.com/600x350?text=Bear+Market", defs: ["Bear Market: Falling prices."] },
+        { title: "Bull Market", text: "A period where stock prices are rising and investors are optimistic.", type: "image", content: "https://via.placeholder.com/600x350?text=Bull+Market", defs: ["Bull Market: Rising prices."] },
+        { title: "Portfolio Diversification", text: "The practice of spreading your investments to reduce risk.", type: "image", content: "https://via.placeholder.com/600x350?text=Diversification", defs: ["Diversification: Risk spreading."] },
+        { title: "Exchange Traded Fund (ETF)", text: "A basket of stocks you can buy all at once, like a pre-made bouquet.", type: "image", content: "https://via.placeholder.com/600x350?text=ETF", defs: ["ETF: A basket of assets."] },
+        { title: "Volatility", text: "The rate at which the price of a stock increases or decreases.", type: "video", content: "https://www.w3schools.com/html/mov_bbb.mp4", defs: ["Volatility: Price swings."] }
+    ],
+    flashcards: [{ q: "What is an IPO?", a: "The first time a company offers shares to the public." }],
+    quiz: [
+        { q: "What animal represents a falling market?", options: ["Bull", "Bear", "Wolf", "Eagle"], correct: 1 },
+        { q: "A 'Blue Chip' company is:", options: ["New and risky", "Established and stable", "Failing", "Only in tech"], correct: 1 },
+        { q: "Spreading money across many stocks is:", options: ["Compounding", "Dividending", "Diversification", "Shorting"], correct: 2 },
+        { q: "The 'P' in P/E Ratio stands for:", options: ["Profit", "Price", "Principal", "Payment"], correct: 1 }
+    ]
+},
+"Finances": {
+    lessons: [
+        { title: "Net Worth", text: "Your total assets minus your total liabilities (what you own minus what you owe).", type: "image", content: "https://via.placeholder.com/600x350?text=Net+Worth", defs: ["Net Worth: Your financial value."] },
+        { title: "Compound Interest", text: "Interest earned on both the principal and the interest already accumulated.", type: "image", content: "https://via.placeholder.com/600x350?text=Compound", defs: ["Compound: Growth on growth."] },
+        { title: "Emergency Fund", text: "Money set aside for unexpected expenses like car repairs or medical bills.", type: "image", content: "https://via.placeholder.com/600x350?text=Emergency", defs: ["Emergency Fund: Safety cash."] },
+        { title: "Credit Score", text: "A number representing your creditworthiness (how likely you are to pay back a loan).", type: "video", content: "https://www.w3schools.com/html/mov_bbb.mp4", defs: ["Credit Score: Loan-worthiness."] },
+        { title: "401(k)", text: "A retirement savings plan sponsored by an employer.", type: "image", content: "https://via.placeholder.com/600x350?text=401k", defs: ["401k: Employer retirement plan."] },
+        { title: "IRA", text: "Individual Retirement Account. A tax-advantaged account for retirement.", type: "image", content: "https://via.placeholder.com/600x350?text=IRA", defs: ["IRA: Personal retirement account."] },
+        { title: "Inflation", text: "The rate at which the general level of prices for goods and services is rising.", type: "image", content: "https://via.placeholder.com/600x350?text=Inflation", defs: ["Inflation: Purchasing power loss."] },
+        { title: "Liquidity", text: "How quickly an asset can be converted into cash without losing value.", type: "image", content: "https://via.placeholder.com/600x350?text=Liquidity", defs: ["Liquidity: Access to cash."] },
+        { title: "Fixed vs. Variable Expenses", text: "Fixed (Rent) stays the same; Variable (Groceries) changes monthly.", type: "image", content: "https://via.placeholder.com/600x350?text=Expenses", defs: ["Fixed: Constant cost.", "Variable: Changing cost."] },
+        { title: "APY", text: "Annual Percentage Yield. The actual rate of return on your savings including compounding.", type: "video", content: "https://www.w3schools.com/html/mov_bbb.mp4", defs: ["APY: Real savings return."] }
+    ],
+    flashcards: [{ q: "What is Net Worth?", a: "Total assets minus total liabilities." }],
+    quiz: [
+        { q: "Which interest type grows your money fastest?", options: ["Simple", "Compound", "Fixed", "None"], correct: 1 },
+        { q: "Rent is usually what kind of expense?", options: ["Variable", "Fixed", "Discretionary", "Sudden"], correct: 1 },
+        { q: "What is the safety cash for surprises called?", options: ["Retirement", "Emergency Fund", "Asset", "Dividend"], correct: 1 },
+        { q: "What does APY measure?", options: ["Credit Score", "Investment Risk", "Savings Return", "Tax Rate"], correct: 2 }
+    ]
+}
 };rd = document.querySelector('.flashcard');
     if(card) {
         card.onclick = () => card.classList.toggle('flipped');
