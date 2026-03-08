@@ -1,6 +1,10 @@
 :root {
-    --earth: #3d2b1f; --leaf: #2d5a27; --wasabi: #a8b59d;
-    --paper: #fdfaf0; --gold: #d4af37; --accent: #bb6830;
+    --caramel-powder: #EDBA97;
+    --orange-luster: #E17426;
+    --persian-plum: #701B15;
+    --aspiring-blue: #A4C0C1;
+    --midnight-green: #0A4152;
+    --parchment: #fffef0;
 }
 
 body { margin: 0; font-family: 'Libre Baskerville', serif; background: #f4f1ea; color: var(--earth); }
@@ -122,4 +126,41 @@ textarea { width: 100%; height: 120px; font-family: 'Caveat', cursive; font-size
 
 .journey-btn:active {
     transform: translateY(0);
+}
+.flashcard-inner {
+    width: 100%;
+    height: 300px;
+    transition: 0.6s;
+    transform-style: preserve-3d;
+}
+
+.front, .back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+    border: 2px solid rgba(0,0,0,0.1);
+    /* The Floral Background Effect */
+    background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), 
+                      url('flashcards.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Specific Deck Colors based on your palette */
+.deck-life-insurance .front { background-color: var(--caramel-powder); }
+.deck-taxes .front { background-color: var(--orange-luster); color: white; }
+.deck-stocks .front { background-color: var(--persian-plum); color: white; }
+.deck-finances .front { background-color: var(--midnight-green); color: white; }
+
+.back {
+    transform: rotateY(180deg);
+    background-color: var(--parchment);
+    color: var(--midnight-green);
 }
