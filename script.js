@@ -1,4 +1,10 @@
-
+function enterGarden() {
+    // Hide welcome, show app
+    document.getElementById('welcome-screen').classList.remove('active');
+    document.getElementById('welcome-screen').style.display = 'none';
+    document.getElementById('app-shell').style.display = 'flex';
+    console.log("Entering the Garden...");
+}
 // 1. NAVIGATION & INITIALIZATION
 window.onload = () => {
     console.log("Financial Garden Loaded.");
