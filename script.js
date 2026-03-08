@@ -1,3 +1,4 @@
+// --- DATA: The "Seeds" of knowledge ---
 const subjectData = {
     "Life Insurance": {
         lessons: [
@@ -73,9 +74,6 @@ const subjectData = {
         quiz: [{ q: "When should you start saving?", options: ["When I'm 40", "As early as possible"], correct: 1 }]
     }
 };
-// --- DATA: The "Seeds" of knowledge ---
-    }
-};
 
 let currentSubject = "";
 let currentLessonIndex = 0;
@@ -83,7 +81,6 @@ let currentLessonIndex = 0;
 // 1. NAVIGATION & INITIALIZATION
 window.onload = () => {
     console.log("Financial Garden Loaded.");
-    // Add click listener to flashcard for flipping
     const card = document.querySelector('.flashcard');
     if(card) {
         card.onclick = () => card.classList.toggle('flipped');
@@ -137,7 +134,7 @@ function drop(e) {
 
 // 3. LESSON & PROGRESS ENGINE
 function loadLesson(name, index = 0) {
-    saveNotes(); // Save what you were writing
+    saveNotes(); 
     currentSubject = name;
     currentLessonIndex = index;
     
@@ -145,7 +142,6 @@ function loadLesson(name, index = 0) {
     if (!subject) return;
     const data = subject.lessons[index];
 
-    // Update Text & Media
     document.getElementById('lesson-title').innerText = data.title;
     document.getElementById('lesson-text').innerText = data.text;
     const mc = document.getElementById('media-container');
@@ -153,19 +149,28 @@ function loadLesson(name, index = 0) {
         ? `<video controls width="100%"><source src="${data.content}" type="video/mp4"></video>` 
         : `<img src="${data.content}" style="width:100%">`;
 
-    // Update Definitions
     const dl = document.getElementById('definitions-list');
     dl.innerHTML = "";
     data.defs.forEach(d => dl.innerHTML += `<li>${d}</li>`);
 
-    // Update Progress Vine
-    const progressPercent = ((index + 1) / subject.lessons.length) * 100;
-    document.getElementById('progress-vine').style.width = progressPercent + "%";
-    document.querySelector('.vine-leaf').style.left = `calc(${progressPercent}% - 10px)`;
-
+    updateProgress(name, index);
     loadNotes(name);
-    loadHarvest(name); // Update Flashcards & Quiz
+    loadHarvest(name); 
     showPage('lesson-page');
+}
+
+function updateProgress(name, index) {
+    const subject = subjectData[name];
+    if (!subject) return;
+
+    const progressPercent = ((index + 1) / subject.lessons.length) * 100;
+    const vine = document.getElementById('progress-vine');
+    const leaf = document.querySelector('.vine-leaf');
+    
+    if (vine && leaf) {
+        vine.style.width = progressPercent + "%";
+        leaf.style.left = `calc(${progressPercent}% - 12px)`;
+    }
 }
 
 // 4. FLASHCARDS & QUIZ (THE HARVEST)
@@ -177,40 +182,21 @@ function loadHarvest(name) {
 
     if (!data || !data.flashcards) return;
 
-    // Reset Classes & Apply Theme
     cardContainer.className = 'flashcard'; 
     if (name === "Life Insurance") cardContainer.classList.add('deck-life-insurance');
     else if (name === "Taxes") cardContainer.classList.add('deck-taxes');
     else if (name === "Stock Market") cardContainer.classList.add('deck-stocks');
     else cardContainer.classList.add('deck-finances');
 
-    // Update Card Content
     front.innerHTML = `<h3>${data.flashcards[0].q}</h3><p style="font-size: 0.8rem; opacity: 0.7;">Click to Flip</p>`;
     back.innerHTML = `<h4>Definition:</h4><p>${data.flashcards[0].a}</p>`;
 
-    // Update Quiz
     const quiz = data.quiz[0];
     document.getElementById('quiz-question').innerText = quiz.q;
     const options = document.getElementById('quiz-options');
     options.innerHTML = "";
     quiz.options.forEach((opt, i) => {
         options.innerHTML += `<button class="journey-btn" onclick="checkQuiz(${i}, ${quiz.correct})">${opt}</button>`;
-        function updateProgress(name, index) {
-    const subject = subjectData[name];
-    if (!subject) return;
-
-    // The math: (current position / total steps) * 100
-    const progressPercent = ((index + 1) / subject.lessons.length) * 100;
-    
-    const vine = document.getElementById('progress-vine');
-    const leaf = document.querySelector('.vine-leaf');
-    
-    if (vine && leaf) {
-        vine.style.width = progressPercent + "%";
-        // calc helps keep the leaf centered on the edge of the bar
-        leaf.style.left = `calc(${progressPercent}% - 12px)`;
-    }
-}
     });
 }
 
