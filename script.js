@@ -144,6 +144,24 @@ function loadHarvest(name) {
     options.innerHTML = "";
     quiz.options.forEach((opt, i) => {
         options.innerHTML += `<button onclick="checkQuiz(${i}, ${quiz.correct})">${opt}</button>`;
+        function loadHarvest(name) {
+    const data = subjectData[name];
+    const cardContainer = document.querySelector('.flashcard');
+    const front = document.getElementById('card-front');
+    const back = document.getElementById('card-back');
+
+    if (!data || !data.flashcards) return;
+
+    // Reset Classes and apply the specific deck theme
+    cardContainer.className = 'flashcard'; // Reset
+    if (name === "Life Insurance") cardContainer.classList.add('deck-life-insurance');
+    if (name === "Taxes") cardContainer.classList.add('deck-taxes');
+    if (name === "Stock Market") cardContainer.classList.add('deck-stocks');
+
+    // Set text from your Subject Data
+    front.innerHTML = `<h3>${data.flashcards[0].q}</h3>`;
+    back.innerHTML = `<p>${data.flashcards[0].a}</p>`;
+}
     });
 }
 
