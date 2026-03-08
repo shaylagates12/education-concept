@@ -4,22 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seedling | My Learning Garden</title>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Caveat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Caveat&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
- <section id="welcome-screen" class="active">
+<section id="welcome-screen" class="active">
     <div class="trail-path-container">
-        <div class="foreground-flowers"></div>
-        
         <div class="welcome-box crystal-frosted">
             <h1 class="seedling-logo">Seedling</h1>
-            
             <p class="objective-text">
                 Reach higher with structured growth! We believe independent learning should be as natural as planting a garden. Seedling guides your ascent with easy, managing steps for lasting mastery.
             </p>
-
             <button class="welcome-btn gold-seedling-pin" onclick="enterGarden()">
                 Welcome <span class="sprout-icon">🌱</span>
             </button>
@@ -27,104 +23,87 @@
     </div>
 </section>
 
-    <div id="app-shell" style="display:none;">
-        <aside class="sidebar">
-            <div class="logo">🌱</div>
-            <nav>
-                <button onclick="showPage('lesson-page')" title="Lessons">📖</button>
-                <button onclick="showPage('kanban-page')" title="My Garden">🏡</button>
-                <button onclick="showPage('quiz-page')" title="Harvest Quiz">🍎</button>
-            </nav>
-            <div id="rank-badge">Novice</div>
-        </aside>
+<div id="app-shell" style="display:none;">
+    <aside class="sidebar">
+        <div class="logo">🌱</div>
+        <nav>
+            <button onclick="showPage('lesson-page')" title="Lessons">📖</button>
+            <button onclick="showPage('kanban-page')" title="My Garden">🏡</button>
+            <button onclick="showPage('quiz-page')" title="Harvest Quiz">🍎</button>
+        </nav>
+        <div id="rank-badge">Novice</div>
+    </aside>
 
-        <main class="content-area">
-            <section id="lesson-page" class="page active">
-                <div class="lesson-grid">
-                    <div class="media-frame">
-                        <div class="progress-container">
-    <div id="progress-vine" class="vine-bar"></div>
-    <div class="vine-leaf">🍃</div>
+    <main class="content-area">
+        <section id="lesson-page" class="page active">
+            <div class="lesson-grid">
+                <div class="media-frame">
+                    <div class="progress-container">
+                        <div id="progress-vine" class="vine-bar"></div>
+                        <div class="vine-leaf">🍃</div>
+                    </div>
+                    <h2 id="lesson-title">Select a Subject to Begin</h2>
+                    <div id="media-container" class="media-placeholder">
+                        <p>Pick a card from "The Packet" in your Garden to start learning.</p>
+                    </div>
+                    <div id="lesson-text" class="parchment"></div>
+                    <div id="definitions-box" class="tool-box" style="display:none;">
+                        <h4>Seedling Definitions</h4>
+                        <ul id="definitions-list"></ul>
+                    </div>
+                </div>
+                
+                <aside class="lesson-sidebar">
+                    <div class="tool-box">
+                        <h4>Field Notes</h4>
+                        <textarea id="field-notes" placeholder="Write your thoughts here..."></textarea>
+                    </div>
+                    <div class="tool-box">
+                        <h4>Ask Pip</h4>
+                        <div id="chat-display"></div>
+                        <div class="chat-input">
+                            <input type="text" id="pip-input" placeholder="Ask Pip...">
+                            <button onclick="askPip()">➔</button>
+                        </div>
+                    </div>
+                    <button id="next-lesson-btn" class="vintage-btn journey-btn" onclick="nextLesson()">
+                        Next Lesson ➔
+                    </button>
+                </aside>
+            </div>
+        </section>
+
+        <section id="kanban-page" class="page">
+            <div class="kanban-header">
+                <h2>The Drawing Board</h2>
+                <input type="text" id="new-subject" placeholder="New subject name...">
+                <button onclick="plantSeed()" class="journey-btn">Plant Seed</button>
+            </div>
+            <div class="garden-board">
+                <div class="col" id="todo" ondrop="drop(event)" ondragover="allow(event)"><h3>The Packet</h3><div class="zone"></div></div>
+                <div class="col" id="doing" ondrop="drop(event)" ondragover="allow(event)"><h3>Sprouting</h3><div class="zone"></div></div>
+                <div class="col" id="done" ondrop="drop(event)" ondragover="allow(event)"><h3>Blooming</h3><div class="zone"></div></div>
+            </div>
+        </section>
+
+        <section id="quiz-page" class="page">
+            <h2>Harvest Time: Flashcards & Quizzes</h2>
+            <div class="quiz-container">
+                <div class="flashcard">
+                    <div class="flashcard-inner" onclick="this.parentElement.classList.toggle('flipped')">
+                        <div class="front" id="card-front"></div>
+                        <div class="back" id="card-back"></div>
+                    </div>
+                </div>
+                <div id="quiz-box" class="parchment">
+                    <h3 id="quiz-question">Question will appear here</h3>
+                    <div id="quiz-options"></div>
+                </div>
+            </div>
+        </section>
+    </main>
 </div>
-<h2 id="lesson-title">Select a Subject to Begin</h2>
-                        <h2 id="lesson-title">Select a Subject to Begin</h2>
-                        <div id="media-container" class="media-placeholder">
-                            <p>Pick a card from "The Packet" in your Garden to start learning.</p>
-                        </div>
-                        <div id="lesson-text" class="parchment"></div>
-                        <div id="definitions-box" class="tool-box" style="display:none;">
-                            <h4>Seedling Definitions</h4>
-                            <ul id="definitions-list"></ul>
-                        </div>
-                    </div>
-                    
-                    <aside class="lesson-sidebar">
-                        <div class="tool-box">
-                            <h4>Field Notes</h4>
-                            <textarea id="field-notes" placeholder="Write your thoughts here..."></textarea>
-                        </div>
-                        <div class="tool-box">
-                            <h4>Ask Pip</h4>
-                            <div id="chat-display"></div>
-                            <div class="chat-input">
-                                <input type="text" id="pip-input" placeholder="Ask Pip...">
-                                <button onclick="askPip()">➔</button>
-                                <aside class="lesson-sidebar">
-    <div class="tool-box">
-        <h4>Field Notes</h4>
-        <textarea id="field-notes" placeholder="Write your thoughts here..."></textarea>
-    </div>
-    
-    <div class="tool-box">
-        <h4>Ask Pip</h4>
-        <div id="chat-display"></div>
-        <div class="chat-input">
-            <input type="text" id="pip-input" placeholder="Ask Pip...">
-            <button onclick="askPip()">➔</button>
-        </div>
-    </div>
 
-    <button id="next-lesson-btn" class="vintage-btn journey-btn" onclick="nextLesson()">
-        Next Lesson ➔
-    </button>
-</aside>
-                            </div>
-                        </div>
-                    </aside>
-                </div>
-            </section>
-
-            <section id="kanban-page" class="page">
-                <div class="kanban-header">
-                    <h2>The Drawing Board</h2>
-                    <input type="text" id="new-subject" placeholder="New subject name...">
-                    <button onclick="plantSeed()">Plant Seed</button>
-                </div>
-                <div class="garden-board">
-                    <div class="col" id="todo" ondrop="drop(event)" ondragover="allow(event)"><h3>The Packet</h3><div class="zone"></div></div>
-                    <div class="col" id="doing" ondrop="drop(event)" ondragover="allow(event)"><h3>Sprouting</h3><div class="zone"></div></div>
-                    <div class="col" id="done" ondrop="drop(event)" ondragover="allow(event)"><h3>Blooming</h3><div class="zone"></div></div>
-                </div>
-            </section>
-
-            <section id="quiz-page" class="page">
-                <h2>Harvest Time: Flashcards & Quizzes</h2>
-                <div class="quiz-container">
-                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
-                        <div class="flashcard-inner">
-                            <div class="front" id="card-front">Click to start flashcards</div>
-                            <div class="back" id="card-back">Flip for answer</div>
-                        </div>
-                    </div>
-                    <div id="quiz-box" class="parchment">
-                        <h3 id="quiz-question">Question will appear here</h3>
-                        <div id="quiz-options"></div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
