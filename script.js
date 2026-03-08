@@ -1,48 +1,79 @@
-// --- DATA: The "Seeds" of knowledge ---
 const subjectData = {
     "Life Insurance": {
-        lessons: [{ 
-            title: "Protecting the Future", 
-            text: "Life insurance is a contract between an insurer and a policy owner. It guarantees payment of a death benefit to beneficiaries.", 
-            type: "image", 
-            content: "https://via.placeholder.com/600x350?text=Term+vs+Whole+Life+Chart", 
-            defs: ["Premium", "Beneficiary", "Underwriting"] 
-        }],
-        flashcards: [{ q: "What is a 'Premium'?", a: "The amount you pay periodically to keep the policy active." }],
-        quiz: [{ q: "Which type of insurance usually only lasts for a specific period?", options: ["Whole Life", "Term Life"], correct: 1 }]
+        lessons: [
+            { 
+                title: "The Safety Net", 
+                text: "Life insurance provides a financial payout to beneficiaries upon the death of the insured. It is the foundation of a protective financial plan.", 
+                type: "image", 
+                content: "https://via.placeholder.com/600x350?text=Life+Insurance+Basics", 
+                defs: ["Policy: The contract.", "Premium: The cost."] 
+            },
+            { 
+                title: "Term vs. Whole Life", 
+                text: "Term insurance covers you for a specific period (e.g., 20 years), while Whole Life is permanent and can build cash value.", 
+                type: "image", 
+                content: "https://via.placeholder.com/600x350?text=Term+vs+Whole+Comparison", 
+                defs: ["Cash Value: An investment component.", "Term: The duration."] 
+            }
+        ],
+        flashcards: [{ q: "What is a 'Beneficiary'?", a: "The person or entity designated to receive the death benefit." }],
+        quiz: [{ q: "Which policy builds cash value?", options: ["Term Life", "Whole Life"], correct: 1 }]
     },
     "Taxes": {
-        lessons: [{ 
-            title: "Understanding the Tax Bracket", 
-            text: "A progressive tax system means your tax rate increases as your taxable amount increases.", 
-            type: "image", 
-            content: "https://via.placeholder.com/600x350?text=Tax+Bracket+Visualization", 
-            defs: ["Deduction", "Credit", "Taxable Income"] 
-        }],
-        flashcards: [{ q: "What is a Tax Deduction?", a: "An amount that lowers your overall taxable income." }],
-        quiz: [{ q: "Which is more valuable?", options: ["$1,000 Deduction", "$1,000 Credit"], correct: 1 }]
+        lessons: [
+            { 
+                title: "Tax Brackets 101", 
+                text: "The US uses a progressive tax system. You only pay higher rates on the dollars within that specific bracket.", 
+                type: "image", 
+                content: "https://via.placeholder.com/600x350?text=Tax+Bracket+Flow", 
+                defs: ["Progressive Tax: Higher income = higher rate.", "Marginal Rate: The tax on your last dollar."] 
+            },
+            { 
+                title: "Deductions & Credits", 
+                text: "Deductions lower your taxable income; Credits lower your actual tax bill dollar-for-dollar.", 
+                type: "image", 
+                content: "https://via.placeholder.com/600x350?text=Deductions+vs+Credits", 
+                defs: ["Standard Deduction: A flat reduction.", "Tax Credit: A direct discount on tax owed."] 
+            }
+        ],
+        flashcards: [{ q: "Which is more powerful?", a: "A Tax Credit, because it reduces your bill directly." }],
+        quiz: [{ q: "What does a deduction do?", options: ["Lowers taxable income", "Reduces tax bill directly"], correct: 0 }]
     },
     "Stock Market": {
-        lessons: [{ 
-            title: "The Engine of Growth", 
-            text: "Stocks represent ownership in a corporation. When the company grows, your share value often grows with it.", 
-            type: "video", 
-            content: "https://www.w3schools.com/html/mov_bbb.mp4", 
-            defs: ["Dividend", "Bull Market", "Volatility"] 
-        }],
-        flashcards: [{ q: "What is a Dividend?", a: "A portion of company earnings paid out to shareholders." }],
-        quiz: [{ q: "What do we call a market where prices are rising?", options: ["Bear Market", "Bull Market"], correct: 1 }]
+        lessons: [
+            { 
+                title: "Buying Ownership", 
+                text: "A stock is a share of ownership in a company. You profit through price appreciation or dividends.", 
+                type: "video", 
+                content: "https://www.w3schools.com/html/mov_bbb.mp4", 
+                defs: ["Ticker Symbol: A unique code (e.g., AAPL).", "Equity: Ownership value."] 
+            },
+            { 
+                title: "Market Cycles", 
+                text: "Markets fluctuate. A 'Bull' market is charging up, while a 'Bear' market is hibernating or falling.", 
+                type: "image", 
+                content: "https://via.placeholder.com/600x350?text=Bull+vs+Bear+Market", 
+                defs: ["Volatility: How fast prices change.", "Diversification: Spreading risk."] 
+            }
+        ],
+        flashcards: [{ q: "What is a Dividend?", a: "A reward paid to shareholders from company profits." }],
+        quiz: [{ q: "What animal represents a rising market?", options: ["Bear", "Bull"], correct: 1 }]
     },
     "Finances": {
-        lessons: [{ 
-            title: "The Power of Compounding", 
-            text: "Compound interest is interest calculated on the initial principal, including accumulated interest.", 
-            type: "image", 
-            content: "https://via.placeholder.com/600x350?text=Compound+Interest+Curve", 
-            defs: ["Principal", "APY", "Liquidity"] 
-        }],
-        flashcards: [{ q: "What is the 50/30/20 rule?", a: "50% Needs, 30% Wants, 20% Savings." }],
-        quiz: [{ q: "What is an Emergency Fund?", a: "3-6 months of expenses saved for surprises." }]
+        lessons: [
+            { 
+                title: "The Magic of Compounding", 
+                text: "Compound interest is when you earn interest on your interest. Time is your greatest asset here.", 
+                type: "image", 
+                content: "https://via.placeholder.com/600x350?text=Compound+Interest+Graph", 
+                defs: ["Principal: Original investment.", "APY: Annual Percentage Yield."] 
+            }
+        ],
+        flashcards: [{ q: "What is Liquidity?", a: "How quickly you can turn an asset into cash." }],
+        quiz: [{ q: "When should you start saving?", options: ["When I'm 40", "As early as possible"], correct: 1 }]
+    }
+};
+// --- DATA: The "Seeds" of knowledge ---
     }
 };
 
