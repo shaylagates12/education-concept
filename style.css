@@ -1,364 +1,65 @@
 :root {
-    /* Financial Opaque Palette */
-    --caramel-powder: #EDBA97;
     --orange-luster: #E17426;
-    --persian-plum: #701B15;
-    --aspiring-blue: #A4C0C1;
     --midnight-green: #0A4152;
-    --parchment: #fffef0;
-    
-    /* Garden Theme Basics */
-    --earth: #3d2b1f;
-    --leaf: #2d5a27;
-    --wasabi: #a8b59d;
     --gold: #d4af37;
-    --paper: #fdfaf0;
-    --accent: #bb6830;
+    --leaf: #2d5a27;
 }
 
-body { 
-    margin: 0; 
-    font-family: 'Libre Baskerville', serif; 
-    background: #f4f1ea; 
-    color: var(--earth); 
-}
+body { margin: 0; font-family: 'Libre Baskerville', serif; background: #f4f1ea; }
 
-/* 1. OVERLAYS & NAVIGATION */
-.overlay { 
-    position: fixed; 
-    inset: 0; 
-    background: var(--leaf); 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    z-index: 1000; 
-}
-
-.vintage-frame { 
-    border: 15px solid var(--gold); 
-    background: var(--paper); 
-    padding: 40px; 
-    text-align: center; 
-    border-radius: 8px; 
-    box-shadow: 0 20px 50px rgba(0,0,0,0.4); 
-}
-
-#app-shell { display: flex; height: 100vh; }
-
-.content-area { flex: 1; padding: 30px; overflow-y: auto; }
-.page { display: none; }
-.page.active { display: block; }
-
-/* 2. LIFTING EFFECTS (Toolboxes & Buttons) */
-.tool-box, .journey-btn {
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
-                box-shadow 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.tool-box:hover, .journey-btn:hover {
-    transform: translateY(-5px); /* The Lift */
-    box-shadow: 0 12px 20px rgba(0,0,0,0.15); 
-}
-
-/* 3. PROGRESS VINE STYLING */
-.progress-container {
-    width: 100%;
-    height: 10px;
-    background: #e0eadd;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    position: relative;
-    overflow: visible;
-}
-
-.vine-bar {
-    width: 0%; 
-    height: 100%;
-    background: var(--leaf);
-    border-radius: 10px;
-    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.vine-leaf {
-    position: absolute;
-    top: -10px;
-    left: 0%; 
-    transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    font-size: 1.2rem;
-}
-
-/* 4. LESSON LAYOUT */
-.lesson-grid { display: grid; grid-template-columns: 1fr 350px; gap: 30px; }
-
-.media-placeholder {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto 20px auto;
-    background: #000;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    min-height: 300px;
+/* COVER PAGE STYLE */
+#welcome-screen {
+    height: 100vh;
+    background: url('cover page.jpg') no-repeat center center;
+    background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.media-placeholder video, 
-.media-placeholder img { width: 100%; height: auto; display: block; }
-
-.parchment { 
-    background: var(--paper); 
-    padding: 25px; 
-    border: 1px solid #ddd; 
-    border-radius: 5px; 
-    line-height: 1.6; 
-}
-
-.tool-box { 
-    background: white; 
-    padding: 15px; 
-    border-radius: 8px; 
-    margin-bottom: 20px; 
-}
-
-textarea { 
-    width: 100%; 
-    height: 120px; 
-    font-family: 'Caveat', cursive; 
-    font-size: 1.4rem; 
-    border: none; 
-    background: #fffde7; 
-}
-
-/* 5. KANBAN GARDEN */
-.garden-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.col { background: rgba(0,0,0,0.03); border: 2px dashed var(--wasabi); border-radius: 15px; min-height: 500px; padding: 15px; }
-.card { 
-    background: #fff9c4; 
-    padding: 15px; 
-    margin: 10px 0; 
-    border-radius: 4px; 
-    cursor: grab; 
-    font-family: 'Caveat', cursive; 
-    font-size: 1.2rem; 
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.1); 
-}
-
-/* 6. FLASHCARDS (Art Nouveau Edition) */
-.flashcard { 
-    width: 100%; 
-    height: 350px; 
-    perspective: 1000px; 
-    margin-bottom: 30px; 
-    cursor: pointer; 
-}
-
-.flashcard-inner { 
-    position: relative; 
-    width: 100%; 
-    height: 100%; 
-    transition: 0.6s; 
-    transform-style: preserve-3d; 
-}
-
-.flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
-
-.front, .back { 
-    position: absolute; 
-    inset: 0; 
-    backface-visibility: hidden; 
-    border: 4px solid var(--gold); 
-    border-radius: 15px; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center; 
-    padding: 20px; 
+.crystal-frosted {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 24px;
+    padding: 3rem;
     text-align: center;
-    background-size: cover;
-    background-position: center;
+    max-width: 600px;
 }
 
-.front {
-    /* Faded floral overlay */
-    background-image: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), 
-                      url('flashcards.jpg');
-}
+.seedling-logo { font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--midnight-green); }
 
-/* Deck Colors Blending */
-.deck-life-insurance .front { background-color: var(--caramel-powder); }
-.deck-taxes .front { background-color: var(--orange-luster); color: white; }
-.deck-stocks .front { background-color: var(--persian-plum); color: white; }
-.deck-finances .front { background-color: var(--midnight-green); color: white; }
-
-.back { 
-    transform: rotateY(180deg); 
-    background-color: var(--parchment); 
-    color: var(--midnight-green); 
-    font-size: 1.1rem;
-}
-
-/* 7. UI ELEMENTS */
-#definitions-box { border-left: 5px solid var(--gold); background: #fdfaf0; margin-top: 20px; }
-#definitions-list li { margin-bottom: 10px; font-style: italic; }
-
-.journey-btn {
-    width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    background-color: var(--leaf);
-    color: white;
-    border: 2px solid var(--gold);
-    border-radius: 5px;
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1rem;
-    cursor: pointer;
-}
-/* 1. The Base Card: Links your uploaded 'flashcards.jpg' */
-.flashcard {
-    position: relative;
-    background-image: url('flashcards.jpg'); 
-    background-size: cover;
-    background-position: center;
-    border: 8px double #d4af37; /* The Gold Art Nouveau frame */
-    border-radius: 15px;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-}
-
-/* 2. The Reveal Effect: Art fades in when you look at it */
-.flashcard .art-overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    opacity: 0.7; /* Start slightly faded */
-    transition: opacity 0.5s ease;
-}
-
-.flashcard:hover .art-overlay {
-    opacity: 1; /* Art becomes vibrant on hover */
-}
-
-/* 3. Color Overlays: Tints based on your 'New #5.jpg' palette */
-.deck-life-insurance .art-overlay { background-color: #A4C0C1; } /* Aspiring Blue */
-.deck-taxes .art-overlay          { background-color: #E17426; } /* Orange Luster */
-.deck-stocks .art-overlay         { background-color: #701B15; } /* Persian Plum */
-.deck-finances .art-overlay       { background-color: #0A4152; } /* Midnight Green */
-
-/* 4. Text Safety: Keeps vocab words visible over the art */
-.flashcard h3, .flashcard h4, .flashcard p {
-    position: relative;
-    z-index: 2;
-    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.9); /* Makes text "pop" */
-}
-/* The Vine's "Crawl" Animation */
-#progress-vine {
-    height: 100%;
-    background: linear-gradient(90deg, #2d5a27, #4e9344); /* Forest green gradient */
-    width: 0%; /* Starts at 0 */
-    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth, organic growth speed */
-    box-shadow: 0 0 10px rgba(78, 147, 68, 0.5);
-    border-radius: 10px;
-}
-
-/* The Leaf's "Wiggle" Animation */
-.vine-leaf {
-    position: absolute;
-    top: -10px;
-    font-size: 24px;
-    transition: left 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-    animation: leaf-sway 3s ease-in-out infinite; /* Constant gentle swaying */
-    z-index: 5;
-}
-
-@keyframes leaf-sway {
-    0%, 100% { transform: rotate(-5deg) translateY(0); }
-    50% { transform: rotate(15deg) translateY(-2px); }
-}
-/* 1. THE SPROUT’S TRAIL BACKGROUND DEPTH */
-#welcome-screen {
-    background: linear-gradient(#f7f1e3, #fffbef); /* The sky/parchment base */
-    overflow: hidden;
-}
-
-.trail-background {
-    position: absolute;
-    inset: 0;
-    /* Use image_12.png's deep path, set as cover */
-    background-image: url('path_to_sprout_trail.png'); 
-    background-size: cover;
-    background-position: center;
-    transform: translateZ(0); /* Optimized for scrolling */
-}
-
-/* Foreground Wildflower Bokeh Effect from image_12.png */
-.blurry-wildflowers {
-    position: absolute;
-    bottom: -50px;
-    left: 0;
-    width: 100%;
-    height: 150px;
-    background-image: url('wildflower_bokeh.png'); /* The blurred poppies/wildflowers */
-    background-size: contain;
-    background-repeat: no-repeat;
-    filter: blur(8px); /* Depth of field */
-    opacity: 0.8;
-    z-index: 2;
-}
-
-/* 2. THE CRYSTAL CONTENT OVERLAY */
-.welcome-content.crystal-overlay {
-    position: relative;
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(10px); /* The frosted crystal look from image_12.png */
-    border: 3px solid rgba(10, 65, 82, 0.3); /* Midnight Green #0A4152 tint */
-    border-radius: 20px;
-    padding: 40px;
-    max-width: 500px;
-    z-index: 5;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-}
-
-.objective-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: var(--midnight-green);
-    margin-bottom: 30px;
-    text-shadow: 1px 1px 1px rgba(255,255,255,0.7);
-}
-
-/* 3. THE GOLD SEEDLING PIN BUTTON */
 .gold-seedling-pin {
-    background-color: var(--orange-luster); /* #E17426 */
+    background: var(--orange-luster);
     color: white;
-    border: 3px solid var(--gold); /* #d4af37 */
-    border-radius: 50px; /* Fully rounded 'pin' shape */
-    padding: 12px 30px;
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.1rem;
+    border: 3px solid var(--gold);
+    padding: 15px 40px;
+    border-radius: 50px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    font-size: 1.2rem;
 }
 
-.gold-seedling-pin:hover {
-    background-color: var(--accent); /* #bb6830 */
-    transform: translateY(-3px) scale(1.03); /* The pop effect */
-    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-}
+/* APP SHELL & SIDEBAR */
+#app-shell { display: flex; height: 100vh; }
+.sidebar { width: 80px; background: var(--midnight-green); display: flex; flex-direction: column; align-items: center; padding: 20px 0; }
+.sidebar button { background: none; border: none; font-size: 2rem; margin: 20px 0; cursor: pointer; }
 
-.sprout-icon {
-    font-size: 1.4rem;
-    transform: scale(0); /* Icon is invisible by default */
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
+/* VINE PROGRESS */
+.progress-container { width: 100%; height: 10px; background: #e0eadd; border-radius: 10px; position: relative; margin-bottom: 20px; }
+.vine-bar { height: 100%; background: var(--leaf); width: 0%; transition: width 0.8s; border-radius: 10px; }
+.vine-leaf { position: absolute; top: -10px; transition: left 0.8s; }
 
-.gold-seedling-pin:hover .sprout-icon {
-    transform: scale(1); /* Sprout "grows" on hover */
-}
+/* KANBAN */
+.garden-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.col { background: rgba(0,0,0,0.03); border: 2px dashed #a8b59d; border-radius: 15px; min-height: 400px; padding: 15px; }
+.zone { min-height: 350px; }
+.card { background: #fff9c4; padding: 15px; margin: 10px 0; border-radius: 8px; cursor: pointer; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+
+/* FLASHCARDS */
+.flashcard { width: 100%; height: 300px; perspective: 1000px; }
+.flashcard-inner { position: relative; width: 100%; height: 100%; transition: 0.6s; transform-style: preserve-3d; }
+.flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+.front, .back { position: absolute; inset: 0; backface-visibility: hidden; border: 4px solid var(--gold); border-radius: 15px; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.back { transform: rotateY(180deg); background: #fffef0; }
+
+.journey-btn { width: 100%; padding: 12px; background: var(--leaf); color: white; border: 2px solid var(--gold); cursor: pointer; margin-top: 10px; }
