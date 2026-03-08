@@ -195,6 +195,22 @@ function loadHarvest(name) {
     options.innerHTML = "";
     quiz.options.forEach((opt, i) => {
         options.innerHTML += `<button class="journey-btn" onclick="checkQuiz(${i}, ${quiz.correct})">${opt}</button>`;
+        function updateProgress(name, index) {
+    const subject = subjectData[name];
+    if (!subject) return;
+
+    // The math: (current position / total steps) * 100
+    const progressPercent = ((index + 1) / subject.lessons.length) * 100;
+    
+    const vine = document.getElementById('progress-vine');
+    const leaf = document.querySelector('.vine-leaf');
+    
+    if (vine && leaf) {
+        vine.style.width = progressPercent + "%";
+        // calc helps keep the leaf centered on the edge of the bar
+        leaf.style.left = `calc(${progressPercent}% - 12px)`;
+    }
+}
     });
 }
 
