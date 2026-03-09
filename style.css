@@ -3,84 +3,110 @@
     --midnight-green: #0A4152;
     --gold: #d4af37;
     --leaf: #2d5a27;
+    --parchment: #fdfaf0;
 }
 
-body { margin: 0; font-family: 'Libre Baskerville', serif; background: #f4f1ea; }
+body { 
+    margin: 0; 
+    font-family: 'Libre Baskerville', serif; 
+    background: #f4f1ea; 
+    overflow: hidden; 
+}
 
-/* COVER PAGE STYLE */
+/* 1. CRYSTAL WELCOME SCREEN */
 #welcome-screen {
     height: 100vh;
-    background: url('cover page.jpg') no-repeat center center;
-    background-size: cover;
+    background: url('cover page.jpg') no-repeat center center/cover;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: fixed;
+    width: 100%;
+    z-index: 100;
 }
 
 .crystal-frosted {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(12px);
-    border: 2px solid rgba(255, 255, 255, 0.4);
-    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
     padding: 3rem;
     text-align: center;
-    max-width: 600px;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
-.seedling-logo { font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--midnight-green); }
+.seedling-logo { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--midnight-green); margin-bottom: 10px; }
 
 .gold-seedling-pin {
     background: var(--orange-luster);
     color: white;
-    border: 3px solid var(--gold);
-    padding: 15px 40px;
+    border: 2px solid var(--gold);
+    padding: 12px 35px;
     border-radius: 50px;
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    transition: transform 0.2s;
+}
+.gold-seedling-pin:hover { transform: scale(1.05); }
+
+/* 2. APP SHELL LAYOUT */
+#app-shell { display: flex; height: 100vh; width: 100%; }
+
+.sidebar { 
+    width: 80px; 
+    background: var(--midnight-green); 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    padding: 20px 0;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.2);
 }
 
-/* APP SHELL & SIDEBAR */
-#app-shell { display: flex; height: 100vh; }
-.sidebar { width: 80px; background: var(--midnight-green); display: flex; flex-direction: column; align-items: center; padding: 20px 0; }
-.sidebar button { background: none; border: none; font-size: 2rem; margin: 20px 0; cursor: pointer; }
+.sidebar button { 
+    background: none; 
+    border: none; 
+    font-size: 1.8rem; 
+    margin: 15px 0; 
+    cursor: pointer; 
+    filter: grayscale(1);
+    transition: 0.3s;
+}
+.sidebar button:hover { filter: grayscale(0); transform: translateY(-3px); }
 
-/* VINE PROGRESS */
-.progress-container { width: 100%; height: 10px; background: #e0eadd; border-radius: 10px; position: relative; margin-bottom: 20px; }
-.vine-bar { height: 100%; background: var(--leaf); width: 0%; transition: width 0.8s; border-radius: 10px; }
-.vine-leaf { position: absolute; top: -10px; transition: left 0.8s; }
+.content-area { flex: 1; padding: 40px; overflow-y: auto; }
 
-/* KANBAN */
-.garden-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.col { background: rgba(0,0,0,0.03); border: 2px dashed #a8b59d; border-radius: 15px; min-height: 400px; padding: 15px; }
-.zone { min-height: 350px; }
-.card { background: #fff9c4; padding: 15px; margin: 10px 0; border-radius: 8px; cursor: pointer; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+/* 3. PAGE TRANSITIONS */
+.page { display: none; opacity: 0; transition: opacity 0.5s; }
+.page.active { opacity: 1; }
 
-/* FLASHCARDS */
-.flashcard { width: 100%; height: 300px; perspective: 1000px; }
-.flashcard-inner { position: relative; width: 100%; height: 100%; transition: 0.6s; transform-style: preserve-3d; }
+/* 4. FLASHCARDS ART NOUVEAU */
+.flashcard { width: 400px; height: 280px; perspective: 1000px; margin: 20px auto; }
+.flashcard-inner { 
+    position: relative; width: 100%; height: 100%; 
+    transition: 0.6s; transform-style: preserve-3d; cursor: pointer; 
+}
 .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
-.front, .back { position: absolute; inset: 0; backface-visibility: hidden; border: 4px solid var(--gold); border-radius: 15px; display: flex; align-items: center; justify-content: center; padding: 20px; }
-.back { transform: rotateY(180deg); background: #fffef0; }
 
-.journey-btn { width: 100%; padding: 12px; background: var(--leaf); color: white; border: 2px solid var(--gold); cursor: pointer; margin-top: 10px; }
-/* Hide all pages by default */
-.page {
-    display: none; 
-    opacity: 0;
-    transition: opacity 0.5s ease;
+.front, .back { 
+    position: absolute; inset: 0; backface-visibility: hidden; 
+    border: 5px double var(--gold); border-radius: 15px; 
+    display: flex; flex-direction: column; align-items: center; justify-content: center; 
+    background-image: url('flashcards.jpg'); background-size: cover;
+    padding: 20px; text-align: center;
 }
+.back { transform: rotateY(180deg); background: var(--parchment); }
 
-/* Only show the page that has the 'active' class */
-.page.active {
-    display: block;
-    opacity: 1;
-}
+/* 5. KANBAN / GARDEN */
+.garden-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px;}
+.col { background: rgba(0,0,0,0.03); border: 2px dashed #a8b59d; border-radius: 15px; padding: 15px; }
+.card { background: white; padding: 15px; border-radius: 8px; border-left: 5px solid var(--orange-luster); cursor: grab; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
 
-/* Ensure the welcome screen behaves the same way */
-#welcome-screen {
-    display: none;
-}
+/* LESSON GRID */
+.lesson-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+.parchment { background: var(--parchment); padding: 25px; border-radius: 10px; border: 1px solid #e2decb; line-height: 1.6; }
 
-#welcome-screen.active {
-    display: flex; /* Flex helps center your Crystal box */
+.journey-btn { 
+    background: var(--leaf); color: white; border: 1px solid var(--gold); 
+    padding: 10px; border-radius: 5px; cursor: pointer; font-family: inherit; 
 }
