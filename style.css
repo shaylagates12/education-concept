@@ -1,44 +1,229 @@
+/* --- 1. GLOBAL ROOT VARIABLES & PALETTE --- */
 :root {
-    --orange-luster: #E17426;
-    --midnight-green: #0A4152;
+    /* Palette from image_21.png + New Pink */
+    --emerald-green: #284139;
+    --wasabi: #809076;
+    --creased-khaki: #F8D194;
+    --egyptian-earth: #B86830;
+    --noir-de-vigne: #111A19;
+    
+    /* ADDED PINK and ACCENTS */
+    --dusty-pink: #D8B0B8; /* Muted vintage pink */
     --gold: #d4af37;
-    --leaf: #2d5a27;
-    --parchment: #fdfaf0;
+    
+    /* Functional Colors */
+    --bg-ground: #fffdf5; /* Off-white for newspaper */
+    --earth: #3d2b1f;
+    --parchment: #fffef0;
 }
 
-body { margin: 0; font-family: 'Libre Baskerville', serif; background: #f4f1ea; }
+body { 
+    margin: 0; 
+    font-family: 'Libre Baskerville', serif; 
+    color: var(--noir-de-vigne);
+    overflow: hidden;
+}
 
-/* FIX: FULL-SCREEN COVER */
-#welcome-screen.active {
-    display: flex;
+/* --- 2. WELCOME SCREEN (Sprout Gate) --- */
+#welcome-screen {
     position: fixed;
     inset: 0;
-    background: url('cover page.jpg') no-repeat center center/cover;
-    z-index: 1000;
-}
-
-/* FIX: NO-SQUISH LESSON GRID */
-.lesson-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 40px;
-    height: 100%;
-}
-
-/* ART NOUVEAU FLASHCARDS */
-.front, .back {
-    background-image: linear-gradient(rgba(255, 252, 240, 0.7), rgba(255, 252, 240, 0.7)), 
-                      url('flashcards.jpg');
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('path_bg.jpg'); /* Immersion image_15.png */
     background-size: cover;
-    border: 6px double var(--gold);
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
 }
 
-.crystal-frosted {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    padding: 3rem;
-    border-radius: 30px;
+.vintage-frame.sprout-gate {
+    background: rgba(253, 250, 240, 0.7); /* Translucent base */
+    backdrop-filter: blur(10px);
+    border: 15px solid var(--gold);
+    border-radius: 8px;
+    padding: 60px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    max-width: 600px;
 }
+
+.welcome-btn.gold-seedling-pin {
+    background-color: var(--dusty-pink); /* Palette Pink */
+    border: 3px solid var(--gold);
+    color: var(--noir-de-vigne);
+    border-radius: 50px;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+.welcome-btn.gold-seedling-pin:hover {
+    background-color: var(--emerald-green);
+    color: white;
+    transform: translateY(-3px) scale(1.05);
+}
+
+/* --- 3. THE MAIN APP SHELL --- */
+#app-shell { display: flex; height: 100vh; position: relative; }
+
+/* Cinematic Immersive Background Layer */
+.trail-path-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('path_bg.jpg'); /* Immersion from image_15.png */
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+/* Sidebar (Crawls out like a vine) */
+.sidebar-vine {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 80px;
+    background: var(--emerald-green);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    z-index: 100;
+    transition: width 0.3s ease, left 0.3s ease;
+    overflow: hidden;
+}
+
+.sidebar-vine:hover { width: 220px; } /* The Sprout expands */
+
+.sidebar-vine button {
+    background: none;
+    border: none;
+    font-size: 2.2rem;
+    color: var(--wasabi);
+    margin: 25px 0;
+    cursor: pointer;
+    filter: grayscale(1);
+    transition: all 0.3s ease;
+}
+
+.sidebar-vine button:hover { filter: grayscale(0); transform: scale(1.1); color: white; }
+
+/* The Crystal Newspaper Container */
+.content-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10; /* Above path bg */
+}
+
+.crystal-paper-box {
+    width: 90%;
+    max-width: 1400px;
+    height: 85%;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(15px); /* Frosted Crystal Look */
+    border: 8px solid var(--gold);
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    overflow: hidden;
+    transition: all 0.6s ease;
+}
+
+/* --- 4. NEWSPAPER PAGE (Folded Layout) --- */
+.newspaper-page {
+    display: none;
+    height: 100%;
+    padding: 40px;
+    overflow-y: auto;
+    background-image: url('newspaper_texture.png'), linear-gradient(var(--parchment), var(--parchment)); /* vintage paper texture */
+    background-color: var(--parchment);
+    background-blend-mode: multiply;
+}
+
+.newspaper-page.active { display: block; }
+
+/* Newspaper Headings (Art Nouveau/Vintage fonts) */
+.news-head h2 { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--emerald-green); text-align: center; border-bottom: 5px solid var(--noir-de-vigne); padding-bottom: 10px; margin-top: 0; }
+.masthead { font-family: 'Caveat', cursive; font-size: 1.4rem; text-align: center; color: var(--egyptian-earth); border-top: 2px solid var(--noir-de-vigne); padding: 5px 0; margin-bottom: 30px;}
+.news-headline { font-family: 'Playfair Display', serif; font-size: 2.2rem; border-bottom: 2px solid var(--earth); padding-bottom: 10px; color: var(--emerald-green); }
+
+/* Main Grid (Lessons) */
+.lesson-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
+
+/* PARODY ADS COLUMN (Floating Outside) */
+.parody-ads-column {
+    position: relative;
+    right: -20px; /* Offset like a sticky note on the side */
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.parody-ad {
+    background: var(--parchment);
+    border: 2px solid var(--wasabi);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 5px 5px 0 var(--earth); /* Comic parody shadow */
+    transition: transform 0.2s;
+}
+.parody-ad:hover { transform: scale(1.03); }
+
+.field-notes-ad h4, .ask-pip-ad h4 { font-family: 'Caveat', cursive; color: var(--emerald-green); font-size: 1.6rem; margin: 0 0 15px; }
+
+/* Newspaper Media Frame */
+.media-frame.newspaper-photo {
+    border: 10px solid var(--egyptian-earth);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    padding: 5px;
+    background: var(--creased-khaki);
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+}
+
+.media-frame::after {
+    content: "© Seedling Press"; /* Parody photo caption */
+    position: absolute;
+    bottom: 5px; right: 10px; font-size: 0.8rem; color: var(--egyptian-earth);
+}
+
+/* --- 5. FUNCTIONAL GARDEN STYLES --- */
+/* The Vine Progress Bar */
+.progress-container { width: 100%; height: 12px; background: var(--wasabi); border-radius: 12px; position: relative; overflow: visible; margin-bottom: 20px; }
+.vine-bar { width: 0%; height: 100%; background: var(--dusty-pink); border-radius: 12px; transition: width 0.8s ease; } /* Vine uses Pink accent */
+.vine-leaf { position: absolute; top: -12px; transition: left 0.8s ease; font-size: 1.6rem; }
+
+/* Kanban cards as seed packets */
+.garden-board .card {
+    background: #fff9c4 url('seed_packet_icon.png') no-repeat right 10px top 10px; /* Icon required */
+    background-size: 20px;
+    border-radius: 8px;
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    padding: 15px;
+    box-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+}
+
+/* Flashcards/Quizzes (Art Nouveau Heritage) */
+.front, .back {
+    border: 4px solid var(--gold);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+}
+.front { background-color: var(--dusty-pink); color: var(--emerald-green); }
+.deck-taxes .front { background-color: var(--egyptian-earth); color: white; }
+.back { background-color: var(--creased-khaki); transform: rotateY(180deg); color: var(--noir-de-vigne); }
+
+/* UI Elements and Buttons */
+.tool-box { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+.parchment.news-box { background: var(--parchment); border: 2px solid var(--Noir-de-Vigne); }
+
+.journey-btn { width: 100%; padding: 15px; background-color: var(--dusty-pink); color: var(--noir-de-vigne); border: 3px solid var(--gold); border-radius: 5px; font-family: 'Libre Baskerville', serif; cursor: pointer; }
+.journey-btn:hover { background-color: var(--emerald-green); color: white; }
+
+textarea { font-family: 'Caveat', cursive; font-size: 1.4rem; border: none; background: var(--bg-ground); width: 100%; height: 120px; resize: none; }
