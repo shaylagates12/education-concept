@@ -144,3 +144,12 @@ body {
     gap: 40px;
     align-items: start;
 }
+.front, .back {
+    background-image: linear-gradient(rgba(255, 252, 240, 0.8), rgba(255, 252, 240, 0.8)), 
+                      url('Gemini_Generated_Image_Flashcard.jpg');
+    background-size: cover;
+    background-position: center;
+    border: 8px double var(--gold); /* The heritage/ornate look */
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
