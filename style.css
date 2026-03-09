@@ -137,3 +137,10 @@ body {
     background: var(--leaf); color: white; border: 1px solid var(--gold); 
     padding: 10px; border-radius: 5px; cursor: pointer; font-family: inherit; 
 }
+/* This restores the layout to how it was previously */
+#lesson-page.active {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr; /* Content on left, tools on right */
+    gap: 40px;
+    align-items: start;
+}
