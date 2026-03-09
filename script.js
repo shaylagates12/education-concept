@@ -5,44 +5,88 @@ let currentQuizIndex = 0;
 const subjectData = {
     "Life Insurance": {
         lessons: [
-            { title: "The Policy", text: "The 'Policy' is the legal contract between the insurer and the owner.", type: "image", content: "https://via.placeholder.com/600x350?text=The+Policy", defs: ["Policy: Legal agreement."] },
-            { title: "The Premium", text: "The 'Premium' is the payment to keep the coverage active.", type: "image", content: "https://via.placeholder.com/600x350?text=Premium", defs: ["Premium: Cost of insurance."] },
-            { title: "The Beneficiary", text: "The person who receives funds if you pass away.", type: "image", content: "https://via.placeholder.com/600x350?text=Beneficiary", defs: ["Beneficiary: Fund recipient."] },
-            { title: "Underwriting", text: "Process of risk assessment.", type: "video", content: "https://www.w3schools.com/html/mov_bbb.mp4", defs: ["Underwriting: Risk check."] },
-            { title: "Death Benefit", text: "Total sum paid by the policy.", type: "image", content: "https://via.placeholder.com/600x350?text=Death+Benefit", defs: ["Death Benefit: Payout."] },
-            { title: "Term Length", text: "Duration for which a policy provides coverage.", type: "image", content: "https://via.placeholder.com/600x350?text=Term", defs: ["Term: Set time."] },
-            { title: "Cash Value", text: "Savings portion of a Whole Life policy.", type: "image", content: "https://via.placeholder.com/600x350?text=Cash+Value", defs: ["Cash Value: Equity."] },
-            { title: "The Rider", text: "Optional add-on for extra benefits.", type: "image", content: "https://via.placeholder.com/600x350?text=Rider", defs: ["Rider: Add-on."] },
-            { title: "Lapse", text: "When a policy ends due to non-payment.", type: "image", content: "https://via.placeholder.com/600x350?text=Lapse", defs: ["Lapse: Termination."] },
-            { title: "Grace Period", text: "Extra time to pay before a lapse.", type: "video", content: "https://www.w3schools.com/html/mov_bbb.mp4", defs: ["Grace Period: Buffer."] }
+            { title: "The Policy", text: "The 'Policy' is the formal legal contract between the insurance company and the owner.", type: "image", content: "policy.jpg", defs: ["Policy: The legal agreement."] },
+            { title: "The Premium", text: "A 'Premium' is the scheduled payment required to keep your insurance active.", type: "image", content: "premium.jpg", defs: ["Premium: The cost of coverage."] },
+            { title: "The Beneficiary", text: "The 'Beneficiary' is the person or entity designated to receive the death benefit.", type: "image", content: "beneficiary.jpg", defs: ["Beneficiary: The fund recipient."] },
+            { title: "Underwriting", text: "The process where the insurer evaluates your risk level to set your rates.", type: "video", content: "underwriting_clip.mp4", defs: ["Underwriting: Risk assessment."] },
+            { title: "Death Benefit", text: "The 'Death Benefit' is the total sum of money paid out upon the insured's passing.", type: "image", content: "benefit.jpg", defs: ["Death Benefit: The payout sum."] },
+            { title: "Term Length", text: "The specific duration (e.g., 10, 20, 30 years) a policy remains in effect.", type: "image", content: "term.jpg", defs: ["Term: The time limit."] },
+            { title: "Cash Value", text: "The savings component found in permanent policies that grows over time.", type: "image", content: "cash_value.jpg", defs: ["Cash Value: Built-in equity."] },
+            { title: "The Rider", text: "A 'Rider' is an optional add-on that provides extra benefits like 'Accidental Death'.", type: "image", content: "rider.jpg", defs: ["Rider: Policy add-on."] },
+            { title: "Lapse", text: "A 'Lapse' occurs when the policy ends because premiums were not paid.", type: "image", content: "lapse.jpg", defs: ["Lapse: Policy termination."] },
+            { title: "Grace Period", text: "The extra time (usually 30 days) allowed to pay a premium before the policy lapses.", type: "video", content: "grace_period.mp4", defs: ["Grace Period: Payment buffer."] }
         ],
-        flashcards: [{ q: "What is a Rider?", a: "An optional add-on to a policy." }],
         quiz: [
-            { q: "What is the cost of insurance?", options: ["Payout", "Premium", "Tax", "Equity"], correct: 1 },
-            { q: "Who receives the money?", options: ["Agent", "Insurer", "Beneficiary", "Underwriter"], correct: 2 },
-            { q: "What describes risk assessment?", options: ["Underwriting", "Lapsing", "Riding", "Saving"], correct: 0 },
-            { q: "What is the payment buffer called?", options: ["Premium Time", "Grace Period", "Extension", "Lapse Window"], correct: 1 }
+            { q: "What is the cost to keep a policy active?", options: ["The Benefit", "The Premium", "The Rider", "The Lapse"], correct: 1 },
+            { q: "Who receives the money from a claim?", options: ["Underwriter", "Insurer", "Beneficiary", "Agent"], correct: 2 },
+            { q: "What is an optional policy add-on called?", options: ["A Vine", "A Rider", "A Term", "A Premium"], correct: 1 },
+            { q: "The process of evaluating risk is known as:", options: ["Underwriting", "Harvesting", "Blooming", "Lapsing"], correct: 0 }
+        ]
+    },
+    "Taxes": {
+        lessons: [
+            { title: "Gross Income", text: "Your total earnings before any taxes or deductions are taken out.", type: "image", content: "gross.jpg", defs: ["Gross: Total before cuts."] },
+            { title: "Deductions", text: "Expenses you can subtract from your income to lower your tax bill.", type: "image", content: "deduction.jpg", defs: ["Deduction: Tax-lowering expense."] },
+            { title: "Tax Credit", text: "A 'Credit' is a dollar-for-dollar reduction of the actual tax you owe.", type: "image", content: "credit.jpg", defs: ["Credit: Direct tax reduction."] },
+            { title: "W-2 Form", text: "The form employers send you showing how much you earned and paid in taxes.", type: "image", content: "w2.jpg", defs: ["W-2: Income summary."] },
+            { title: "1040 Form", text: "The standard form individuals use to file their annual income tax returns.", type: "image", content: "1040.jpg", defs: ["1040: The main tax form."] },
+            { title: "Dependents", text: "People (usually children) who rely on you for financial support.", type: "image", content: "dependent.jpg", defs: ["Dependent: Supported person."] },
+            { title: "Tax Bracket", text: "The range of incomes taxed at a specific percentage rate.", type: "video", content: "brackets.mp4", defs: ["Bracket: Your tax percentage."] },
+            { title: "Withholding", text: "The amount of money your employer takes from your check to pay the IRS.", type: "image", content: "withholding.jpg", defs: ["Withholding: Pre-paid taxes."] },
+            { title: "Refund", text: "Money sent back to you if you overpaid your taxes during the year.", type: "image", content: "refund.jpg", defs: ["Refund: Overpayment return."] },
+            { title: "Audit", text: "A formal examination of your tax return by the IRS for accuracy.", type: "video", content: "audit.mp4", defs: ["Audit: Tax inspection."] }
+        ],
+        quiz: [
+            { q: "Which form is used to file your annual return?", options: ["W-2", "1040", "1099", "I-9"], correct: 1 },
+            { q: "What is income BEFORE taxes called?", options: ["Net Income", "Taxable Income", "Gross Income", "Refund"], correct: 2 },
+            { q: "What lowers the total amount of income that can be taxed?", options: ["A Credit", "An Audit", "A Deduction", "A Bracket"], correct: 2 },
+            { q: "A dollar-for-dollar reduction in taxes owed is a:", options: ["Refund", "W-2", "Withholding", "Tax Credit"], correct: 3 }
+        ]
+    },
+    "Stock Market": {
+        lessons: [
+            { title: "Share", text: "A 'Share' represents a unit of ownership in a specific corporation.", type: "image", content: "share.jpg", defs: ["Share: Piece of a company."] },
+            { title: "Dividend", text: "A portion of a company's profit paid out to its shareholders.", type: "image", content: "dividend.jpg", defs: ["Dividend: Profit sharing."] },
+            { title: "Bull Market", text: "A period where stock prices are rising and investors are confident.", type: "image", content: "bull.jpg", defs: ["Bull: Rising prices."] },
+            { title: "Bear Market", text: "A period where stock prices are falling and the outlook is gloomy.", type: "image", content: "bear.jpg", defs: ["Bear: Falling prices."] },
+            { title: "Portfolio", text: "The entire collection of investments owned by an individual.", type: "image", content: "portfolio.jpg", defs: ["Portfolio: Your collection."] },
+            { title: "Diversification", text: "Spreading your money across different stocks to reduce risk.", type: "video", content: "diversify.mp4", defs: ["Diversification: Risk spreading."] },
+            { title: "Ticker Symbol", text: "A unique 1-5 letter code identifying a specific stock (e.g., AAPL).", type: "image", content: "ticker.jpg", defs: ["Ticker: Company code."] },
+            { title: "Brokerage", text: "The platform or firm that allows you to buy and sell stocks.", type: "image", content: "broker.jpg", defs: ["Brokerage: Trading platform."] },
+            { title: "Index Fund", text: "A fund that tracks a specific group of stocks (like the S&P 500).", type: "image", content: "index.jpg", defs: ["Index Fund: Grouped stocks."] },
+            { title: "Volatility", text: "How much a stock's price swings up and down over time.", type: "video", content: "volatility.mp4", defs: ["Volatility: Price swings."] }
+        ],
+        quiz: [
+            { q: "What represents one unit of company ownership?", options: ["A Dividend", "A Share", "A Portfolio", "A Ticker"], correct: 1 },
+            { q: "A market with rising prices is called a:", options: ["Bear Market", "Seed Market", "Bull Market", "Pulp Market"], correct: 2 },
+            { q: "What is the strategy of spreading risk called?", options: ["Diversification", "Lapsing", "Withholding", "Harvesting"], correct: 0 },
+            { q: "What is a 'Dividend'?", options: ["A stock code", "A tax form", "A share of profit", "A unit of risk"], correct: 2 }
         ]
     }
-    // (Other subjects follow this same structure)
 };
 
+// Function that triggers the first immersion flow
 function enterGarden() {
+    // Hide welcome, show app
     document.getElementById('welcome-screen').style.display = 'none';
-    document.getElementById('welcome-screen').classList.remove('active');
     document.getElementById('app-shell').style.display = 'flex';
+    
+    // Default to the Drawing Board (Kanban)
     showPage('kanban-page');
+    console.log("Welcome to your Garden! Start by planting seeds in 'The Drawing Board'.");
 }
 
+// Function to handle switching between cute garden names ( Grove, Drawing Board, Harvest Quiz)
 function showPage(id) {
-    document.querySelectorAll('.page').forEach(p => {
-        p.classList.remove('active');
-        p.style.display = 'none';
-    });
-    const target = document.getElementById(id);
-    target.classList.add('active');
-    target.style.display = (id === 'lesson-page') ? 'grid' : 'block'; // Fixes squishing
+    // Hide all pages
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(page => page.classList.remove('active'));
+    
+    // Show the target page
+    document.getElementById(id).classList.add('active');
 }
+
+// RESTORED FUNCTIONS: SUBJECTDATA, PIP CHAT, FIELD NOTES, PROGRESS VINE, Drag&Drop logic.
 
 function loadLesson(name, index = 0) {
     currentSubject = name;
