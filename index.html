@@ -13,8 +13,12 @@
     <div class="trail-path-container">
         <div class="welcome-box crystal-frosted">
             <h1 class="seedling-logo">Seedling</h1>
-            <p class="objective-text">Reach higher with structured growth! Independent learning as natural as planting a garden.</p>
-            <button class="welcome-btn gold-seedling-pin" onclick="enterGarden()">Welcome 🌱</button>
+            <p class="objective-text">
+                Reach higher with structured growth! Independent learning as natural as planting a garden. Seedling guides your ascent with easy, managing steps for lasting mastery.
+            </p>
+            <button class="welcome-btn gold-seedling-pin" onclick="enterGarden()">
+                Welcome <span class="sprout-icon">🌱</span>
+            </button>
         </div>
     </div>
 </section>
@@ -27,6 +31,7 @@
             <button onclick="showPage('kanban-page')" title="My Garden">🏡</button>
             <button onclick="showPage('quiz-page')" title="Harvest Quiz">🍎</button>
         </nav>
+        <div id="rank-badge">Novice</div>
     </aside>
 
     <main class="content-area">
@@ -37,25 +42,31 @@
                         <div id="progress-vine" class="vine-bar"></div>
                         <div class="vine-leaf">🍃</div>
                     </div>
-                    <h2 id="lesson-title">Select a Subject</h2>
-                    <div id="media-container"></div> <div id="lesson-text" class="parchment"></div>
+                    <h2 id="lesson-title">Select a Subject to Begin</h2>
+                    <div id="media-container" class="media-placeholder"></div>
+                    <div id="lesson-text" class="parchment"></div>
                     <div id="definitions-box" class="tool-box" style="display:none;">
                         <h4>Seedling Definitions</h4>
                         <ul id="definitions-list"></ul>
                     </div>
                 </div>
+                
                 <aside class="lesson-sidebar">
                     <div class="tool-box">
                         <h4>Field Notes</h4>
-                        <textarea id="field-notes" placeholder="Notes..."></textarea>
+                        <textarea id="field-notes" placeholder="Write your thoughts here..."></textarea>
                     </div>
                     <div class="tool-box">
                         <h4>Ask Pip</h4>
                         <div id="chat-display"></div>
-                        <input type="text" id="pip-input" placeholder="Ask Pip...">
-                        <button onclick="askPip()">➔</button>
+                        <div class="chat-input">
+                            <input type="text" id="pip-input" placeholder="Ask Pip...">
+                            <button onclick="askPip()">➔</button>
+                        </div>
                     </div>
-                    <button class="journey-btn" onclick="nextLesson()">Next Lesson ➔</button>
+                    <button id="next-lesson-btn" class="vintage-btn journey-btn" onclick="nextLesson()">
+                        Next Lesson ➔
+                    </button>
                 </aside>
             </div>
         </section>
@@ -63,7 +74,7 @@
         <section id="kanban-page" class="page">
             <div class="kanban-header">
                 <h2>The Drawing Board</h2>
-                <input type="text" id="new-subject" placeholder="New subject...">
+                <input type="text" id="new-subject" placeholder="New subject (Taxes, Life Insurance)...">
                 <button onclick="plantSeed()" class="journey-btn">Plant Seed</button>
             </div>
             <div class="garden-board">
@@ -74,15 +85,17 @@
         </section>
 
         <section id="quiz-page" class="page">
-            <div class="flashcard">
-                <div class="flashcard-inner" onclick="this.parentElement.classList.toggle('flipped')">
-                    <div class="front" id="card-front"></div>
-                    <div class="back" id="card-back"></div>
+            <div class="quiz-layout-container">
+                <div class="flashcard">
+                    <div class="flashcard-inner" onclick="this.parentElement.classList.toggle('flipped')">
+                        <div class="front" id="card-front"></div>
+                        <div class="back" id="card-back"></div>
+                    </div>
                 </div>
-            </div>
-            <div id="quiz-box" class="parchment">
-                <h3 id="quiz-question"></h3>
-                <div id="quiz-options"></div>
+                <div id="quiz-box" class="parchment">
+                    <h3 id="quiz-question"></h3>
+                    <div id="quiz-options"></div>
+                </div>
             </div>
         </section>
     </main>
