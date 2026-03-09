@@ -35,7 +35,7 @@
     </aside>
 
     <main class="content-area">
-        <section id="lesson-page" class="page active">
+        <section id="lesson-page" class="page">
             <div class="lesson-grid">
                 <div class="media-frame">
                     <div class="progress-container">
@@ -80,9 +80,18 @@
                 <button onclick="plantSeed()" class="journey-btn">Plant Seed</button>
             </div>
             <div class="garden-board">
-                <div class="col" id="todo" ondrop="drop(event)" ondragover="allow(event)"><h3>The Packet</h3><div class="zone"></div></div>
-                <div class="col" id="doing" ondrop="drop(event)" ondragover="allow(event)"><h3>Sprouting</h3><div class="zone"></div></div>
-                <div class="col" id="done" ondrop="drop(event)" ondragover="allow(event)"><h3>Blooming</h3><div class="zone"></div></div>
+                <div class="col" id="todo" ondrop="drop(event)" ondragover="allow(event)">
+                    <h3>The Packet</h3>
+                    <div class="zone"></div>
+                </div>
+                <div class="col" id="doing" ondrop="drop(event)" ondragover="allow(event)">
+                    <h3>Sprouting</h3>
+                    <div class="zone"></div>
+                </div>
+                <div class="col" id="done" ondrop="drop(event)" ondragover="allow(event)">
+                    <h3>Blooming</h3>
+                    <div class="zone"></div>
+                </div>
             </div>
         </section>
 
