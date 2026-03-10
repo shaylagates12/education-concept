@@ -204,4 +204,21 @@ function checkAnswer(selected, correct, btn) {
 function backToChoice() {
     document.getElementById('quiz-choice-screen').style.display = 'block';
     document.getElementById('harvest-action-area').style.display = 'none';
+    // This "Bridge" ensures the Harvest page knows what you are studying
+function selectSubjectForHarvest(name) {
+    currentSubject = name;
+    document.getElementById('active-subject-display').innerText = name;
+    showPage('quiz-page'); // Navigates to the choice screen
+}
+
+// Add the Harvest Logic below your existing code...
+function startHarvest(mode) {
+    const choiceScreen = document.getElementById('quiz-choice-screen');
+    const actionArea = document.getElementById('harvest-action-area');
+    
+    choiceScreen.style.display = 'none';
+    actionArea.style.display = 'block';
+    
+    // Logic for loading either Quiz or Flashcards goes here
+}
 }
