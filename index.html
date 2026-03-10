@@ -316,3 +316,39 @@
     <script src="script.js"></script>
 </body>
 </html>
+<section id="quiz-page" class="page newspaper-page">
+    <div id="quiz-choice-screen" class="harvest-choice-box">
+        <h2 class="news-headline">Thyme to Grow!</h2>
+        <p class="masthead">Select your harvesting method for: <span id="active-subject-display">None</span></p>
+        <div class="choice-buttons">
+            <button class="journey-btn" onclick="startHarvest('flashcards')">Flashcards</button>
+            <button class="journey-btn" onclick="startHarvest('quiz')">The Big Quiz</button>
+        </div>
+    </div>
+
+    <div id="harvest-action-area" style="display:none;">
+        <button class="vintage-btn-small" onclick="backToChoice()">⬅ Back</button>
+        
+        <div id="flashcard-mode" class="harvest-container">
+            <div class="flashcard-deck">
+                <div class="flashcard-inner" id="main-flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="front" id="card-front">Question</div>
+                    <div class="back" id="card-back">Answer</div>
+                </div>
+            </div>
+            <div class="deck-controls">
+                <button class="vintage-btn" onclick="prevCard()">Previous</button>
+                <button class="vintage-btn" onclick="nextCard()">Next</button>
+            </div>
+        </div>
+
+        <div id="quiz-mode" class="quiz-layout-box" style="display:none;">
+            <div class="progress-container">
+                <div id="quiz-progress-bar" class="vine-bar"></div>
+            </div>
+            <h3 id="quiz-question" class="news-headline"></h3>
+            <div id="quiz-options" class="options-grid"></div>
+            <div id="quiz-feedback" class="parchment feedback-box"></div>
+        </div>
+    </div>
+</section>
