@@ -133,3 +133,75 @@ function returnToRoots() {
     document.getElementById('step-1').style.display = 'block';
     document.getElementById('step-2').style.display = 'none';
 }
+let currentCardIndex = 0;
+
+function startHarvest(mode) {
+    if (!currentSubject) {
+        alert("Please select a subject from your garden first!");
+        return;
+    }
+    
+    document.getElementById('quiz-choice-screen').style.display = 'none';
+    document.getElementById('harvest-action-area').style.display = 'block';
+    
+    if (mode === 'flashcards') {
+        document.getElementById('flashcard-mode').style.display = 'block';
+        document.getElementById('quiz-mode').style.display = 'none';
+        loadFlashcard(0);
+    } else {
+        document.getElementById('flashcard-mode').style.display = 'none';
+        document.getElementById('quiz-mode').style.display = 'block';
+        loadQuizQuestion(0);
+    }
+}
+
+function loadFlashcard(index) {
+    const cards = subjectData[currentSubject].flashcards;
+    const card = cards[index];
+    document.getElementById('card-front').innerText = card.q;
+    document.getElementById('card-back').innerText = card.a;
+    document.getElementById('main-flashcard').classList.remove('flipped');
+}
+
+function loadQuizQuestion(index) {
+    const quiz = subjectData[currentSubject].quiz;
+    const qData = quiz[index];
+    currentQuizIndex = index;
+
+    document.getElementById('quiz-question').innerText = qData.q;
+    const optionsDiv = document.getElementById('quiz-options');
+    optionsDiv.innerHTML = "";
+
+    qData.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option-btn';
+        btn.innerText = opt;
+        btn.onclick = () => checkAnswer(i, qData.correct, btn);
+        optionsDiv.appendChild(btn);
+    });
+    
+    // Update Progress
+    const progress = ((index + 1) / quiz.length) * 100;
+    document.getElementById('quiz-progress-bar').style.width = progress + "%";
+}
+
+function checkAnswer(selected, correct, btn) {
+    if (selected === correct) {
+        btn.classList.add('correct');
+        setTimeout(() => {
+            if (currentQuizIndex + 1 < subjectData[currentSubject].quiz.length) {
+                loadQuizQuestion(currentQuizIndex + 1);
+            } else {
+                alert("Harvest Complete! You've mastered " + currentSubject);
+                backToChoice();
+            }
+        }, 1000);
+    } else {
+        btn.classList.add('wrong');
+    }
+}
+
+function backToChoice() {
+    document.getElementById('quiz-choice-screen').style.display = 'block';
+    document.getElementById('harvest-action-area').style.display = 'none';
+}
