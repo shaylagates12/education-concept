@@ -22,13 +22,15 @@
 </section>
 
 <div id="app-shell" style="display:none;">
+    
     <div class="trail-path-bg"></div>
+
     <aside class="sidebar-vine">
         <div class="logo">🌱</div>
         <nav>
-            <button onclick="showPage('lesson-page')" title="The Grove">📖</button>
-            <button onclick="showPage('kanban-page')" title="Drawing Board">🏡</button>
-            <button onclick="showPage('quiz-page')" title="Harvest Quiz">🍎</button>
+            <button onclick="showPage('lesson-page')" title="The Grove (Lessons)">📖</button>
+            <button onclick="showPage('kanban-page')" title="The Drawing Board (Garden)">🏡</button>
+            <button onclick="showPage('quiz-page')" title="Harvest Quiz (Flashcards)">🍎</button>
         </nav>
         <div id="rank-badge">Novice</div>
     </aside>
@@ -39,35 +41,60 @@
             <section id="lesson-page" class="page active newspaper-page">
                 <header class="news-head">
                     <h2>Seedling: The Grove Edition</h2>
-                    <p class="masthead">Knowledge Garden | Today's Date</p>
+                    <p class="masthead">Vol 1. No 1. | Knowledge Garden | Today's Date</p>
                 </header>
+                
                 <div class="lesson-grid">
-                    <article class="main-news">
+                    <article class="main-news Media">
                         <div class="progress-container">
                             <div id="progress-vine" class="vine-bar"></div>
                             <div class="vine-leaf">🍃</div>
                         </div>
-                        <h1 id="lesson-title" class="news-headline">Select a Subject</h1>
-                        <div id="media-container" class="newspaper-photo"></div>
-                        <div id="lesson-text" class="news-copy"></div>
+                        
+                        <h1 id="lesson-title" class="news-headline">Select a Subject to Begin</h1>
+                        
+                        <div id="media-container" class="media-placeholder newspaper-photo">
+                            <p>Pick a card from "The Packet" in your Garden to start learning.</p>
+                        </div>
+                        
+                        <div id="lesson-text" class="parchment news-copy"></div>
+                        <div id="definitions-box" class="tool-box news-sidebar-item" style="display:none;">
+                            <h4>Seedling Definitions</h4>
+                            <ul id="definitions-list"></ul>
+                        </div>
                     </article>
+
                     <aside class="parody-ads-column">
                         <div class="parody-ad field-notes-ad">
                             <h4>Field Notes</h4>
                             <textarea id="field-notes" placeholder="Write your thoughts..."></textarea>
                         </div>
-                        <button id="next-lesson-btn" class="journey-btn" onclick="nextLesson()">Next Lesson ➔</button>
+                        <div class="parody-ad ask-pip-ad">
+                            <h4>Ask Pip</h4>
+                            <div id="chat-display"></div>
+                            <div class="chat-input">
+                                <input type="text" id="pip-input" placeholder="Ask Pip...">
+                                <button onclick="askPip()">➔</button>
+                            </div>
+                        </div>
+                        <div class="parody-ad journey-btn-ad">
+                            <button id="next-lesson-btn" class="vintage-btn journey-btn" onclick="nextLesson()">
+                                Next Lesson ➔
+                            </button>
+                        </div>
                     </aside>
                 </div>
             </section>
 
             <section id="kanban-page" class="page newspaper-page">
-                <header class="news-head"><h2>Garden Layout</h2></header>
-                <div class="kanban-header" style="text-align:center; margin-bottom: 20px;">
-                    <input type="text" id="new-subject" placeholder="Taxes, Stock Market...">
-                    <button class="journey-btn" style="width:auto;" onclick="plantSeed()">Plant Seed</button>
+                <header class="news-head">
+                    <h2>Garden Layout: The Drawing Board</h2>
+                </header>
+                <div class="kanban-header">
+                    <input type="text" id="new-subject" placeholder="New subject name...">
+                    <button onclick="plantSeed()">Plant Seed</button>
                 </div>
-                <div class="garden-board newspaper-columns" style="display:flex; gap:20px; justify-content:center;">
+                <div class="garden-board newspaper-columns">
                     <div class="col" id="todo" ondrop="drop(event)" ondragover="allow(event)"><h3>The Packet</h3><div class="zone"></div></div>
                     <div class="col" id="doing" ondrop="drop(event)" ondragover="allow(event)"><h3>Sprouting</h3><div class="zone"></div></div>
                     <div class="col" id="done" ondrop="drop(event)" ondragover="allow(event)"><h3>Blooming</h3><div class="zone"></div></div>
@@ -75,38 +102,46 @@
             </section>
 
             <section id="quiz-page" class="page newspaper-page">
-                <div id="quiz-choice-screen">
-                    <h1 class="news-headline" style="text-align:center;">Thyme to Grow!</h1>
-                    <p style="text-align:center;">Harvesting: <span id="active-subject-display">None</span></p>
-                    <div style="display: flex; gap: 20px; justify-content: center;">
-                        <button class="journey-btn" onclick="startHarvest('flashcards')">Flashcards</button>
-                        <button class="journey-btn" onclick="startHarvest('quiz')">The Big Quiz</button>
-                    </div>
-                </div>
-                <div id="harvest-action-area" style="display:none;">
-                    <button class="journey-btn" style="width:auto;" onclick="backToChoice()">⬅ Back</button>
-                    <div id="flashcard-mode">
-                        <div class="flashcard" onclick="this.classList.toggle('flipped')">
-                            <div class="flashcard-inner">
-                                <div class="front" id="card-front"></div>
-                                <div class="back" id="card-back"></div>
-                            </div>
-                        </div>
-                        <div style="display:flex; justify-content:center; gap:10px; margin-top:20px;">
-                            <button class="journey-btn" style="width:auto;" onclick="prevCard()">Prev</button>
-                            <button class="journey-btn" style="width:auto;" onclick="nextCard()">Next</button>
-                        </div>
-                    </div>
-                    <div id="quiz-mode" style="display:none;">
-                        <h3 id="quiz-question" class="news-headline"></h3>
-                        <div id="quiz-options"></div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </main>
-</div>
+                <header class="news-head">
+                    <h2>Harvest Time: Flashcards & Quizzes</h2>
+               <section id="quiz-page" class="page newspaper-page">
+    <header class="news-head">
+        <h2>Harvest Time: Flashcards & Quizzes</h2>
+    </header>
 
-<script src="script.js"></script>
-</body>
-</html>
+   <section id="quiz-page" class="page newspaper-page">
+    <header class="news-head">
+        <h2>Harvest Time: Flashcards & Quizzes</h2>
+    </header>
+
+    <div id="quiz-choice-screen" class="parchment news-box" style="text-align: center; padding: 40px; margin-top: 20px;">
+        <h1 class="news-headline">Thyme to Grow!</h1>
+        <p class="masthead">Currently Harvesting: <span id="active-subject-display" style="color: var(--egyptian-earth);">None Selected</span></p>
+        <div style="display: flex; gap: 20px; justify-content: center; margin-top: 30px;">
+            <button class="journey-btn" onclick="startHarvest('flashcards')">Flashcards</button>
+            <button class="journey-btn" onclick="startHarvest('quiz')">The Big Quiz</button>
+        </div>
+    </div>
+
+    <div id="harvest-action-area" style="display:none; margin-top: 20px;">
+        <button class="vintage-btn" onclick="backToChoice()" style="margin-bottom: 20px;">⬅ Change Method</button>
+        
+        <div id="flashcard-mode">
+            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                <div class="flashcard-inner">
+                    <div class="front" id="card-front">Question</div>
+                    <div class="back" id="card-back">Answer</div>
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
+                <button class="journey-btn" style="width: auto;" onclick="prevCard()">Previous</button>
+                <button class="journey-btn" style="width: auto;" onclick="nextCard()">Next</button>
+            </div>
+        </div>
+
+        <div id="quiz-mode" class="parchment news-box" style="display:none; padding: 30px;">
+            <h3 id="quiz-question" class="news-headline">Question will appear here</h3>
+            <div id="quiz-options" style="display: grid; gap: 10px; margin-top: 20px;"></div>
+        </div>
+    </div>
+</section>
