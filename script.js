@@ -1,3 +1,7 @@
+function enterGarden() {
+    console.log("Entering the garden...");
+    // your transition code here
+}
 /* --- KEEPING ALL YOUR ORIGINAL DATA --- */
 let currentSubject = "";
 let currentLessonIndex = 0;
