@@ -198,3 +198,13 @@ loadLesson = function(name, index) {
     originalLoadLesson(name, index);
     document.getElementById('active-subject-display').innerText = name;
 };
+function nextLesson() {
+    const lessons = subjectData[currentSubject].lessons;
+    if (currentLessonIndex < lessons.length - 1) {
+        currentLessonIndex++;
+        loadLesson(currentSubject, currentLessonIndex);
+    } else {
+        alert("You've reached the end of this path! Time to harvest your knowledge.");
+        showPage('quiz-page');
+    }
+}
