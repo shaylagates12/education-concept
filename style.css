@@ -137,8 +137,6 @@ body {
     background-color: var(--parchment);
 }
 
-.newspaper-page.active { display: block; }
-
 /* Newspaper Headings (Art Nouveau/Vintage fonts) */
 .news-head h2 { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--emerald-green); text-align: center; border-bottom: 5px solid var(--noir-de-vigne); padding-bottom: 10px; margin-top: 0; }
 .masthead { font-family: 'Caveat', cursive; font-size: 1.4rem; text-align: center; color: var(--egyptian-earth); border-top: 2px solid var(--noir-de-vigne); padding: 5px 0; margin-bottom: 30px;}
