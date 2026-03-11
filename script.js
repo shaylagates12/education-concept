@@ -153,6 +153,15 @@ function prevCard() {
         loadFlashcard();
     }
 }
+function loadFlashcard() {
+    // RESET the flip so the next card doesn't start backwards
+    document.querySelector('.flashcard').classList.remove('flipped'); 
+
+    const lessons = subjectData[currentSubject].lessons;
+    const item = lessons[currentHarvestIndex];
+    document.getElementById('card-front').innerText = item.title;
+    document.getElementById('card-back').innerText = item.defs[0];
+}
 
 function loadQuiz() {
     const quizData = subjectData[currentSubject].quiz[currentHarvestIndex];
