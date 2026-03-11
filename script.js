@@ -235,3 +235,41 @@ function drop(e) {
     const zone = e.target.closest('.col').querySelector('.zone');
     if (zone) zone.appendChild(card);
 }
+function nextLesson() {
+    const lessons = subjectData[currentSubject].lessons;
+    if (currentLessonIndex < lessons.length - 1) {
+        currentLessonIndex++;
+        loadLesson(currentSubject, currentLessonIndex);
+    } else {
+        alert("The Grove is fully grown! Heading to Harvest.");
+        showPage('quiz-page');
+    }
+}
+function plantSeed() {
+    const input = document.getElementById('new-subject');
+    const name = input.value.trim();
+    if (name && subjectData[name]) {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.draggable = true;
+        card.innerText = name;
+        card.id = 'seed-' + Date.now();
+        // This ensures the system "recognizes" the card for dragging
+        card.ondragstart = (e) => e.dataTransfer.setData("text", e.target.id);
+        card.onclick = () => loadLesson(name, 0);
+        
+        document.querySelector('#todo .zone').appendChild(card);
+        input.value = "";
+    } else {
+        alert("Please enter a valid subject like 'Taxes' or 'Stock Market'");
+    }
+}
+function allow(e) { e.preventDefault(); }
+
+function drop(e) {
+    e.preventDefault();
+    const data = e.dataTransfer.getData("text");
+    const card = document.getElementById(data);
+    const zone = e.target.closest('.col').querySelector('.zone');
+    if (zone) zone.appendChild(card);
+}
