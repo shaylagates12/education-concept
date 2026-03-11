@@ -1,224 +1,99 @@
 let currentSubject = "";
-let userProfile = { role: '', focusPref: '', rank: '🌱 Novice', masteredSeeds: [] };
+let currentLessonIndex = 0;
+let currentHarvestIndex = 0;
 
-// 1. GERMINATION PHASE (Onboarding)
-function nextStepOnboarding(role) {
-    userProfile.role = role;
-    document.getElementById('step-1').style.display = 'none';
-    document.getElementById('step-2').style.display = 'block';
-}
+const subjectData = {
+    "Life Insurance": {
+        lessons: [
+            { title: "The Policy", text: "The 'Policy' is the formal legal contract between the insurance company and the owner.", content: "policy.jpg", defs: ["Policy: The legal agreement."] },
+            { title: "The Premium", text: "A 'Premium' is the scheduled payment required to keep your insurance active.", content: "premium.jpg", defs: ["Premium: The cost of coverage."] }
+        ],
+        quiz: [
+            { q: "What is the cost to keep a policy active?", options: ["The Benefit", "The Premium", "The Rider", "The Lapse"], correct: 1 }
+        ]
+    },
+    "Taxes": {
+        lessons: [
+            { title: "Gross Income", text: "Your total earnings before any taxes or deductions are taken out.", content: "gross.jpg", defs: ["Gross: Total before cuts."] }
+        ],
+        quiz: [
+            { q: "What is income BEFORE taxes called?", options: ["Net Income", "Taxable Income", "Gross Income", "Refund"], correct: 2 }
+        ]
+    }
+};
 
-function germinate() {
-    userProfile.focusPref = document.querySelector('input[name="focus"]:checked').value;
-    
-    // Save to Local Storage for Persistence
-    localStorage.setItem('seedling_user_profile', JSON.stringify(userProfile));
-    
-    // Switch Views
-    document.getElementById('onboarding-overlay').style.display = 'none';
+function enterGarden() {
+    document.getElementById('welcome-screen').style.display = 'none';
     document.getElementById('app-shell').style.display = 'flex';
+    showPage('kanban-page');
 }
 
-// 2. KANBAN GARDEN LOGIC (Connected Subjects)
-function plantNewSeed() {
-    const name = document.getElementById('subject-seed-input').value;
-    if (!name) return;
-    
-    // Create the hand-drawn "Sticky Note" card
-    const card = document.createElement('div');
-    card.className = 'doodle-card';
-    card.id = 'seed-' + Date.now();
-    card.textContent = name;
-    card.onclick = () => activateSubjectJourney(name);
-    card.draggable = true;
-    card.ondragstart = drag;
-    
-    document.getElementById('kanban-todo').querySelector('.drop-zone').appendChild(card);
-    document.getElementById('subject-seed-input').value = "";
-    saveGarden();
-}
-
-// Connect Kanban Choice to Learning Area
-function activateSubjectJourney(name) {
-    currentSubject = name;
-    
-    // Switch to Learning Area
-    showPage('lesson-page');
-    
-    // Update the Ornate Picture Frame Content
-    document.getElementById('current-lesson-topic').textContent = name;
-    
-    // Simulate Opening Summary (This would pull from a database in a real app)
-    document.getElementById('lesson-content-summary').innerHTML = `
-        <p><strong>Opening Summary:</strong> The subject of ${name} is a cornerstone of this learning garden. Before you can unlock the full breadth of the topic, you must absorb this introductory concept.</p>
-        <p>This is the soil that Pip will use to nurture your understanding.</p>
-    `;
-    
-    // Show the "Continue" Button (Unlocking the lesson)
-    document.getElementById('lesson-continue-btn').style.display = 'block';
-}
-
-function continueJourney() {
-    // Reveal the rest of the lesson
-    document.getElementById('lesson-content-summary').innerHTML += `
-        <p><strong>Lesson Continued:</strong> Excellent. Now that you have grasped the initial concepts, Pip can help you explore technical details.</p>
-        <p>Write your detailed conceptual thoughts in the Field Notes area to the right.</p>
-    `;
-    document.getElementById('lesson-continue-btn').style.display = 'none';
-}
-
-// 3. PAGE LOGIC
-function showPage(pageId) {
+function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(pageId).classList.add('active');
-    
-    // Sync Nav Column state
-    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-    // (Nav button syncing logic needed here based on the index of the page)
+    document.getElementById(id).classList.add('active');
 }
 
-// 4. PERSISTENCE SYSTEMS (Persistence)
-function saveGarden() {
-    const gardenState = {
-        todo: getCardData('#kanban-todo'),
-        doing: getCardData('#kanban-doing'),
-        done: getCardData('#kanban-done')
-    };
-    localStorage.setItem('seedling_garden', JSON.stringify(gardenState));
-}
-
-function getCardData(colId) {
-    return Array.from(document.querySelector(colId).querySelectorAll('.doodle-card')).map(c => ({ id: c.id, text: c.textContent }));
-}
-
-// Drag & Drop
-function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
-function allowDrop(ev) { ev.preventDefault(); }
-function drop(ev) {
-    ev.preventDefault();
-    const data = ev.dataTransfer.getData("text");
-    const targetCol = ev.target.closest('.doodle-col');
-    if (targetCol) {
-        targetCol.querySelector('.drop-zone').appendChild(document.getElementById(data));
-        saveGarden();
-    }
-}
-function returnToRoots() {
-    // 1. Show the onboarding overlay again
-    document.getElementById('onboarding-overlay').style.display = 'flex';
-    
-    // 2. Hide the main app shell
-    document.getElementById('app-shell').style.display = 'none';
-    
-    // 3. Reset the onboarding to the first step
-    document.getElementById('step-1').style.display = 'block';
-    document.getElementById('step-2').style.display = 'none';
-    
-    // 4. (Optional) Clear the saved profile if you want a total fresh start
-    // localStorage.removeItem('seedling_user_profile');
-}// Add to the bottom of script.js
-function confirmReset() {
-    const text = "Are you sure you want to return to the beginning? Your garden progress will remain, but you will need to recalibrate your persona.";
-    if (confirm(text) == true) {
-        returnToRoots();
+function plantSeed() {
+    const input = document.getElementById('new-subject');
+    const name = input.value.trim();
+    if (name && subjectData[name]) {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.draggable = true;
+        card.innerText = name;
+        card.id = 'seed-' + Date.now();
+        card.ondragstart = (e) => e.dataTransfer.setData("text", e.target.id);
+        card.onclick = () => loadLesson(name, 0);
+        document.querySelector('#todo .zone').appendChild(card);
+        input.value = "";
+    } else {
+        alert("Enter 'Taxes' or 'Life Insurance'");
     }
 }
 
-function returnToRoots() {
-    // Show the onboarding overlay and hide the main app
-    document.getElementById('onboarding-overlay').style.display = 'flex';
-    document.getElementById('app-shell').style.display = 'none';
-    
-    // Reset the onboarding steps to the start
-    document.getElementById('step-1').style.display = 'block';
-    document.getElementById('step-2').style.display = 'none';
+function allow(e) { e.preventDefault(); }
+function drop(e) {
+    e.preventDefault();
+    const data = e.dataTransfer.getData("text");
+    const zone = e.target.closest('.col').querySelector('.zone');
+    zone.appendChild(document.getElementById(data));
 }
-let currentCardIndex = 0;
+
+function loadLesson(name, index) {
+    currentSubject = name;
+    currentLessonIndex = index;
+    const data = subjectData[name].lessons[index];
+    document.getElementById('lesson-title').innerText = data.title;
+    document.getElementById('lesson-text').innerText = data.text;
+    document.getElementById('active-subject-display').innerText = name;
+    showPage('lesson-page');
+}
+
+function nextLesson() {
+    if (currentLessonIndex < subjectData[currentSubject].lessons.length - 1) {
+        currentLessonIndex++;
+        loadLesson(currentSubject, currentLessonIndex);
+    } else {
+        showPage('quiz-page');
+    }
+}
 
 function startHarvest(mode) {
-    if (!currentSubject) {
-        alert("Please select a subject from your garden first!");
-        return;
-    }
-    
+    if (!currentSubject) return alert("Select a subject first!");
     document.getElementById('quiz-choice-screen').style.display = 'none';
     document.getElementById('harvest-action-area').style.display = 'block';
-    
-    if (mode === 'flashcards') {
-        document.getElementById('flashcard-mode').style.display = 'block';
-        document.getElementById('quiz-mode').style.display = 'none';
-        loadFlashcard(0);
-    } else {
-        document.getElementById('flashcard-mode').style.display = 'none';
-        document.getElementById('quiz-mode').style.display = 'block';
-        loadQuizQuestion(0);
-    }
+    mode === 'flashcards' ? loadFlashcard() : loadQuiz();
 }
 
-function loadFlashcard(index) {
-    const cards = subjectData[currentSubject].flashcards;
-    const card = cards[index];
-    document.getElementById('card-front').innerText = card.q;
-    document.getElementById('card-back').innerText = card.a;
-    document.getElementById('main-flashcard').classList.remove('flipped');
-}
-
-function loadQuizQuestion(index) {
-    const quiz = subjectData[currentSubject].quiz;
-    const qData = quiz[index];
-    currentQuizIndex = index;
-
-    document.getElementById('quiz-question').innerText = qData.q;
-    const optionsDiv = document.getElementById('quiz-options');
-    optionsDiv.innerHTML = "";
-
-    qData.options.forEach((opt, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'quiz-option-btn';
-        btn.innerText = opt;
-        btn.onclick = () => checkAnswer(i, qData.correct, btn);
-        optionsDiv.appendChild(btn);
-    });
-    
-    // Update Progress
-    const progress = ((index + 1) / quiz.length) * 100;
-    document.getElementById('quiz-progress-bar').style.width = progress + "%";
-}
-
-function checkAnswer(selected, correct, btn) {
-    if (selected === correct) {
-        btn.classList.add('correct');
-        setTimeout(() => {
-            if (currentQuizIndex + 1 < subjectData[currentSubject].quiz.length) {
-                loadQuizQuestion(currentQuizIndex + 1);
-            } else {
-                alert("Harvest Complete! You've mastered " + currentSubject);
-                backToChoice();
-            }
-        }, 1000);
-    } else {
-        btn.classList.add('wrong');
-    }
+function loadFlashcard() {
+    const item = subjectData[currentSubject].lessons[currentHarvestIndex];
+    document.getElementById('flashcard-mode').style.display = 'block';
+    document.getElementById('quiz-mode').style.display = 'none';
+    document.getElementById('card-front').innerText = item.title;
+    document.getElementById('card-back').innerText = item.defs[0];
 }
 
 function backToChoice() {
     document.getElementById('quiz-choice-screen').style.display = 'block';
     document.getElementById('harvest-action-area').style.display = 'none';
-    // This "Bridge" ensures the Harvest page knows what you are studying
-function selectSubjectForHarvest(name) {
-    currentSubject = name;
-    document.getElementById('active-subject-display').innerText = name;
-    showPage('quiz-page'); // Navigates to the choice screen
-}
-
-// Add the Harvest Logic below your existing code...
-function startHarvest(mode) {
-    const choiceScreen = document.getElementById('quiz-choice-screen');
-    const actionArea = document.getElementById('harvest-action-area');
-    
-    choiceScreen.style.display = 'none';
-    actionArea.style.display = 'block';
-    
-    // Logic for loading either Quiz or Flashcards goes here
-}
 }
