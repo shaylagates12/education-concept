@@ -1,6 +1,18 @@
+/* --- AT THE TOP OF YOUR SCRIPT --- */
+
 function enterGarden() {
-    console.log("Entering the garden...");
-    // your transition code here
+    // We select the elements by their IDs to swap visibility
+    const welcome = document.getElementById('welcome-screen');
+    const app = document.getElementById('app-shell');
+    
+    if (welcome && app) {
+        welcome.style.display = 'none'; // Hides the entry gate
+        app.style.display = 'flex';     // Reveals the main garden shell
+        showPage('kanban-page');         // Redirects to the Drawing Board
+    } else {
+        console.error("Seedling Error: HTML elements for the garden transition are missing.");
+    }
+}
 }
 /* --- KEEPING ALL YOUR ORIGINAL DATA --- */
 let currentSubject = "";
