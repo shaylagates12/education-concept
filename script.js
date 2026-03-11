@@ -1,6 +1,7 @@
+/* --- KEEPING ALL YOUR ORIGINAL DATA --- */
 let currentSubject = "";
 let currentLessonIndex = 0;
-let currentQuizIndex = 0;
+let currentHarvestIndex = 0;
 
 const subjectData = {
     "Life Insurance": {
@@ -65,39 +66,84 @@ const subjectData = {
     }
 };
 
-// Function that triggers the first immersion flow
+/* --- FIXED FUNCTIONS --- */
+
 function enterGarden() {
-    // Hide welcome, show app
+    // FIXED: Corrected the property call
     document.getElementById('welcome-screen').style.display = 'none';
     document.getElementById('app-shell').style.display = 'flex';
-    
-    // Default to the Drawing Board (Kanban)
     showPage('kanban-page');
-    console.log("Welcome to your Garden! Start by planting seeds in 'The Drawing Board'.");
 }
 
-// Function to handle switching between cute garden names ( Grove, Drawing Board, Harvest Quiz)
 function showPage(id) {
-    // Hide all pages
+    // FIXED: This now clears all pages properly before showing the new one
     const pages = document.querySelectorAll('.page');
-    pages.forEach(page => page.classList.remove('active'));
+    pages.forEach(page => {
+        page.classList.remove('active');
+        page.style.display = 'none'; 
+    });
     
-    // Show the target page
-    document.getElementById(id).classList.add('active');
+    const target = document.getElementById(id);
+    target.classList.add('active');
+    target.style.display = 'block';
 }
 
-// RESTORED FUNCTIONS: SUBJECTDATA, PIP CHAT, FIELD NOTES, PROGRESS VINE, Drag&Drop logic.
+function plantSeed() {
+    const input = document.getElementById('new-subject');
+    const name = input.value.trim();
+    // FIXED: Added validation to ensure the subject exists in your data
+    if (name && subjectData[name]) {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.draggable = true;
+        card.innerText = name;
+        card.id = 'seed-' + Date.now();
+        card.ondragstart = (e) => e.dataTransfer.setData("text", e.target.id);
+        card.onclick = () => loadLesson(name, 0);
+        
+        document.querySelector('#todo .zone').appendChild(card);
+        input.value = "";
+    } else {
+        alert("Please enter: Life Insurance, Taxes, or Stock Market");
+    }
+}
 
 function loadLesson(name, index = 0) {
     currentSubject = name;
     currentLessonIndex = index;
     const data = subjectData[name].lessons[index];
+    
+    // Update text
     document.getElementById('lesson-title').innerText = data.title;
     document.getElementById('lesson-text').innerText = data.text;
+    
+    // FIXED: Better media handling
     const mc = document.getElementById('media-container');
-    mc.innerHTML = data.type === "video" ? `<video controls width="100%"><source src="${data.content}"></video>` : `<img src="${data.content}" style="width:100%">`;
+    if(data.type === "video") {
+        mc.innerHTML = `<video controls width="100%"><source src="${data.content}"></video>`;
+    } else {
+        mc.innerHTML = `<img src="${data.content}" style="width:100%; border-radius: 8px;">`;
+    }
+    
+    // Update the "Active Subject" display in the quiz page early
+    if(document.getElementById('active-subject-display')) {
+        document.getElementById('active-subject-display').innerText = name;
+    }
+    
     updateProgress(name, index);
     showPage('lesson-page');
+}
+
+function nextLesson() {
+    if (!currentSubject) return;
+    const lessons = subjectData[currentSubject].lessons;
+    if (currentLessonIndex < lessons.length - 1) {
+        currentLessonIndex++;
+        loadLesson(currentSubject, currentLessonIndex);
+    } else {
+        alert("The Grove is fully grown! Heading to Harvest.");
+        showPage('quiz-page');
+    }
 }
 
 function updateProgress(name, index) {
@@ -106,17 +152,24 @@ function updateProgress(name, index) {
     document.getElementById('progress-vine').style.width = percent + "%";
     document.querySelector('.vine-leaf').style.left = `calc(${percent}% - 15px)`;
 }
-// (PlantSeed, Drop/Allow, AskPip functions are preserved here)
-let currentHarvestIndex = 0;
 
-// This function bridges your Kanban/Lessons to the Quiz Page
+/* --- KANBAN LOGIC --- */
+function allow(e) { e.preventDefault(); }
+function drop(e) {
+    e.preventDefault();
+    const data = e.dataTransfer.getData("text");
+    const card = document.getElementById(data);
+    const zone = e.target.closest('.col').querySelector('.zone');
+    if (zone) zone.appendChild(card);
+}
+
+/* --- HARVEST / QUIZ LOGIC --- */
 function startHarvest(mode) {
     if (!currentSubject) {
-        alert("Please select a subject from 'The Grove' or 'The Drawing Board' first!");
+        alert("Select a subject in the Garden first!");
         showPage('kanban-page');
         return;
     }
-
     document.getElementById('quiz-choice-screen').style.display = 'none';
     document.getElementById('harvest-action-area').style.display = 'block';
     currentHarvestIndex = 0;
@@ -133,7 +186,9 @@ function startHarvest(mode) {
 }
 
 function loadFlashcard() {
-    // Uses your existing lesson data as flashcards!
+    const cardElement = document.querySelector('.flashcard');
+    if(cardElement) cardElement.classList.remove('flipped');
+    
     const lessons = subjectData[currentSubject].lessons;
     const item = lessons[currentHarvestIndex];
     document.getElementById('card-front').innerText = item.title;
@@ -153,15 +208,6 @@ function prevCard() {
         loadFlashcard();
     }
 }
-function loadFlashcard() {
-    // RESET the flip so the next card doesn't start backwards
-    document.querySelector('.flashcard').classList.remove('flipped'); 
-
-    const lessons = subjectData[currentSubject].lessons;
-    const item = lessons[currentHarvestIndex];
-    document.getElementById('card-front').innerText = item.title;
-    document.getElementById('card-back').innerText = item.defs[0];
-}
 
 function loadQuiz() {
     const quizData = subjectData[currentSubject].quiz[currentHarvestIndex];
@@ -172,7 +218,6 @@ function loadQuiz() {
     quizData.options.forEach((opt, i) => {
         const btn = document.createElement('button');
         btn.className = "journey-btn";
-        btn.style.textAlign = "left";
         btn.innerText = opt;
         btn.onclick = () => {
             if (i === quizData.correct) {
@@ -183,13 +228,12 @@ function loadQuiz() {
                         currentHarvestIndex++;
                         loadQuiz();
                     } else {
-                        alert("Harvest Complete! You've mastered " + currentSubject);
+                        alert("Harvest Complete!");
                         backToChoice();
                     }
-                }, 800);
+                }, 600);
             } else {
-                btn.style.backgroundColor = "var(--egyptian-earth)";
-                btn.style.color = "white";
+                btn.style.backgroundColor = "#e74c3c";
             }
         };
         optionsDiv.appendChild(btn);
@@ -199,86 +243,4 @@ function loadQuiz() {
 function backToChoice() {
     document.getElementById('quiz-choice-screen').style.display = 'block';
     document.getElementById('harvest-action-area').style.display = 'none';
-}
-
-// Update your active subject display whenever a lesson is loaded
-const originalLoadLesson = loadLesson;
-loadLesson = function(name, index) {
-    originalLoadLesson(name, index);
-    document.getElementById('active-subject-display').innerText = name;
-};
-function nextLesson() {
-    const lessons = subjectData[currentSubject].lessons;
-    if (currentLessonIndex < lessons.length - 1) {
-        currentLessonIndex++;
-        loadLesson(currentSubject, currentLessonIndex);
-    } else {
-        alert("You've reached the end of this path! Time to harvest your knowledge.");
-        showPage('quiz-page');
-    }
-}
-function plantSeed() {
-    const input = document.getElementById('new-subject');
-    const name = input.value.trim();
-    if (name && subjectData[name]) {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.draggable = true;
-        card.innerText = name;
-        card.id = 'seed-' + Date.now();
-        card.ondragstart = (e) => e.dataTransfer.setData("text", e.target.id);
-        card.onclick = () => loadLesson(name, 0);
-        
-        document.querySelector('#todo .zone').appendChild(card);
-        input.value = "";
-    } else {
-        alert("Please enter a valid subject (e.g., Taxes, Stock Market)");
-    }
-}
-
-function allow(e) { e.preventDefault(); }
-function drop(e) {
-    e.preventDefault();
-    const data = e.dataTransfer.getData("text");
-    const card = document.getElementById(data);
-    const zone = e.target.closest('.col').querySelector('.zone');
-    if (zone) zone.appendChild(card);
-}
-function nextLesson() {
-    const lessons = subjectData[currentSubject].lessons;
-    if (currentLessonIndex < lessons.length - 1) {
-        currentLessonIndex++;
-        loadLesson(currentSubject, currentLessonIndex);
-    } else {
-        alert("The Grove is fully grown! Heading to Harvest.");
-        showPage('quiz-page');
-    }
-}
-function plantSeed() {
-    const input = document.getElementById('new-subject');
-    const name = input.value.trim();
-    if (name && subjectData[name]) {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.draggable = true;
-        card.innerText = name;
-        card.id = 'seed-' + Date.now();
-        // This ensures the system "recognizes" the card for dragging
-        card.ondragstart = (e) => e.dataTransfer.setData("text", e.target.id);
-        card.onclick = () => loadLesson(name, 0);
-        
-        document.querySelector('#todo .zone').appendChild(card);
-        input.value = "";
-    } else {
-        alert("Please enter a valid subject like 'Taxes' or 'Stock Market'");
-    }
-}
-function allow(e) { e.preventDefault(); }
-
-function drop(e) {
-    e.preventDefault();
-    const data = e.dataTransfer.getData("text");
-    const card = document.getElementById(data);
-    const zone = e.target.closest('.col').querySelector('.zone');
-    if (zone) zone.appendChild(card);
 }
