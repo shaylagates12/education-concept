@@ -28,7 +28,7 @@ body {
     position: fixed;
     inset: 0;
     /* This uses your palette colors as a beautiful fallback */
-    background: linear-gradient(135deg, var(--Dusty-pink), var(--wasabi)); 
+    background: linear-gradient(135deg, var(--dusty-pink), var(--wasabi)); 
     display: flex;
     align-items: center;
     justify-content: center;
