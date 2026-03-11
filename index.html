@@ -109,6 +109,11 @@
         <h2>Harvest Time: Flashcards & Quizzes</h2>
     </header>
 
+   <section id="quiz-page" class="page newspaper-page">
+    <header class="news-head">
+        <h2>Harvest Time: Flashcards & Quizzes</h2>
+    </header>
+
     <div id="quiz-choice-screen" class="parchment news-box" style="text-align: center; padding: 40px; margin-top: 20px;">
         <h1 class="news-headline">Thyme to Grow!</h1>
         <p class="masthead">Currently Harvesting: <span id="active-subject-display" style="color: var(--egyptian-earth);">None Selected</span></p>
@@ -121,7 +126,7 @@
     <div id="harvest-action-area" style="display:none; margin-top: 20px;">
         <button class="vintage-btn" onclick="backToChoice()" style="margin-bottom: 20px;">⬅ Change Method</button>
         
-        <div id="flashcard-mode" class="quiz-container">
+        <div id="flashcard-mode">
             <div class="flashcard" onclick="this.classList.toggle('flipped')">
                 <div class="flashcard-inner">
                     <div class="front" id="card-front">Question</div>
@@ -140,6 +145,3 @@
         </div>
     </div>
 </section>
-<script src="script.js"></script>
-</body>
-</html>
