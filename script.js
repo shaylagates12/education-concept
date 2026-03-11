@@ -107,3 +107,94 @@ function updateProgress(name, index) {
     document.querySelector('.vine-leaf').style.left = `calc(${percent}% - 15px)`;
 }
 // (PlantSeed, Drop/Allow, AskPip functions are preserved here)
+let currentHarvestIndex = 0;
+
+// This function bridges your Kanban/Lessons to the Quiz Page
+function startHarvest(mode) {
+    if (!currentSubject) {
+        alert("Please select a subject from 'The Grove' or 'The Drawing Board' first!");
+        showPage('kanban-page');
+        return;
+    }
+
+    document.getElementById('quiz-choice-screen').style.display = 'none';
+    document.getElementById('harvest-action-area').style.display = 'block';
+    currentHarvestIndex = 0;
+
+    if (mode === 'flashcards') {
+        document.getElementById('flashcard-mode').style.display = 'block';
+        document.getElementById('quiz-mode').style.display = 'none';
+        loadFlashcard();
+    } else {
+        document.getElementById('flashcard-mode').style.display = 'none';
+        document.getElementById('quiz-mode').style.display = 'block';
+        loadQuiz();
+    }
+}
+
+function loadFlashcard() {
+    // Uses your existing lesson data as flashcards!
+    const lessons = subjectData[currentSubject].lessons;
+    const item = lessons[currentHarvestIndex];
+    document.getElementById('card-front').innerText = item.title;
+    document.getElementById('card-back').innerText = item.defs[0];
+}
+
+function nextCard() {
+    if (currentHarvestIndex < subjectData[currentSubject].lessons.length - 1) {
+        currentHarvestIndex++;
+        loadFlashcard();
+    }
+}
+
+function prevCard() {
+    if (currentHarvestIndex > 0) {
+        currentHarvestIndex--;
+        loadFlashcard();
+    }
+}
+
+function loadQuiz() {
+    const quizData = subjectData[currentSubject].quiz[currentHarvestIndex];
+    document.getElementById('quiz-question').innerText = quizData.q;
+    const optionsDiv = document.getElementById('quiz-options');
+    optionsDiv.innerHTML = "";
+
+    quizData.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = "journey-btn";
+        btn.style.textAlign = "left";
+        btn.innerText = opt;
+        btn.onclick = () => {
+            if (i === quizData.correct) {
+                btn.style.backgroundColor = "var(--emerald-green)";
+                btn.style.color = "white";
+                setTimeout(() => {
+                    if (currentHarvestIndex < subjectData[currentSubject].quiz.length - 1) {
+                        currentHarvestIndex++;
+                        loadQuiz();
+                    } else {
+                        alert("Harvest Complete! You've mastered " + currentSubject);
+                        backToChoice();
+                    }
+                }, 800);
+            } else {
+                btn.style.backgroundColor = "var(--egyptian-earth)";
+                btn.style.color = "white";
+            }
+        };
+        optionsDiv.appendChild(btn);
+    });
+}
+
+function backToChoice() {
+    document.getElementById('quiz-choice-screen').style.display = 'block';
+    document.getElementById('harvest-action-area').style.display = 'none';
+}
+
+// Update your active subject display whenever a lesson is loaded
+const originalLoadLesson = loadLesson;
+loadLesson = function(name, index) {
+    originalLoadLesson(name, index);
+    document.getElementById('active-subject-display').innerText = name;
+};
