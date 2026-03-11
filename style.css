@@ -24,12 +24,11 @@ body {
     overflow: hidden;
 }
 
-/* --- 2. WELCOME SCREEN (Sprout Gate) --- */
 #welcome-screen {
     position: fixed;
     inset: 0;
-    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('path_bg.jpg'); /* Immersion image_15.png */
-    background-size: cover;
+    /* This uses your palette colors as a beautiful fallback */
+    background: linear-gradient(135deg, var(--Dusty-pink), var(--wasabi)); 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -135,7 +134,7 @@ body {
     height: 100%;
     padding: 40px;
     overflow-y: auto;
-    background-image: url('newspaper_texture.png'), linear-gradient(var(--parchment), var(--parchment)); /* vintage paper texture */
+   path_bg.jpg: url('newspaper_texture.png'), linear-gradient(var(--parchment), var(--parchment)); /* vintage paper texture */
     background-color: var(--parchment);
     background-blend-mode: multiply;
 }
