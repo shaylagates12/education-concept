@@ -391,4 +391,4 @@ textarea { font-family: 'Caveat', cursive; font-size: 1.4rem; border: none; back
     display: grid;
     grid-template-columns: 2fr 1fr; /* 2 parts lesson, 1 part side-tools */
     gap: 40px;
-}}
+}
