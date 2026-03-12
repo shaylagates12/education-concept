@@ -272,26 +272,12 @@ textarea { font-family: 'Caveat', cursive; font-size: 1.4rem; border: none; back
     border-color: var(--emerald-green);
     background-color: var(--parchment);
 }
-/* Fixes the lesson page layout */
-.lesson-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr; /* 2 parts lesson, 1 part sidebar */
-    gap: 20px;
-    align-items: start;
-    max-height: 80vh; /* Keeps it from disappearing off screen */
-    overflow-y: auto; /* Adds a scrollbar if the text is too long */
-}
 
 /* Makes Pip and Notes smaller */
 .parody-ads-column {
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-
-.parody-ad {
-    padding: 10px;
-    font-size: 0.85em; /* Shrinks the text size */
 }
 
 #field-notes {
@@ -360,13 +346,6 @@ textarea { font-family: 'Caveat', cursive; font-size: 1.4rem; border: none; back
     align-items: start;
 }
 
-/* Fixes the height so you can scroll inside the box, not the whole page */
-.crystal-paper-box {
-    height: 85vh;
-    overflow-y: auto;
-    padding: 20px;
-}
-
 /* Keeps Pip's box and Notes from getting too huge */
 .parody-ad {
     margin-bottom: 15px;
@@ -412,39 +391,4 @@ textarea { font-family: 'Caveat', cursive; font-size: 1.4rem; border: none; back
     display: grid;
     grid-template-columns: 2fr 1fr; /* 2 parts lesson, 1 part side-tools */
     gap: 40px;
-}
-
-/* Flashcard Styling */
-.flashcard-container {
-    perspective: 1000px;
-    width: 100%;
-    height: 300px;
-}
-
-.flashcard {
-    width: 100%;
-    height: 100%;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-    cursor: pointer;
-}
-
-.flashcard.flipped { transform: rotateY(180deg); }
-
-.card-front, .card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    border-radius: 15px;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    text-align: center;
-}
-
-.card-front { background: #e0d0b8; color: #2d5a27; border: 4px solid #c5b396; }
-.card-back { background: #fff; color: #5d4037; border: 4px solid #d7ccc8; transform: rotateY(180deg); }
+}}
