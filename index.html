@@ -21,83 +21,101 @@
         </div>
     </section>
 
-  <div id="app-shell" style="display:none;">
-    <div class="trail-path-bg"></div>
+    <div id="app-shell" style="display:none;">
+        <div class="trail-path-bg"></div>
 
-    <aside class="sidebar-vine">
-        <div class="logo">🌱</div>
-        <nav>
-            <button onclick="showPage('kanban-page')" title="The Drawing Board">🏡</button>
-            <button onclick="showPage('lesson-page')" title="The Grove">📖</button>
-            <button onclick="showPage('quiz-page')" title="Harvest Quiz">🍎</button>
-        </nav>
-        <div id="rank-badge" style="font-weight: bold; color: var(--egyptian-earth); margin-top: auto; padding-bottom: 20px;">Novice Sprout</div>
-    </aside>
+        <aside class="sidebar-vine">
+            <div class="logo">🌱</div>
+            <nav>
+                <button onclick="showPage('kanban-page')" title="The Drawing Board">🏡</button>
+                <button onclick="showPage('lesson-page')" title="The Grove">📖</button>
+                <button onclick="showPage('quiz-page')" title="Harvest Quiz">🍎</button>
+            </nav>
+            <div id="rank-badge">Novice Sprout</div>
+        </aside>
 
-    <main class="content-area">
-        <div class="crystal-paper-box">
-            
-            <section id="kanban-page" class="page newspaper-page">
-                <header class="news-head"><h2>Garden Layout: The Drawing Board</h2></header>
-                <div class="kanban-header">
-                    <input type="text" id="new-subject" placeholder="New subject name...">
-                    <button onclick="plantSeed()">Plant Seed</button>
-                </div>
-                <div class="garden-board">
-                    <div class="col" id="todo"><h3>The Packet</h3><div class="zone"></div></div>
-                    <div class="col" id="doing"><h3>Sprouting</h3><div class="zone"></div></div>
-                    <div class="col" id="done"><h3>Blooming</h3><div class="zone"></div></div>
-                </div>
-            </section>
-
-            <section id="lesson-page" class="page newspaper-page">
-                <header class="news-head"><h2>Seedling: The Grove Edition</h2></header>
-                <div class="deck-selector">
-                    <button class="vintage-btn" onclick="switchDeck('Life Insurance')">Life Insurance</button>
-                    <button class="vintage-btn" onclick="switchDeck('Taxes')">Taxes</button>
-                    <button class="vintage-btn" onclick="switchDeck('Stock Market')">Stocks</button>
-                </div>
+        <main class="content-area">
+            <div class="crystal-paper-box">
                 
-                <div class="lesson-grid">
-                    <article class="main-news">
-                        <div class="progress-container"><div id="progress-vine" class="vine-bar"></div></div>
-                        <h1 id="lesson-title" class="news-headline">Select a Subject</h1>
-                        <div id="media-container" class="newspaper-photo"></div>
-                        <div id="lesson-text" class="news-copy"></div>
-                    </article>
+                <section id="kanban-page" class="page newspaper-page">
+                    <header class="news-head"><h2>Garden Layout: The Drawing Board</h2></header>
+                    <div class="kanban-header">
+                        <input type="text" id="new-subject" placeholder="New subject name...">
+                        <button onclick="plantSeed()">Plant Seed</button>
+                    </div>
+                    <div class="garden-board">
+                        <div class="col" id="todo"><h3>The Packet</h3><div class="zone" ondrop="drop(event)" ondragover="allow(event)"></div></div>
+                        <div class="col" id="doing"><h3>Sprouting</h3><div class="zone" ondrop="drop(event)" ondragover="allow(event)"></div></div>
+                        <div class="col" id="done"><h3>Blooming</h3><div class="zone" ondrop="drop(event)" ondragover="allow(event)"></div></div>
+                    </div>
+                </section>
 
-                    <aside class="parody-ads-column">
-                        <div class="parody-ad field-notes-ad">
-                            <h4>Field Notes</h4>
-                            <textarea id="field-notes" placeholder="Write your thoughts..."></textarea>
+                <section id="lesson-page" class="page newspaper-page">
+                    <header class="news-head"><h2>Seedling: The Grove Edition</h2></header>
+                    <div class="deck-selector">
+                        <button class="vintage-btn" onclick="loadLesson('Life Insurance')">Life Insurance</button>
+                        <button class="vintage-btn" onclick="loadLesson('Taxes')">Taxes</button>
+                        <button class="vintage-btn" onclick="loadLesson('Stock Market')">Stocks</button>
+                    </div>
+                    
+                    <div class="lesson-grid">
+                        <article class="main-news">
+                            <div class="progress-container"><div id="progress-vine" class="vine-bar"></div></div>
+                            <h1 id="lesson-title" class="news-headline">Select a Subject</h1>
+                            <div id="media-container" class="newspaper-photo"></div>
+                            <div id="lesson-text" class="news-copy"></div>
+                        </article>
+
+                        <aside class="parody-ads-column">
+                            <div class="parody-ad field-notes-ad">
+                                <h4>Field Notes</h4>
+                                <textarea id="field-notes" placeholder="Write your thoughts..."></textarea>
+                            </div>
+                            <div class="parody-ad ask-pip-ad">
+                                <h4>Ask Pip</h4>
+                                <div id="chat-display"></div>
+                                <div class="chat-input">
+                                    <input type="text" id="pip-input" placeholder="Ask Pip...">
+                                    <button onclick="askPip()">➔</button>
+                                </div>
+                            </div>
+                            <button class="journey-btn" onclick="nextLesson()">Next Lesson ➔</button>
+                        </aside>
+                    </div>
+                </section>
+
+                <section id="quiz-page" class="page newspaper-page">
+                    <header class="news-head"><h2>Harvest Time</h2></header>
+                    
+                    <div id="quiz-choice-screen">
+                        <div class="choice-container">
+                            <button class="journey-btn" onclick="startHarvest('quiz')">Take the Quiz</button>
+                            <button class="journey-btn" onclick="startHarvest('flashcards')">Review Flashcards</button>
                         </div>
-                        <div class="parody-ad ask-pip-ad">
-                            <h4>Ask Pip</h4>
-                            <div id="chat-display"></div>
-                            <div class="chat-input">
-                                <input type="text" id="pip-input" placeholder="Ask Pip...">
-                                <button onclick="askPip()">➔</button>
+                    </div>
+
+                    <div id="harvest-action-area" style="display:none;">
+                        <div id="flashcard-mode" style="display:none;">
+                            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                                <div class="flashcard-inner">
+                                    <div class="flashcard-front" id="card-front">Front</div>
+                                    <div class="flashcard-back" id="card-back">Back</div>
+                                </div>
+                            </div>
+                            <div class="nav-controls">
+                                <button onclick="prevCard()">← Prev</button>
+                                <button onclick="nextCard()">Next →</button>
                             </div>
                         </div>
-                        <button class="journey-btn" onclick="nextLesson()">Next Lesson ➔</button>
-                    </aside>
-                </div>
-            </section>
 
-            <section id="quiz-page" class="page newspaper-page">
-                <header class="news-head"><h2>Harvest Time</h2></header>
-                <div id="quiz-choice-screen">
-                    <button class="journey-btn" onclick="startHarvest()">Start Quiz</button>
-                </div>
-                <div id="quiz-mode" style="display:none;">
-                    <h3 id="quiz-question"></h3>
-                    <div id="quiz-options"></div>
-                </div>
-            </section>
+                        <div id="quiz-mode" style="display:none;">
+                            <h3 id="quiz-question">Question goes here?</h3>
+                            <div id="quiz-options"></div>
+                        </div>
 
-        </div>
-    </main>
-</div>
+                        <button class="vintage-btn" onclick="backToChoice()" style="margin-top:20px;">Back to Choices</button>
+                    </div>
+                </section>
 
             </div>
         </main>
