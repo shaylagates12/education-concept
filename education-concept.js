@@ -297,3 +297,12 @@ function updateLessonUI() {
     // Injects the picture/chart
     document.getElementById('media-container').innerHTML = `<img src="${lesson.img}" style="max-width:100%; border-radius:10px;">`;
 }
+function showLesson(index) {
+    const lesson = subjectData[currentSubject].lessons[index];
+    document.getElementById('lesson-title').innerText = lesson.title;
+    document.getElementById('lesson-text').innerText = lesson.text;
+    
+    // This part handles your charts/pictures!
+    const mediaContainer = document.getElementById('media-container');
+    mediaContainer.innerHTML = `<img src="${lesson.img}" alt="${lesson.title}" style="max-width:100%; border-radius:8px;">`;
+}
