@@ -24,31 +24,43 @@
     <div id="app-shell" style="display:none;">
         <div class="trail-path-bg"></div>
 
-        <aside class="sidebar-vine">
-            <div class="logo">🌱</div>
-            <nav>
-                <button onclick="showPage('kanban-page')" title="The Drawing Board">🏡</button>
-                <button onclick="showPage('lesson-page')" title="The Grove">📖</button>
-                <button onclick="showPage('quiz-page')" title="Harvest Quiz">🍎</button>
-            </nav>
-            <div id="rank-badge">Novice Sprout</div>
-        </aside>
+       <aside class="sidebar-vine">
+    <div class="logo">🌱</div>
+    <nav>
+        <button onclick="showPage('kanban-page')" class="nav-item">Board</button>
+        <button onclick="showPage('lesson-page')" class="nav-item">Grove</button>
+        <button onclick="showPage('quiz-page')" class="nav-item">Harvest</button>
+    </nav>
+    <div id="rank-badge">Novice Sprout</div>
+</aside>
 
-        <main class="content-area">
-            <div class="crystal-paper-box">
-                
-                <section id="kanban-page" class="page newspaper-page">
-                    <header class="news-head"><h2>Garden Layout: The Drawing Board</h2></header>
-                    <div class="kanban-header">
-                        <input type="text" id="new-subject" placeholder="New subject name...">
-                        <button onclick="plantSeed()">Plant Seed</button>
-                    </div>
-                    <div class="garden-board">
-                        <div class="col" id="todo"><h3>The Packet</h3><div class="zone" ondrop="drop(event)" ondragover="allow(event)"></div></div>
-                        <div class="col" id="doing"><h3>Sprouting</h3><div class="zone" ondrop="drop(event)" ondragover="allow(event)"></div></div>
-                        <div class="col" id="done"><h3>Blooming</h3><div class="zone" ondrop="drop(event)" ondragover="allow(event)"></div></div>
-                    </div>
-                </section>
+<section id="kanban-page" class="page newspaper-page">
+    <header class="news-head"><h2>The Drawing Board</h2></header>
+    
+    <div class="kanban-header">
+        <input type="text" id="new-subject" placeholder="New subject name...">
+        <button class="plant-btn" onclick="plantSeed()">Plant Seed</button>
+    </div>
+
+    <div class="kanban-board">
+        <div class="kanban-column" id="todo">
+            <h3>Backlog</h3>
+            <div class="zone" ondrop="drop(event)" ondragover="allow(event)"></div>
+        </div>
+        <div class="kanban-column" id="doing">
+            <h3>To Do</h3>
+            <div class="zone" ondrop="drop(event)" ondragover="allow(event)"></div>
+        </div>
+        <div class="kanban-column" id="in-progress">
+            <h3>In Progress</h3>
+            <div class="zone" ondrop="drop(event)" ondragover="allow(event)"></div>
+        </div>
+        <div class="kanban-column" id="done">
+            <h3>Done</h3>
+            <div class="zone" ondrop="drop(event)" ondragover="allow(event)"></div>
+        </div>
+    </div>
+</section>
 
               <section id="lesson-page" class="page newspaper-page">
     <header class="news-head"><h2>Seedling: The Grove Edition</h2></header>
