@@ -379,3 +379,19 @@ textarea { font-family: 'Caveat', cursive; font-size: 1.4rem; border: none; back
     background: rgba(255, 255, 255, 0.5);
     margin-bottom: 5px;
 }
+.crystal-paper-box {
+    width: 95%;
+    max-width: 1400px;
+    height: 90vh; /* Increased height */
+    overflow-y: scroll; /* Forces scrollability */
+    padding: 30px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--wasabi) transparent;
+}
+
+/* Allow the lesson content to breathe */
+.news-copy {
+    line-height: 1.8;
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+}
