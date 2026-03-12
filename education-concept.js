@@ -150,6 +150,9 @@ function askPip() {
         }, 600);
 
         input.value = "";
+        // Add this inside your askPip function's setTimeout
+const pipBox = document.querySelector('.ask-pip-ad');
+pipBox.classList.add('pip-active');
     }
 }
 function updateRank(status) {
@@ -197,3 +200,7 @@ function updateRank(status) {
     font-family: 'Playfair Display', serif;
     font-size: 1.4rem;
 }
+// Add this at the bottom of your JS to stop the glow when you focus
+document.getElementById('pip-input').addEventListener('focus', () => {
+    document.querySelector('.ask-pip-ad').classList.remove('pip-active');
+});
