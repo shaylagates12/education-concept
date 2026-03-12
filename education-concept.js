@@ -31,6 +31,14 @@ function enterGarden() {
     document.getElementById('welcome-screen').style.display = 'none';
     document.getElementById('app-shell').style.display = 'flex';
     showPage('kanban-page');
+    
+    // Pip's Auto-Welcome Message
+    const chat = document.getElementById('chat-display');
+    if(chat) {
+        setTimeout(() => {
+            chat.innerHTML += `<p style="color: #2d5a27;"><strong>Pip 🌱:</strong> Welcome to the garden! Plant a seed in the Drawing Board to begin.</p>`;
+        }, 1000);
+    }
 }
 
 function showPage(id) {
@@ -143,4 +151,49 @@ function askPip() {
 
         input.value = "";
     }
+}
+function updateRank(status) {
+    const badge = document.getElementById('rank-badge');
+    if (status === "bloomed") {
+        badge.innerText = "Master Gardener";
+        badge.style.color = "#d4af37"; // Gold color
+        
+        const chat = document.getElementById('chat-display');
+        chat.innerHTML += `<p style="color: #2d5a27;"><strong>Pip 🌱:</strong> Wow! You've reached Master Gardener status!</p>`;
+    }
+}
+/* Pip's Glow Animation */
+@keyframes pip-glow {
+    0% { box-shadow: 0 0 5px rgba(45, 90, 39, 0.2); border-color: #2d5a27; }
+    50% { box-shadow: 0 0 15px rgba(76, 175, 80, 0.6); border-color: #4CAF50; }
+    100% { box-shadow: 0 0 5px rgba(45, 90, 39, 0.2); border-color: #2d5a27; }
+}
+
+.ask-pip-ad {
+    border: 2px solid #2d5a27;
+    transition: all 0.3s ease;
+}
+
+.pip-active {
+    animation: pip-glow 2s infinite ease-in-out;
+    background-color: rgba(232, 245, 233, 0.8) !important;
+}
+
+/* Flashcard Earthy Styling (Matching your Image) */
+.flashcard-inner {
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+.front { background-color: #e0d0b8; color: #2d5a27; border: 4px solid #c5b396; }
+.back { background-color: #fdf5e6; color: #5d4037; border: 4px solid #d7ccc8; }
+
+.front, .back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
 }
