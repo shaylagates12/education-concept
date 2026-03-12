@@ -429,3 +429,65 @@ textarea { font-family: 'Caveat', cursive; font-size: 1.4rem; border: none; back
     background-color: var(--gold-frame);
     color: white;
 }
+/* SIDEBAR NAMES INSTEAD OF EMOJIS */
+.sidebar-vine {
+    width: 120px; /* Widened to fit text */
+}
+
+.nav-item {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.9rem;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 10px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* MODERN KANBAN LAYOUT */
+.kanban-board {
+    display: flex;
+    gap: 15px;
+    padding: 20px 0;
+    overflow-x: auto;
+}
+
+.kanban-column {
+    background: #f4f5f7; /* Light gray from your reference */
+    border-radius: 20px;
+    min-width: 200px;
+    flex: 1;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.kanban-column h3 {
+    text-align: center;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #5e6c84;
+    margin-bottom: 20px;
+}
+
+/* PILL-SHAPED CARDS */
+.card {
+    background: var(--dusty-pink); /* Using your aesthetic color */
+    color: var(--egyptian-earth);
+    padding: 12px 20px;
+    border-radius: 50px; /* Pill shape from reference image */
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: center;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    cursor: grab;
+}
+
+/* Give cards different colors based on order or subject if you wish */
+.card:nth-child(even) { background: #7d5fff; color: white; }
+.card:nth-child(3n) { background: #3ae374; color: white; }
