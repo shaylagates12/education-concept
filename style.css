@@ -301,3 +301,17 @@ textarea { font-family: 'Caveat', cursive; font-size: 1.4rem; border: none; back
 #chat-display {
     height: 120px;
 }
+.deck-selector .vintage-btn {
+    padding: 5px 15px;
+    margin: 0 5px;
+    font-size: 0.9rem;
+    background: #e0d0b8;
+    border: 2px solid #c5b396;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.deck-selector .vintage-btn:hover {
+    background: #2d5a27;
+    color: white;
+}
