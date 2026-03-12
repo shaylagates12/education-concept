@@ -63,8 +63,17 @@
         <textarea id="field-notes" placeholder="Write your thoughts..."></textarea>
     </div>
 
+    <div class="parody-ad ask-pip-ad">
+        <h4>Ask Pip</h4>
+        <div id="chat-display" style="height: 100px; overflow-y: auto; background: rgba(255,255,255,0.5); padding: 5px; margin-bottom: 5px; font-size: 0.9em;"></div>
+        <div class="chat-input" style="display: flex; gap: 2px;">
+            <input type="text" id="pip-input" placeholder="Ask Pip..." style="width: 80%;">
+            <button onclick="askPip()">➔</button>
+        </div>
+    </div>
+
     <div class="parody-ad journey-btn-ad">
-        <button id="next-lesson-btn" ...>Next Lesson ➔</button>
+        <button id="next-lesson-btn" class="journey-btn" onclick="nextLesson()">Next Lesson ➔</button>
     </div>
 </aside>
                 <section id="kanban-page" class="page newspaper-page">
