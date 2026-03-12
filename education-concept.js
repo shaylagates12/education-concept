@@ -23,31 +23,28 @@ const subjectData = {
     "Taxes": {
         lessons: [
             { title: "1. The Social Contract", text: "Taxes are mandatory contributions to state revenue. They fund public services like roads, schools, and emergency services.", img: "tax-basics.jpg" },
-            { title: "2. Progressive vs. Regressive", text: "The US uses a progressive system: as you earn more, your tax rate increases in brackets. Regressive taxes (like sales tax) affect lower incomes more heavily.", img: "tax-brackets-chart.png" },
+            { title: "2. Progressive vs. Regressive", text: "The US uses a progressive system: as you earn more, your tax rate increases in brackets.", img: "tax-brackets-chart.png" },
             { title: "3. The W-4 Form", text: "Filled out when you start a job, this tells your employer how much tax to withhold from your paycheck.", img: "w4-form.jpg" },
-            { title: "4. Filing Status", text: "Your status (Single, Married Filing Jointly, Head of Household) determines your standard deduction and tax rates.", img: "filing-status.jpg" },
-            { title: "5. Gross vs. Taxable Income", text: "Gross income is everything you earn. Taxable income is what's left after deductions and adjustments.", img: "income-calc.png" },
-            { title: "6. Standard Deduction", text: "A flat amount the IRS allows you to subtract from your income, no questions asked, to lower your tax bill.", img: "deduction.jpg" },
-            { title: "7. Itemized Deductions", text: "If your specific expenses (mortgage interest, charity) are higher than the standard deduction, you 'itemize' to save more money.", img: "itemizing.jpg" },
-            { title: "8. Tax Credits", text: "Credits are more powerful than deductions. While deductions lower taxable income, credits reduce your actual tax bill dollar-for-dollar.", img: "tax-credit-vs-deduction.png" },
-            { title: "9. The 1040 Form", text: "This is the main form used by individual taxpayers to file their annual income tax returns.", img: "1040-form.jpg" },
-            { title: "10. Tax Deadlines", text: "April 15th is the typical 'Tax Day.' Filing an extension gives you until October, but you still must pay estimated taxes by April.", img: "calendar.jpg" }
+            { title: "4. Filing Status", text: "Your status (Single, Married, etc) determines your standard deduction.", img: "filing-status.jpg" },
+            { title: "5. Gross vs. Taxable Income", text: "Gross income is everything you earn. Taxable income is what's left after deductions.", img: "income-calc.png" },
+            { title: "6. Standard Deduction", text: "A flat amount the IRS allows you to subtract from your income to lower your tax bill.", img: "deduction.jpg" },
+            { title: "7. Itemized Deductions", text: "If your specific expenses are higher than the standard deduction, you 'itemize'.", img: "itemizing.jpg" },
+            { title: "8. Tax Credits", text: "Credits reduce your actual tax bill dollar-for-dollar.", img: "tax-credit-vs-deduction.png" },
+            { title: "9. The 1040 Form", text: "This is the main form used by individual taxpayers to file returns.", img: "1040-form.jpg" },
+            { title: "10. Tax Deadlines", text: "April 15th is the typical 'Tax Day.'", img: "calendar.jpg" }
         ],
         quiz: [
             { q: "Which form tells your employer how much to withhold?", options: ["1040", "W-4", "W-2", "1099"], correct: 1 },
-            { q: "What is better: A $1,000 credit or a $1,000 deduction?", options: ["Deduction", "Credit", "They are the same", "Neither"], correct: 1 },
-            { q: "Which tax system charges higher earners a higher %?", options: ["Regressive", "Flat", "Progressive", "Direct"], correct: 2 },
-            { q: "When is the typical deadline to file taxes?", options: ["January 1", "April 15", "July 4", "December 31"], correct: 1 }
+            { q: "What is better: A $1,000 credit or a $1,000 deduction?", options: ["Deduction", "Credit", "They are the same", "Neither"], correct: 1 }
         ]
     },
     "Life Insurance": {
         lessons: [
-            { title: "The Foundation", text: "Life insurance is a legal contract between a policyholder and an insurer...", img: "base.jpg" },
+            { title: "The Foundation", text: "Life insurance is a legal contract between a policyholder and an insurer.", img: "base.jpg" },
             { title: "Understanding Premiums", text: "A premium is the amount you pay... factors include age and health.", img: "premium.jpg" }
         ],
         quiz: [
-            { q: "What is a premium?", options: ["A payout", "A monthly cost", "A tax break", "A contract"], correct: 1 },
-            { q: "Who receives the payout?", options: ["The Insurer", "The Beneficiary", "The Bank", "The State"], correct: 1 }
+            { q: "What is a premium?", options: ["A payout", "A monthly cost", "A tax break", "A contract"], correct: 1 }
         ]
     }
 };
@@ -83,13 +80,6 @@ function showPage(id) {
     }
 }
 
-function updateProgress(name, index) {
-    const total = subjectData[name].lessons.length;
-    const percent = ((index + 1) / total) * 100;
-    const vine = document.getElementById('progress-vine');
-    if(vine) vine.style.width = percent + "%";
-}
-
 /* --- 4. CORE LOGIC --- */
 function plantSeed() {
     const input = document.getElementById('new-subject');
@@ -114,10 +104,16 @@ function loadLesson(name, index = 0) {
     document.getElementById('lesson-title').innerText = data.title;
     document.getElementById('lesson-text').innerText = data.text;
     document.getElementById('media-container').innerHTML = `<img src="${data.img}" style="width:100%; border-radius:8px;">`;
-    document.getElementById('active-subject-display').innerText = name;
     
     updateProgress(name, index);
     showPage('lesson-page');
+}
+
+function updateProgress(name, index) {
+    const total = subjectData[name].lessons.length;
+    const percent = ((index + 1) / total) * 100;
+    const vine = document.getElementById('progress-vine');
+    if(vine) vine.style.width = percent + "%";
 }
 
 function nextLesson() {
@@ -155,7 +151,7 @@ function loadQuiz() {
     optionsDiv.innerHTML = "";
     quiz.options.forEach((opt, i) => {
         const btn = document.createElement('button');
-        btn.className = "journey-btn";
+        btn.className = "quiz-option-btn";
         btn.innerText = opt;
         btn.onclick = () => alert(i === quiz.correct ? "Correct Harvest!" : "Try again!");
         optionsDiv.appendChild(btn);
@@ -164,16 +160,14 @@ function loadQuiz() {
 
 function loadFlashcard() {
     const data = subjectData[currentSubject];
-    if (!data) return;
     const card = data.lessons[currentCardIndex]; 
     document.getElementById('card-front').innerText = card.title;
     document.getElementById('card-back').innerText = card.text;
-    document.querySelector('.flashcard').classList.remove('flipped');
+    document.querySelector('.flashcard-inner').classList.remove('flipped');
 }
 
 function nextCard() {
-    const total = subjectData[currentSubject].lessons.length;
-    currentCardIndex = (currentCardIndex + 1) % total;
+    currentCardIndex = (currentCardIndex + 1) % subjectData[currentSubject].lessons.length;
     loadFlashcard();
 }
 
@@ -181,6 +175,11 @@ function prevCard() {
     const total = subjectData[currentSubject].lessons.length;
     currentCardIndex = (currentCardIndex - 1 + total) % total;
     loadFlashcard();
+}
+
+function backToChoice() {
+    document.getElementById('quiz-choice-screen').style.display = 'block';
+    document.getElementById('harvest-action-area').style.display = 'none';
 }
 
 /* --- 6. PIP CHAT --- */
@@ -195,12 +194,8 @@ function askPip() {
         
         if (question.includes("hello") || question.includes("hi")) {
             response = "Hello! Ready to do some gardening in the Grove?";
-        } else if (question.includes("help") || question.includes("study")) {
-            response = currentSubject ? `We are studying ${currentSubject}. Check the definitions box for clues!` : "Pick a seed in the garden to start learning!";
-        } else if (question.includes("tax")) {
-            response = "Taxes are like pruning—nobody likes it, but it's part of the process!";
-        } else if (question.includes("stock") || question.includes("invest")) {
-            response = "The stock market is like a forest. Some trees grow fast, others slow, but the best gardeners wait for the long term!";
+        } else if (question.includes("help")) {
+            response = currentSubject ? `We are studying ${currentSubject}. Check the notes for clues!` : "Pick a seed in the garden to start!";
         }
 
         setTimeout(() => {
@@ -209,23 +204,5 @@ function askPip() {
         }, 600);
 
         input.value = "";
-        const pipBox = document.querySelector('.ask-pip-ad');
-        if(pipBox) pipBox.classList.add('pip-active');
     }
-}
-
-// Event Listeners
-const pipInput = document.getElementById('pip-input');
-if(pipInput) {
-    pipInput.addEventListener('focus', () => {
-        const pipBox = document.querySelector('.ask-pip-ad');
-        if(pipBox) pipBox.classList.remove('pip-active');
-    });
-}
-
-function allow(e) { e.preventDefault(); }
-function drop(e) { e.preventDefault(); }
-function backToChoice() {
-    document.getElementById('quiz-choice-screen').style.display = 'block';
-    document.getElementById('harvest-action-area').style.display = 'none';
 }
