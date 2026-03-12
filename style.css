@@ -315,7 +315,6 @@ textarea { font-family: 'Caveat', cursive; font-size: 1.4rem; border: none; back
     box-shadow: 0 0 5px rgba(45, 90, 39, 0.2); 
     border-color: #2d5a27; 
   }
-}
 /* This forces the Learning Box (left) and Pip (right) to sit next to each other */
 .lesson-grid {
     display: grid;
