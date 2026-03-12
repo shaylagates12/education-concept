@@ -50,39 +50,49 @@
                     </div>
                 </section>
 
-                <section id="lesson-page" class="page newspaper-page">
-                    <header class="news-head"><h2>Seedling: The Grove Edition</h2></header>
-                    <div class="deck-selector">
-                        <button class="vintage-btn" onclick="loadLesson('Life Insurance')">Life Insurance</button>
-                        <button class="vintage-btn" onclick="loadLesson('Taxes')">Taxes</button>
-                        <button class="vintage-btn" onclick="loadLesson('Stock Market')">Stocks</button>
-                    </div>
-                    
-                    <div class="lesson-grid">
-                        <article class="main-news">
-                            <div class="progress-container"><div id="progress-vine" class="vine-bar"></div></div>
-                            <h1 id="lesson-title" class="news-headline">Select a Subject</h1>
-                            <div id="media-container" class="newspaper-photo"></div>
-                            <div id="lesson-text" class="news-copy"></div>
-                        </article>
+              <section id="lesson-page" class="page newspaper-page">
+    <header class="news-head"><h2>Seedling: The Grove Edition</h2></header>
+    
+    <div class="progress-area">
+        <div class="progress-container">
+            <div id="progress-vine" class="vine-bar"></div>
+        </div>
+    </div>
+    
+    <div class="lesson-grid">
+        <article class="main-news">
+            <h1 id="lesson-title" class="news-headline">Select a Subject</h1>
+            <div id="media-container" class="newspaper-photo"></div>
+            <div id="lesson-text" class="news-copy"></div>
+        </article>
 
-                        <aside class="parody-ads-column">
-                            <div class="parody-ad field-notes-ad">
-                                <h4>Field Notes</h4>
-                                <textarea id="field-notes" placeholder="Write your thoughts..."></textarea>
-                            </div>
-                            <div class="parody-ad ask-pip-ad">
-                                <h4>Ask Pip</h4>
-                                <div id="chat-display"></div>
-                                <div class="chat-input">
-                                    <input type="text" id="pip-input" placeholder="Ask Pip...">
-                                    <button onclick="askPip()">➔</button>
-                                </div>
-                            </div>
-                            <button class="journey-btn" onclick="nextLesson()">Next Lesson ➔</button>
-                        </aside>
-                    </div>
-                </section>
+        <aside class="parody-ads-column">
+            <div class="parody-ad deck-selector-ad">
+                <h4>Choose a Seed</h4>
+                <div class="deck-buttons">
+                    <button class="vintage-btn" onclick="loadLesson('Life Insurance')">Life Insurance</button>
+                    <button class="vintage-btn" onclick="loadLesson('Taxes')">Taxes</button>
+                    <button class="vintage-btn" onclick="loadLesson('Stock Market')">Stocks</button>
+                </div>
+            </div>
+
+            <div class="parody-ad field-notes-ad">
+                <h4>Field Notes</h4>
+                <textarea id="field-notes" placeholder="Write your thoughts..."></textarea>
+            </div>
+
+            <div class="parody-ad ask-pip-ad">
+                <h4>Ask Pip</h4>
+                <div id="chat-display"></div>
+                <div class="chat-input">
+                    <input type="text" id="pip-input" placeholder="Ask Pip...">
+                    <button onclick="askPip()">➔</button>
+                </div>
+            </div>
+            <button class="journey-btn" onclick="nextLesson()">Next Lesson ➔</button>
+        </aside>
+    </div>
+</section>
 
                 <section id="quiz-page" class="page newspaper-page">
                     <header class="news-head"><h2>Harvest Time</h2></header>
