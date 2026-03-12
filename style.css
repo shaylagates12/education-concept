@@ -359,3 +359,73 @@ textarea { font-family: 'Caveat', cursive; font-size: 1.4rem; border: none; back
     grid-template-columns: 2fr 1fr; /* 2 parts lesson, 1 part side-tools */
     gap: 40px;
 }
+/* --- Restore Original Earthy/Vintage Aesthetic --- */
+:root {
+    --gold-frame: #d4af37;
+    --parchment: #fdfaf1;
+    --egyptian-earth: #4b3621;
+    --emerald-green: #2d5a27;
+    --dusty-pink: #d9b1a3;
+}
+
+.newspaper-page {
+    background-color: var(--parchment);
+    border: 8px double var(--gold-frame); /* The classic frame from your screenshot */
+    padding: 30px;
+    box-shadow: 10px 10px 0px rgba(0,0,0,0.1);
+    color: var(--egyptian-earth);
+}
+
+/* Progress Vine Styling */
+.progress-area {
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--egyptian-earth);
+    padding-bottom: 10px;
+}
+
+.progress-container {
+    height: 12px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--egyptian-earth);
+}
+
+.vine-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--emerald-green), #55efc4);
+    width: 0%;
+    transition: width 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Sidebar Ads (Pip & Notes) */
+.parody-ad {
+    border: 2px solid var(--egyptian-earth);
+    background: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    box-shadow: 3px 3px 0px var(--egyptian-earth);
+}
+
+.parody-ad h4 {
+    font-family: 'Caveat', cursive;
+    margin-top: 0;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Buttons */
+.vintage-btn, .journey-btn {
+    background-color: var(--dusty-pink);
+    border: 2px solid var(--gold-frame);
+    font-family: 'Libre Baskerville', serif;
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+}
+
+.vintage-btn:hover {
+    background-color: var(--gold-frame);
+    color: white;
+}
