@@ -13,7 +13,6 @@ function enterGarden() {
         console.error("Seedling Error: HTML elements for the garden transition are missing.");
     }
 }
-}
 /* --- KEEPING ALL YOUR ORIGINAL DATA --- */
 let currentSubject = "";
 let currentLessonIndex = 0;
