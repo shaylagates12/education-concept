@@ -272,3 +272,32 @@ textarea { font-family: 'Caveat', cursive; font-size: 1.4rem; border: none; back
     border-color: var(--emerald-green);
     background-color: var(--parchment);
 }
+/* Fixes the lesson page layout */
+.lesson-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* 2 parts lesson, 1 part sidebar */
+    gap: 20px;
+    align-items: start;
+    max-height: 80vh; /* Keeps it from disappearing off screen */
+    overflow-y: auto; /* Adds a scrollbar if the text is too long */
+}
+
+/* Makes Pip and Notes smaller */
+.parody-ads-column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.parody-ad {
+    padding: 10px;
+    font-size: 0.85em; /* Shrinks the text size */
+}
+
+#field-notes {
+    height: 80px; /* Makes notes box shorter */
+}
+
+#chat-display {
+    height: 120px;
+}
