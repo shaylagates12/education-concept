@@ -286,5 +286,5 @@ function showLesson(index) {
     
     // This part handles your charts/pictures!
     const mediaContainer = document.getElementById('media-container');
-    mediaContainer.innerHTML = `<img src="${lesson.img}" alt="${lesson.title}" style="max-width:100%; border-radius:8px;">`;
+  mediaContainer.innerHTML = `<img src="${lesson.img}" alt="${lesson.title}" style="max-width:100%; border-radius:8px;">`;
 }
