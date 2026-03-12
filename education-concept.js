@@ -202,3 +202,30 @@ function switchDeck(subjectKey) {
     // Trigger Pip's glow to show he's excited about the new deck
     document.querySelector('.ask-pip-ad').classList.add('pip-active');
 }
+let currentCardIndex = 0;
+
+function loadFlashcard() {
+    const data = subjectData[currentSubject];
+    if (!data) return;
+
+    // Use the lessons as flashcards for now
+    const card = data.lessons[currentCardIndex];
+    document.getElementById('card-front').innerText = card.title;
+    document.getElementById('card-back').innerText = card.text;
+    
+    // Reset flip state
+    document.querySelector('.flashcard').classList.remove('flipped');
+}
+
+// Add these to make the prev/next buttons work too!
+function nextCard() {
+    const total = subjectData[currentSubject].lessons.length;
+    currentCardIndex = (currentCardIndex + 1) % total;
+    loadFlashcard();
+}
+
+function prevCard() {
+    const total = subjectData[currentSubject].lessons.length;
+    currentCardIndex = (currentCardIndex - 1 + total) % total;
+    loadFlashcard();
+}
