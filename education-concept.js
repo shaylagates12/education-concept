@@ -166,15 +166,19 @@ function updateRank(status) {
     }
 }
 /* Pip's Glow Animation */
-@keyframes pip-glow {}
-    0% { box-shadow: 0 0 5px rgba(45, 90, 39, 0.2); border-color: #2d5a27; }
-    50% { box-shadow: 0 0 15px rgba(76, 175, 80, 0.6); border-color: #4CAF50; }
-    100% { box-shadow: 0 0 5px rgba(45, 90, 39, 0.2); border-color: #2d5a27; }
-}
-
-.ask-pip-ad {
-    border: 2px solid #2d5a27;
-    transition: all 0.3s ease;
+@keyframes pip-glow {
+  0% { 
+    box-shadow: 0 0 5px rgba(45, 90, 39, 0.2); 
+    border-color: #2d5a27; 
+  }
+  50% { 
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.6); 
+    border-color: #4CAF50; 
+  }
+  100% { 
+    box-shadow: 0 0 5px rgba(45, 90, 39, 0.2); 
+    border-color: #2d5a27; 
+  }
 }
 
 // Add this at the bottom of your JS to stop the glow when you focus
