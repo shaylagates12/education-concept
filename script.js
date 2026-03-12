@@ -1,8 +1,16 @@
-
 function enterGarden() {
-    // We select the elements by their IDs to swap visibility
     const welcome = document.getElementById('welcome-screen');
     const app = document.getElementById('app-shell');
+    
+    if (welcome && app) {
+        welcome.style.setProperty('display', 'none', 'important'); // Forces hide
+        app.style.display = 'flex'; // Reveals the main garden
+        showPage('kanban-page');    // Switches to the Drawing Board
+        console.log("Garden Entered Successfully");
+    } else {
+        console.error("Missing elements: ", { welcome, app });
+    }
+}
     
     if (welcome && app) {
         welcome.style.display = 'none'; // Hides the entry gate
