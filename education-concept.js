@@ -177,29 +177,6 @@ function updateRank(status) {
     transition: all 0.3s ease;
 }
 
-.pip-active {
-    animation: pip-glow 2s infinite ease-in-out;
-    background-color: rgba(232, 245, 233, 0.8) !important;
-}
-
-/* Flashcard Earthy Styling (Matching your Image) */
-.flashcard-inner {
-    border-radius: 15px;
-    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-}
-
-.front { background-color: #e0d0b8; color: #2d5a27; border: 4px solid #c5b396; }
-.back { background-color: #fdf5e6; color: #5d4037; border: 4px solid #d7ccc8; }
-
-.front, .back {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 20px;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-}
 // Add this at the bottom of your JS to stop the glow when you focus
 document.getElementById('pip-input').addEventListener('focus', () => {
     document.querySelector('.ask-pip-ad').classList.remove('pip-active');
