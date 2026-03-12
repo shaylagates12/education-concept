@@ -119,5 +119,28 @@ function backToChoice() {
 
 // PASTE THE askPip() FUNCTION HERE AT THE VERY BOTTOM
 function askPip() {
-    // ... the code I gave you ...
+    const input = document.getElementById('pip-input');
+    const display = document.getElementById('chat-display');
+    const question = input.value.trim().toLowerCase();
+
+    if (question !== "") {
+        display.innerHTML += `<p><strong>You:</strong> ${input.value}</p>`;
+        
+        let response = "I'm still growing! Try asking about 'help' or 'lessons'.";
+        
+        if (question.includes("hello") || question.includes("hi")) {
+            response = "Hello! Ready to do some gardening in the Grove?";
+        } else if (question.includes("help") || question.includes("study")) {
+            response = currentSubject ? `We are studying ${currentSubject}. Check the definitions box for clues!` : "Pick a seed in the garden to start learning!";
+        } else if (question.includes("tax")) {
+            response = "Taxes are like pruning—nobody likes it, but it's part of the process!";
+        }
+
+        setTimeout(() => {
+            display.innerHTML += `<p style="color: #2d5a27;"><strong>Pip 🌱:</strong> ${response}</p>`;
+            display.scrollTop = display.scrollHeight;
+        }, 600);
+
+        input.value = "";
+    }
 }
