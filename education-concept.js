@@ -112,3 +112,12 @@ function loadQuiz() {
 
 function allow(e) { e.preventDefault(); }
 function drop(e) { e.preventDefault(); }
+function backToChoice() {
+    document.getElementById('quiz-choice-screen').style.display = 'block';
+    document.getElementById('harvest-action-area').style.display = 'none';
+}
+
+// PASTE THE askPip() FUNCTION HERE AT THE VERY BOTTOM
+function askPip() {
+    // ... the code I gave you ...
+}
