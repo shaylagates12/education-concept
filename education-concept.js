@@ -1,3 +1,23 @@
+"Stock Market": {
+    lessons: [
+        { title: "1. What is a Stock?", text: "A stock (or share) represents a tiny piece of ownership in a company. When you buy a share, you become a 'shareholder.'", img: "stock-cert.jpg" },
+        { title: "2. The Exchange", text: "Stocks are traded on exchanges like the NYSE or NASDAQ. Think of it as a global digital farmers market for businesses.", img: "nyse-floor.jpg" },
+        { title: "3. Bull vs. Bear", text: "A Bull market is charging ahead (prices rising). A Bear market is hibernating (prices falling 20% or more).", img: "bull-vs-bear.png" },
+        { title: "4. Dividends", text: "Some companies pay you a 'thank you' in cash just for owning their stock. This is called a dividend.", img: "dividends.jpg" },
+        { title: "5. Market Capitalization", text: "The total value of a company. It's calculated by (Price per Share) x (Total Shares).", img: "market-cap.png" },
+        { title: "6. Diversification", text: "The 'Don't put all your eggs in one basket' rule. Owning different types of stocks lowers your risk.", img: "diversification-basket.jpg" },
+        { title: "7. Index Funds & ETFs", text: "Instead of buying one stock, you buy a 'bundle' (like the S&P 500) that tracks the whole market at once.", img: "etf-bundle.png" },
+        { title: "8. P/E Ratio", text: "Price-to-Earnings. It helps you see if a stock is 'expensive' or a 'bargain' compared to how much profit it makes.", img: "pe-ratio.jpg" },
+        { title: "9. Volatility", text: "The speed and size of price changes. High volatility means the price swings wildly like a vine in a storm.", img: "volatility-graph.png" },
+        { title: "10. Compound Interest", text: "The 'Eighth Wonder of the World.' Reinvesting your gains allows your money to grow exponentially over time.", img: "compounding-growth.jpg" }
+    ],
+    quiz: [
+        { q: "What animal represents a rising market?", options: ["Bear", "Bull", "Wolf", "Eagle"], correct: 1 },
+        { q: "What is a 'Dividend'?", options: ["A stock's price", "A cash payout to owners", "A type of tax", "A market crash"], correct: 1 },
+        { q: "Which term describes 'spreading out' your investments?", options: ["Focusing", "Diversification", "Dividing", "Shorting"], correct: 1 },
+        { q: "What does 'Market Cap' measure?", options: ["CEO Salary", "Total Company Value", "Number of Employees", "Daily Profit"], correct: 1 }
+    ]
+}
 "Taxes": {
     lessons: [
         { title: "1. The Social Contract", text: "Taxes are mandatory contributions to state revenue. They fund public services like roads, schools, and emergency services.", img: "tax-basics.jpg" },
@@ -30,15 +50,6 @@ const subjectData = {
             { q: "Who receives the payout?", options: ["The Insurer", "The Beneficiary", "The Bank", "The State"], correct: 1 },
             { q: "Term insurance lasts for?", options: ["Lifetime", "A set period", "One year", "Until retirement"], correct: 1 },
             { q: "Which is a 'Cash Value' policy?", options: ["Term", "Whole Life", "Auto", "Health"], correct: 1 }
-        ]
-    }
-};
-/* --- DATA STORE --- */
-const subjectData = {
-    "Life Insurance": {
-        lessons: [
-            { title: "The Policy", text: "The formal legal contract between the insurance company and the owner.", content: "policy.jpg" },
-            { title: "The Premium", text: "The scheduled payment required to keep your insurance active.", content: "premium.jpg" }
         ],
         quiz: [{ q: "What is the cost to keep a policy active?", options: ["The Benefit", "The Premium", "The Rider"], correct: 1 }]
     },
@@ -177,7 +188,9 @@ function askPip() {
             response = currentSubject ? `We are studying ${currentSubject}. Check the definitions box for clues!` : "Pick a seed in the garden to start learning!";
         } else if (question.includes("tax")) {
             response = "Taxes are like pruning—nobody likes it, but it's part of the process!";
-        }
+        } else if (question.includes("stock") || question.includes("invest")) {
+    response = "The stock market is like a forest. Some trees grow fast, others slow, but the best gardeners wait for the long term!";
+}
 
         setTimeout(() => {
             display.innerHTML += `<p style="color: #2d5a27;"><strong>Pip 🌱:</strong> ${response}</p>`;
