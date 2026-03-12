@@ -61,19 +61,6 @@ body {
     transform: translateY(-3px) scale(1.05);
 }
 
-/* --- 3. THE MAIN APP SHELL --- */
-#app-shell { display: flex; height: 100vh; position: relative; }
-
-/* Cinematic Immersive Background Layer */
-.trail-path-bg {
-    position: absolute;
-    inset: 0;
-    background-image: url(Images/new-bg-img.png); /* Immersion from image_15.png */
-    background-size: cover;
-    background-position: center;
-    z-index: 1;
-}
-
 /* Sidebar (Crawls out like a vine) */
 .sidebar-vine {
     position: absolute;
