@@ -115,28 +115,6 @@ body {
     z-index: 10; /* Above path bg */
 }
 
-.crystal-paper-box {
-    width: 90%;
-    max-width: 1400px;
-    height: 85%;
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(15px); /* Frosted Crystal Look */
-    border: 8px solid var(--gold);
-    border-radius: 12px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-    overflow: hidden;
-    transition: all 0.6s ease;
-}
-
-.newspaper-page {
-    display: none;
-    height: 100%;
-    padding: 40px;
-    overflow-y: auto;
-    /* Removes the broken texture link and uses your Parchment color */
-    background-color: var(--parchment);
-}
-
 /* Newspaper Headings (Art Nouveau/Vintage fonts) */
 .news-head h2 { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--emerald-green); text-align: center; border-bottom: 5px solid var(--noir-de-vigne); padding-bottom: 10px; margin-top: 0; }
 .masthead { font-family: 'Caveat', cursive; font-size: 1.4rem; text-align: center; color: var(--egyptian-earth); border-top: 2px solid var(--noir-de-vigne); padding: 5px 0; margin-bottom: 30px;}
@@ -358,16 +336,6 @@ textarea { font-family: 'Caveat', cursive; font-size: 1.4rem; border: none; back
     background: rgba(255, 255, 255, 0.5);
     margin-bottom: 5px;
 }
-.crystal-paper-box {
-    width: 95%;
-    max-width: 1400px;
-    height: 90vh; /* Increased height */
-    overflow-y: scroll; /* Forces scrollability */
-    padding: 30px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--wasabi) transparent;
-}
-
 /* Allow the lesson content to breathe */
 .news-copy {
     line-height: 1.8;
