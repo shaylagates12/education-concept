@@ -1,21 +1,4 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>education-concept</title>
-</head>
-<body>
-    <button onclick="enterGarden()">Enter Garden</button>
-
-    <script>
-        // Define the function here, preferably before the button in the HTML,
-        // or ensure this script loads before any interaction.
-        function enterGarden() {
-            // Add your garden-related logic here
-        }
-    </script>
-</body>
-</html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -26,7 +9,7 @@
 </head>
 <body>
 
-<section id="welcome-screen" class="active">
+<section id="welcome-screen">
     <div class="vintage-frame sprout-gate">
         <h1 class="logo-title">Seedling</h1>
         <p class="objective-text">
@@ -39,7 +22,6 @@
 </section>
 
 <div id="app-shell" style="display:none;">
-    
     <div class="trail-path-bg"></div>
 
     <aside class="sidebar-vine">
@@ -55,44 +37,28 @@
     <main class="content-area">
         <div class="crystal-paper-box">
             
-            <section id="lesson-page" class="page active newspaper-page">
+            <section id="lesson-page" class="page newspaper-page">
                 <header class="news-head">
                     <h2>Seedling: The Grove Edition</h2>
-                    <p class="masthead">Vol 1. No 1. | Knowledge Garden | Today's Date</p>
+                    <p class="masthead">Vol 1. No 1. | Knowledge Garden</p>
                 </header>
-                
                 <div class="lesson-grid">
                     <article class="main-news Media">
                         <div class="progress-container">
                             <div id="progress-vine" class="vine-bar"></div>
                             <div class="vine-leaf">🍃</div>
                         </div>
-                        
                         <h1 id="lesson-title" class="news-headline">Select a Subject to Begin</h1>
-                        
                         <div id="media-container" class="media-placeholder newspaper-photo">
                             <p>Pick a card from "The Packet" in your Garden to start learning.</p>
                         </div>
-                        
                         <div id="lesson-text" class="parchment news-copy"></div>
-                        <div id="definitions-box" class="tool-box news-sidebar-item" style="display:none;">
-                            <h4>Seedling Definitions</h4>
-                            <ul id="definitions-list"></ul>
-                        </div>
                     </article>
 
                     <aside class="parody-ads-column">
                         <div class="parody-ad field-notes-ad">
                             <h4>Field Notes</h4>
                             <textarea id="field-notes" placeholder="Write your thoughts..."></textarea>
-                        </div>
-                        <div class="parody-ad ask-pip-ad">
-                            <h4>Ask Pip</h4>
-                            <div id="chat-display"></div>
-                            <div class="chat-input">
-                                <input type="text" id="pip-input" placeholder="Ask Pip...">
-                                <button onclick="askPip()">➔</button>
-                            </div>
                         </div>
                         <div class="parody-ad journey-btn-ad">
                             <button id="next-lesson-btn" class="vintage-btn journey-btn" onclick="nextLesson()">
@@ -103,57 +69,119 @@
                 </div>
             </section>
 
-            <section id="kanban-page" class="page newspaper-page">
+            <section id="kanban-page" class="page active newspaper-page">
                 <header class="news-head">
                     <h2>Garden Layout: The Drawing Board</h2>
                 </header>
                 <div class="kanban-header">
-                    <input type="text" id="new-subject" placeholder="New subject name...">
+                    <input type="text" id="new-subject" placeholder="Enter: Taxes, Stock Market, or Life Insurance">
                     <button onclick="plantSeed()">Plant Seed</button>
                 </div>
-                <div class="garden-board newspaper-columns">
-                    <div class="col" id="todo" ondrop="drop(event)" ondragover="allow(event)"><h3>The Packet</h3><div class="zone"></div></div>
-                    <div class="col" id="doing" ondrop="drop(event)" ondragover="allow(event)"><h3>Sprouting</h3><div class="zone"></div></div>
-                    <div class="col" id="done" ondrop="drop(event)" ondragover="allow(event)"><h3>Blooming</h3><div class="zone"></div></div>
+                <div class="garden-board newspaper-columns" style="display: flex; gap: 20px; margin-top: 20px;">
+                    <div class="col" id="todo" ondrop="drop(event)" ondragover="allow(event)" style="flex:1;"><h3>The Packet</h3><div class="zone"></div></div>
+                    <div class="col" id="doing" ondrop="drop(event)" ondragover="allow(event)" style="flex:1;"><h3>Sprouting</h3><div class="zone"></div></div>
+                    <div class="col" id="done" ondrop="drop(event)" ondragover="allow(event)" style="flex:1;"><h3>Blooming</h3><div class="zone"></div></div>
                 </div>
             </section>
 
-          <section id="quiz-page" class="page newspaper-page">
-    <header class="news-head">
-        <h2>Harvest Time: Flashcards & Quizzes</h2>
-    </header>
-
-    <div id="quiz-choice-screen" class="parchment news-box" style="text-align: center; padding: 40px; margin-top: 20px;">
-        <h1 class="news-headline">Thyme to Grow!</h1>
-        <p class="masthead">Currently Harvesting: <span id="active-subject-display" style="color: var(--egyptian-earth);">None Selected</span></p>
-        <div style="display: flex; gap: 20px; justify-content: center; margin-top: 30px;">
-            <button class="journey-btn" onclick="startHarvest('flashcards')">Flashcards</button>
-            <button class="journey-btn" onclick="startHarvest('quiz')">The Big Quiz</button>
-        </div>
-    </div>
-
-    <div id="harvest-action-area" style="display:none; margin-top: 20px;">
-        <button class="vintage-btn" onclick="backToChoice()" style="margin-bottom: 20px;">⬅ Change Method</button>
-        
-        <div id="flashcard-mode">
-            <div class="flashcard" onclick="this.classList.toggle('flipped')">
-                <div class="flashcard-inner">
-                    <div class="front" id="card-front">Question</div>
-                    <div class="back" id="card-back">Answer</div>
+            <section id="quiz-page" class="page newspaper-page">
+                <header class="news-head"><h2>Harvest Time</h2></header>
+                <div id="quiz-choice-screen" class="parchment news-box" style="text-align: center; padding: 40px;">
+                    <h1 class="news-headline">Thyme to Grow!</h1>
+                    <p class="masthead">Harvesting: <span id="active-subject-display">None Selected</span></p>
+                    <button class="journey-btn" onclick="startHarvest('quiz')">Start Quiz</button>
                 </div>
-            </div>
-            <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
-                <button class="journey-btn" style="width: auto;" onclick="prevCard()">Previous</button>
-                <button class="journey-btn" style="width: auto;" onclick="nextCard()">Next</button>
-            </div>
-        </div>
+                <div id="quiz-mode" class="parchment news-box" style="display:none; padding: 30px;">
+                    <h3 id="quiz-question" class="news-headline"></h3>
+                    <div id="quiz-options" style="display: grid; gap: 10px; margin-top: 20px;"></div>
+                </div>
+            </section>
 
-        <div id="quiz-mode" class="parchment news-box" style="display:none; padding: 30px;">
-            <h3 id="quiz-question" class="news-headline">Question will appear here</h3>
-            <div id="quiz-options" style="display: grid; gap: 10px; margin-top: 20px;"></div>
         </div>
-    </div>
-</section>
-<script src="education-concept.js"></script>
+    </main>
+</div>
+
+<script>
+/* --- DATA --- */
+const subjectData = {
+    "Life Insurance": {
+        lessons: [{ title: "The Policy", text: "The formal legal contract between insurer and owner.", content: "policy.jpg" }],
+        quiz: [{ q: "What is the cost to keep a policy active?", options: ["The Benefit", "The Premium", "The Rider"], correct: 1 }]
+    },
+    "Taxes": {
+        lessons: [{ title: "Gross Income", text: "Total earnings before any taxes or deductions.", content: "gross.jpg" }],
+        quiz: [{ q: "Which form is used for annual returns?", options: ["W-2", "1040", "I-9"], correct: 1 }]
+    },
+    "Stock Market": {
+        lessons: [{ title: "Share", text: "A unit of ownership in a corporation.", content: "share.jpg" }],
+        quiz: [{ q: "A market with rising prices is a:", options: ["Bear", "Seed", "Bull"], correct: 2 }]
+    }
+};
+
+let currentSubject = "";
+let currentLessonIndex = 0;
+
+/* --- NAVIGATION --- */
+function enterGarden() {
+    document.getElementById('welcome-screen').style.display = 'none';
+    document.getElementById('app-shell').style.display = 'flex';
+    showPage('kanban-page');
+}
+
+function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+    document.getElementById(id).style.display = 'block';
+}
+
+/* --- KANBAN & LESSONS --- */
+function plantSeed() {
+    const input = document.getElementById('new-subject');
+    const name = input.value.trim();
+    if (subjectData[name]) {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerText = name;
+        card.onclick = () => loadLesson(name);
+        document.querySelector('#todo .zone').appendChild(card);
+        input.value = "";
+    } else {
+        alert("Enter: Taxes, Stock Market, or Life Insurance");
+    }
+}
+
+function loadLesson(name) {
+    currentSubject = name;
+    const data = subjectData[name].lessons[0];
+    document.getElementById('lesson-title').innerText = data.title;
+    document.getElementById('lesson-text').innerText = data.text;
+    document.getElementById('active-subject-display').innerText = name;
+    showPage('lesson-page');
+}
+
+function startHarvest(mode) {
+    if (!currentSubject) return alert("Select a subject first!");
+    document.getElementById('quiz-choice-screen').style.display = 'none';
+    document.getElementById('quiz-mode').style.display = 'block';
+    loadQuiz();
+}
+
+function loadQuiz() {
+    const quiz = subjectData[currentSubject].quiz[0];
+    document.getElementById('quiz-question').innerText = quiz.q;
+    const optDiv = document.getElementById('quiz-options');
+    optDiv.innerHTML = "";
+    quiz.options.forEach((opt, i) => {
+        const b = document.createElement('button');
+        b.className = "journey-btn";
+        b.innerText = opt;
+        b.onclick = () => alert(i === quiz.correct ? "Correct!" : "Try again!");
+        optDiv.appendChild(b);
+    });
+}
+
+// Drag and Drop Helpers
+function allow(e) { e.preventDefault(); }
+function drop(e) { e.preventDefault(); }
+</script>
 </body>
 </html>
