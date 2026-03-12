@@ -1,3 +1,18 @@
+const subjectData = {
+    "Life Insurance": {
+        lessons: [
+            { title: "Page 1: The Foundation", text: "Life insurance is a legal contract between a policyholder and an insurer...", content: "base.jpg" },
+            { title: "Page 2: Understanding Premiums", text: "A premium is the amount you pay... factors include age and health.", content: "premium.jpg" },
+            // ... add up to 10 pages here
+        ],
+        quiz: [
+            { q: "What is a premium?", options: ["A payout", "A monthly cost", "A tax break", "A contract"], correct: 1 },
+            { q: "Who receives the payout?", options: ["The Insurer", "The Beneficiary", "The Bank", "The State"], correct: 1 },
+            { q: "Term insurance lasts for?", options: ["Lifetime", "A set period", "One year", "Until retirement"], correct: 1 },
+            { q: "Which is a 'Cash Value' policy?", options: ["Term", "Whole Life", "Auto", "Health"], correct: 1 }
+        ]
+    }
+};
 /* --- DATA STORE --- */
 const subjectData = {
     "Life Insurance": {
@@ -217,4 +232,32 @@ function prevCard() {
     const total = subjectData[currentSubject].lessons.length;
     currentCardIndex = (currentCardIndex - 1 + total) % total;
     loadFlashcard();
+}
+function loadFlashcard() {
+    const data = subjectData[currentSubject];
+    if (!data) return;
+
+    const card = data.lessons[currentCardIndex]; // Uses lesson vocab as cards
+    document.getElementById('card-front').innerText = card.title;
+    document.getElementById('card-back').innerText = card.text;
+    
+    // Ensure the card is not flipped when loading a new one
+    document.querySelector('.flashcard').classList.remove('flipped');
+}
+
+function startHarvest(mode) {
+    if (!currentSubject) return alert("Pick a seed in the Garden first!");
+    
+    document.getElementById('quiz-choice-screen').style.display = 'none';
+    document.getElementById('harvest-action-area').style.display = 'block';
+
+    if (mode === 'flashcards') {
+        document.getElementById('flashcard-mode').style.display = 'block';
+        document.getElementById('quiz-mode').style.display = 'none';
+        loadFlashcard();
+    } else {
+        document.getElementById('flashcard-mode').style.display = 'none';
+        document.getElementById('quiz-mode').style.display = 'block';
+        loadQuiz();
+    }
 }
