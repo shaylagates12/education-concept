@@ -1,3 +1,23 @@
+"Taxes": {
+    lessons: [
+        { title: "1. The Social Contract", text: "Taxes are mandatory contributions to state revenue. They fund public services like roads, schools, and emergency services.", img: "tax-basics.jpg" },
+        { title: "2. Progressive vs. Regressive", text: "The US uses a progressive system: as you earn more, your tax rate increases in brackets. Regressive taxes (like sales tax) affect lower incomes more heavily.", img: "tax-brackets-chart.png" },
+        { title: "3. The W-4 Form", text: "Filled out when you start a job, this tells your employer how much tax to withhold from your paycheck.", img: "w4-form.jpg" },
+        { title: "4. Filing Status", text: "Your status (Single, Married Filing Jointly, Head of Household) determines your standard deduction and tax rates.", img: "filing-status.jpg" },
+        { title: "5. Gross vs. Taxable Income", text: "Gross income is everything you earn. Taxable income is what's left after deductions and adjustments.", img: "income-calc.png" },
+        { title: "6. Standard Deduction", text: "A flat amount the IRS allows you to subtract from your income, no questions asked, to lower your tax bill.", img: "deduction.jpg" },
+        { title: "7. Itemized Deductions", text: "If your specific expenses (mortgage interest, charity) are higher than the standard deduction, you 'itemize' to save more money.", img: "itemizing.jpg" },
+        { title: "8. Tax Credits", text: "Credits are more powerful than deductions. While deductions lower taxable income, credits reduce your actual tax bill dollar-for-dollar.", img: "tax-credit-vs-deduction.png" },
+        { title: "9. The 1040 Form", text: "This is the main form used by individual taxpayers to file their annual income tax returns.", img: "1040-form.jpg" },
+        { title: "10. Tax Deadlines", text: "April 15th is the typical 'Tax Day.' Filing an extension gives you until October, but you still must pay estimated taxes by April.", img: "calendar.jpg" }
+    ],
+    quiz: [
+        { q: "Which form tells your employer how much to withhold?", options: ["1040", "W-4", "W-2", "1099"], correct: 1 },
+        { q: "What is better: A $1,000 credit or a $1,000 deduction?", options: ["Deduction", "Credit", "They are the same", "Neither"], correct: 1 },
+        { q: "Which tax system charges higher earners a higher %?", options: ["Regressive", "Flat", "Progressive", "Direct"], correct: 2 },
+        { q: "When is the typical deadline to file taxes?", options: ["January 1", "April 15", "July 4", "December 31"], correct: 1 }
+    ]
+}
 const subjectData = {
     "Life Insurance": {
         lessons: [
