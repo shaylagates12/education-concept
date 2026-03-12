@@ -38,37 +38,6 @@
         { q: "When is the typical deadline to file taxes?", options: ["January 1", "April 15", "July 4", "December 31"], correct: 1 }
     ]
 }
-const subjectData = {
-    "Life Insurance": {
-        lessons: [
-            { title: "Page 1: The Foundation", text: "Life insurance is a legal contract between a policyholder and an insurer...", content: "base.jpg" },
-            { title: "Page 2: Understanding Premiums", text: "A premium is the amount you pay... factors include age and health.", content: "premium.jpg" },
-            // ... add up to 10 pages here
-        ],
-        quiz: [
-            { q: "What is a premium?", options: ["A payout", "A monthly cost", "A tax break", "A contract"], correct: 1 },
-            { q: "Who receives the payout?", options: ["The Insurer", "The Beneficiary", "The Bank", "The State"], correct: 1 },
-            { q: "Term insurance lasts for?", options: ["Lifetime", "A set period", "One year", "Until retirement"], correct: 1 },
-            { q: "Which is a 'Cash Value' policy?", options: ["Term", "Whole Life", "Auto", "Health"], correct: 1 }
-        ],
-        quiz: [{ q: "What is the cost to keep a policy active?", options: ["The Benefit", "The Premium", "The Rider"], correct: 1 }]
-    },
-    "Taxes": {
-        lessons: [
-            { title: "Gross Income", text: "Total earnings before any taxes or deductions are taken out.", content: "gross.jpg" },
-            { title: "Deductions", text: "Expenses you can subtract to lower your tax bill.", content: "deduction.jpg" }
-        ],
-        quiz: [{ q: "Which form is used for annual returns?", options: ["W-2", "1040", "I-9"], correct: 1 }]
-    },
-    "Stock Market": {
-        lessons: [
-            { title: "Share", text: "A unit of ownership in a specific corporation.", content: "share.jpg" },
-            { title: "Bull Market", text: "A period where stock prices are rising.", content: "bull.jpg" }
-        ],
-        quiz: [{ q: "A market with rising prices is a:", options: ["Bear", "Seed", "Bull"], correct: 2 }]
-    }
-};
-
 let currentSubject = "";
 let currentLessonIndex = 0;
 
