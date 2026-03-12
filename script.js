@@ -1,4 +1,3 @@
-/* --- AT THE TOP OF YOUR SCRIPT --- */
 
 function enterGarden() {
     // We select the elements by their IDs to swap visibility
