@@ -261,3 +261,19 @@ function startHarvest(mode) {
         loadQuiz();
     }
 }
+function updateLessonUI() {
+    const lesson = subjectData[currentSubject].lessons[currentLessonIndex];
+    document.getElementById('lesson-title').innerText = lesson.title;
+    document.getElementById('lesson-text').innerHTML = `<p>${lesson.text}</p>`;
+    
+    // Injects the picture/chart
+    document.getElementById('media-container').innerHTML = `<img src="${lesson.img}" style="max-width:100%; border-radius:10px;">`;
+}
+function updateLessonUI() {
+    const lesson = subjectData[currentSubject].lessons[currentLessonIndex];
+    document.getElementById('lesson-title').innerText = lesson.title;
+    document.getElementById('lesson-text').innerHTML = `<p>${lesson.text}</p>`;
+    
+    // Injects the picture/chart
+    document.getElementById('media-container').innerHTML = `<img src="${lesson.img}" style="max-width:100%; border-radius:10px;">`;
+}
