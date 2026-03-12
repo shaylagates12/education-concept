@@ -60,22 +60,25 @@ body {
     color: white;
     transform: translateY(-3px) scale(1.05);
 }
-
-/* Sidebar (Crawls out like a vine) */
-.sidebar-vine {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 80px;
-    background: var(--emerald-green);
+.drawing-board-header {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 30px;
+}
+.seed-input-area {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 0;
-    z-index: 100;
-    transition: width 0.3s ease, left 0.3s ease;
-    overflow: hidden;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+/* Sidebar (Crawls out like a vine) */
+.drawing-board-container {
+    margin-left: 120px; /* Matches your .sidebar-vine width */
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
 }
 
 .sidebar-vine:hover { width: 220px; } /* The Sprout expands */
@@ -440,21 +443,24 @@ textarea { font-family: 'Caveat', cursive; font-size: 1.4rem; border: none; back
 
 /* MODERN KANBAN LAYOUT */
 .kanban-board {
-    display: flex;
-    gap: 15px;
-    padding: 20px 0;
-    overflow-x: auto;
+   display: flex;
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+    max-width: 1200px; /* Prevents it from getting too stretched */
+    align-items: flex-start;
 }
 
 .kanban-column {
-    background: #f4f5f7; /* Light gray from your reference */
-    border-radius: 20px;
-    min-width: 200px;
-    flex: 1;
-    padding: 15px;
+    background: rgba(244, 245, 247, 0.8); /* Slightly transparent to show background */
+    border-radius: 15px;
+    flex: 1; /* Makes all columns equal width */
+    min-width: 250px; 
+    min-height: 400px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
 .kanban-column h3 {
