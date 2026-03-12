@@ -204,3 +204,24 @@ function updateRank(status) {
 document.getElementById('pip-input').addEventListener('focus', () => {
     document.querySelector('.ask-pip-ad').classList.remove('pip-active');
 });
+function switchDeck(subjectKey) {
+    // 1. Update the current subject
+    currentSubject = subjectKey; 
+    
+    // 2. Refresh the flashcard with the new subject data
+    loadFlashcard(); 
+    
+    // 3. Have Pip comment on the choice
+    const chat = document.getElementById('chat-display');
+    const subjectNames = {
+        lifeInsurance: "Life Insurance Fundamentals",
+        taxes: "The Tax Gardener's Tools",
+        stocks: "Stock Market Mechanics"
+    };
+    
+    chat.innerHTML += `<p style="color: #2d5a27;"><strong>Pip 🌱:</strong> Swapping to the ${subjectNames[subjectKey]} deck!</p>`;
+    chat.scrollTop = chat.scrollHeight;
+    
+    // Trigger Pip's glow to show he's excited about the new deck
+    document.querySelector('.ask-pip-ad').classList.add('pip-active');
+}
