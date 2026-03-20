@@ -61,6 +61,23 @@ body {
     transform: translateY(-3px) scale(1.05);
 }
 
+/* Custom Vintage Inputs */
+.vintage-input {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.2rem;
+    padding: 10px 15px;
+    border: 2px solid var(--gold);
+    border-radius: 5px;
+    background-color: var(--parchment);
+    color: var(--noir-de-vigne);
+    outline: none;
+    transition: all 0.3s ease;
+}
+.vintage-input:focus {
+    border-color: var(--emerald-green);
+    box-shadow: 0 0 8px rgba(40, 65, 57, 0.3);
+}
+
 /* --- 3. THE MAIN APP SHELL --- */
 #app-shell { display: flex; height: 100vh; position: relative; }
 

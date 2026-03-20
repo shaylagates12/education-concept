@@ -1,4 +1,8 @@
 /* --- KEEPING ALL YOUR ORIGINAL DATA --- */
+const SUPABASE_URL = 'https://nxowmzxwckzswsqsnhih.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_uK3TDV-ERwEc1JIpxSy5KA_gBXRGEWZ';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 let currentSubject = "";
 let currentLessonIndex = 0;
 let currentHarvestIndex = 0;
@@ -110,6 +114,12 @@ function plantSeed() {
 }
 
 function loadLesson(name, index = 0) {
+    // Force save any pending note before switching lesson contexts
+    if (saveTimeout) {
+        clearTimeout(saveTimeout);
+        saveNote();
+    }
+
     currentSubject = name;
     currentLessonIndex = index;
     const data = subjectData[name].lessons[index];
@@ -144,6 +154,9 @@ function loadLesson(name, index = 0) {
     
     updateProgress(name, index);
     showPage('lesson-page');
+    
+    // Load note for this lesson
+    loadNote(name, index);
 }
 
 function nextLesson() {
@@ -164,6 +177,117 @@ function updateProgress(name, index) {
     document.getElementById('progress-vine').style.width = percent + "%";
     document.querySelector('.vine-leaf').style.left = `calc(${percent}% - 15px)`;
 }
+
+/* --- DATABASE LOGIC --- */
+let loggedInUserId = null;
+
+async function handleSignup() {
+    const email = document.getElementById('auth-email').value.trim();
+    const password = document.getElementById('auth-password').value.trim();
+    const errorMsg = document.getElementById('auth-error');
+    
+    if(!email || !password) {
+        errorMsg.innerText = "Please fill in email and password.";
+        return;
+    }
+    
+    const { data: existingUser } = await supabaseClient.from('users').select('*').eq('email', email).maybeSingle();
+    if(existingUser) {
+        errorMsg.innerText = "Email already exists! Please login.";
+        return;
+    }
+    
+    const { data, error } = await supabaseClient.from('users').insert([{ email, password }]).select().single();
+    if(error) {
+        errorMsg.innerText = "Error signing up: " + error.message;
+    } else {
+        loggedInUserId = data.id;
+        enterGarden();
+    }
+}
+
+async function handleLogin() {
+    const email = document.getElementById('auth-email').value.trim();
+    const password = document.getElementById('auth-password').value.trim();
+    const errorMsg = document.getElementById('auth-error');
+    
+    if(!email || !password) {
+        errorMsg.innerText = "Please fill in email and password.";
+        return;
+    }
+    
+    const { data, error } = await supabaseClient.from('users').select('*').eq('email', email).eq('password', password).maybeSingle();
+    
+    if (error) {
+        errorMsg.innerText = "Error logging in.";
+    } else if (data) {
+        loggedInUserId = data.id;
+        enterGarden();
+    } else {
+        errorMsg.innerText = "Invalid email or password.";
+    }
+}
+
+async function loadNote(subject, index) {
+    if (!loggedInUserId) return; // safety
+    const notesArea = document.getElementById('field-notes');
+    notesArea.value = "Loading note...";
+    notesArea.disabled = true;
+
+    const { data, error } = await supabaseClient
+        .from('notes')
+        .select('note_text')
+        .eq('user_id', loggedInUserId)
+        .eq('subject', subject)
+        .eq('lesson_index', index)
+        .maybeSingle();
+    
+    notesArea.disabled = false;
+
+    if (error) {
+        console.error("Error loading note:", error);
+        notesArea.value = "";
+    } else if (data) {
+        notesArea.value = data.note_text || "";
+    } else {
+        notesArea.value = "";
+    }
+}
+
+let saveTimeout = null;
+async function saveNote() {
+    saveTimeout = null; // Clear timeout indicator
+    if (!currentSubject || !loggedInUserId) return;
+    
+    const notesArea = document.getElementById('field-notes');
+    const noteText = notesArea.value;
+    
+    const { error } = await supabaseClient
+        .from('notes')
+        .upsert({ 
+            user_id: loggedInUserId,
+            subject: currentSubject, 
+            lesson_index: currentLessonIndex, 
+            note_text: noteText,
+            updated_at: new Date().toISOString()
+        }, { onConflict: 'user_id,subject,lesson_index' });
+        
+    if (error) {
+        console.error("Error saving note:", error);
+    } else {
+        console.log("Note saved successfully.");
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const notesArea = document.getElementById('field-notes');
+    if (notesArea) {
+        notesArea.addEventListener('input', () => {
+            if (saveTimeout) clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(saveNote, 1000);
+        });
+    }
+});
 
 /* --- KANBAN LOGIC --- */
 function allow(e) { e.preventDefault(); }
