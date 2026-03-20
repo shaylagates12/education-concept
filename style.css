@@ -1,97 +1,281 @@
+/* --- 1. GLOBAL ROOT VARIABLES & PALETTE --- */
 :root {
-    --soil: #4b3621; --leaf: #2ecc71; --sky: #f0f7f4; --sun: #f1c40f;
+    /* Palette from image_21.png + New Pink */
+    --emerald-green: #284139;
+    --wasabi: #809076;
+    --creased-khaki: #F8D194;
+    --egyptian-earth: #B86830;
+    --noir-de-vigne: #111A19;
+    
+    /* ADDED PINK and ACCENTS */
+    --dusty-pink: #D8B0B8; /* Muted vintage pink */
+    --gold: #d4af37;
+    
+    /* Functional Colors */
+    --bg-ground: #fffdf5; /* Off-white for newspaper */
+    --earth: #3d2b1f;
+    --parchment: #fffef0;
 }
 
-body { font-family: sans-serif; margin: 0; background: var(--sky); }
-.app-container { display: flex; height: 100vh; overflow: hidden; }
-.sidebar { width: 70px; background: var(--soil); display: flex; flex-direction: column; align-items: center; padding: 20px 0; }
-.nav-btn { font-size: 1.5rem; margin: 15px 0; background: none; border: none; cursor: pointer; opacity: 0.5; }
-.active { opacity: 1; transform: scale(1.2); }
-
-.content { flex: 1; padding: 20px; overflow-y: auto; }
-.kanban-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px; }
-.kanban-column { background: #e8edea; border-radius: 15px; padding: 15px; min-height: 400px; }
-.card { background: white; padding: 15px; border-radius: 8px; margin-bottom: 10px; cursor: grab; border-left: 5px solid var(--leaf); }
-
-.details-sidebar { position: fixed; right: -400px; top: 0; width: 350px; height: 100%; background: white; transition: 0.4s; padding: 20px; box-shadow: -5px 0 15px rgba(0,0,0,0.1); }
-.details-sidebar.open { right: 0; }
-
-/* FLASHCARDS */
-.flashcard-container { perspective: 1000px; height: 200px; cursor: pointer; margin: 15px 0; }
-.flashcard-inner { position: relative; width: 100%; height: 100%; transition: 0.6s; transform-style: preserve-3d; }
-.flashcard-inner.flipped { transform: rotateY(180deg); }
-.flashcard-front, .flashcard-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid var(--leaf); padding: 10px; box-sizing: border-box; }
-.flashcard-back { transform: rotateY(180deg); background: #f9f9f9; }
-
-.mastery-rating { margin-top: 10px; }
-.mastery-rating span { font-size: 1.5rem; cursor: pointer; opacity: 0.3; transition: 0.3s; }
-.mastery-rating span.active { opacity: 1; filter: drop-shadow(0 0 5px var(--sun)); }
-/* Add to the bottom of style.css */
-.nav-item.reset-roots {
-    margin-top: auto; /* Pushes the button to the bottom of the column */
-    color: var(--gold-frame);
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding-top: 20px;
+body { 
+    margin: 0; 
+    font-family: 'Libre Baskerville', serif; 
+    color: var(--noir-de-vigne);
+    overflow: hidden;
 }
 
-.nav-item.reset-roots:hover {
-    color: var(--egyptian-earth);
-    filter: drop-shadow(0 0 8px var(--gold-frame));
-}
-/* CHOICE SCREEN STYLING */
-.harvest-choice-box {
-    text-align: center;
-    padding: 50px;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 15px;
-    border: 3px double var(--gold);
-}
-
-.choice-buttons {
+#welcome-screen {
+    position: fixed;
+    inset: 0;
+    /* This uses your palette colors as a beautiful fallback */
+    background: linear-gradient(135deg, var(--dusty-pink), var(--wasabi)); 
     display: flex;
-    gap: 20px;
+    align-items: center;
     justify-content: center;
-    margin-top: 30px;
+    z-index: 2000;
 }
 
-/* QUIZ & FLASHCARD LAYOUT */
-.options-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 15px;
-    margin-top: 20px;
+.vintage-frame.sprout-gate {
+    background: rgba(253, 250, 240, 0.7); /* Translucent base */
+    backdrop-filter: blur(10px);
+    border: 15px solid var(--gold);
+    border-radius: 8px;
+    padding: 60px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    max-width: 600px;
 }
 
-.quiz-option-btn {
+.welcome-btn.gold-seedling-pin {
+    background-color: var(--dusty-pink); /* Palette Pink */
+    border: 3px solid var(--gold);
+    color: var(--noir-de-vigne);
+    border-radius: 50px;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+.welcome-btn.gold-seedling-pin:hover {
+    background-color: var(--emerald-green);
+    color: white;
+    transform: translateY(-3px) scale(1.05);
+}
+
+/* --- 3. THE MAIN APP SHELL --- */
+#app-shell { display: flex; height: 100vh; position: relative; }
+
+/* Cinematic Immersive Background Layer */
+.trail-path-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('path_bg.jpg'); /* Immersion from image_15.png */
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+/* Sidebar (Crawls out like a vine) */
+.sidebar-vine {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 80px;
+    background: var(--emerald-green);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    z-index: 100;
+    transition: width 0.3s ease, left 0.3s ease;
+    overflow: hidden;
+}
+
+.sidebar-vine:hover { width: 220px; } /* The Sprout expands */
+
+.sidebar-vine button {
+    background: none;
+    border: none;
+    font-size: 2.2rem;
+    color: var(--wasabi);
+    margin: 25px 0;
+    cursor: pointer;
+    filter: grayscale(1);
+    transition: all 0.3s ease;
+}
+
+.sidebar-vine button:hover { filter: grayscale(0); transform: scale(1.1); color: white; }
+
+/* The Crystal Newspaper Container */
+.content-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10; /* Above path bg */
+}
+
+.crystal-paper-box {
+    width: 90%;
+    max-width: 1400px;
+    height: 85%;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(15px); /* Frosted Crystal Look */
+    border: 8px solid var(--gold);
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    overflow: hidden;
+    transition: all 0.6s ease;
+}
+
+.newspaper-page {
+    display: none;
+    height: 100%;
+    padding: 40px;
+    overflow-y: auto;
+    /* Removes the broken texture link and uses your Parchment color */
+    background-color: var(--parchment);
+}
+
+/* Newspaper Headings (Art Nouveau/Vintage fonts) */
+.news-head h2 { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--emerald-green); text-align: center; border-bottom: 5px solid var(--noir-de-vigne); padding-bottom: 10px; margin-top: 0; }
+.masthead { font-family: 'Caveat', cursive; font-size: 1.4rem; text-align: center; color: var(--egyptian-earth); border-top: 2px solid var(--noir-de-vigne); padding: 5px 0; margin-bottom: 30px;}
+.news-headline { font-family: 'Playfair Display', serif; font-size: 2.2rem; border-bottom: 2px solid var(--earth); padding-bottom: 10px; color: var(--emerald-green); }
+
+/* Main Grid (Lessons) */
+.lesson-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
+
+/* PARODY ADS COLUMN (Floating Outside) */
+.parody-ads-column {
+    position: relative;
+    right: -20px; /* Offset like a sticky note on the side */
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.parody-ad {
+    background: var(--parchment);
+    border: 2px solid var(--wasabi);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 5px 5px 0 var(--earth); /* Comic parody shadow */
+    transition: transform 0.2s;
+}
+.parody-ad:hover { transform: scale(1.03); }
+
+.field-notes-ad h4, .ask-pip-ad h4 { font-family: 'Caveat', cursive; color: var(--emerald-green); font-size: 1.6rem; margin: 0 0 15px; }
+
+#chat-display {
+    max-height: 150px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    font-family: Arial, sans-serif;
+}
+
+/* Newspaper Media Frame */
+.media-frame.newspaper-photo {
+    border: 10px solid var(--egyptian-earth);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    padding: 5px;
     background: var(--creased-khaki);
-    border: 2px solid var(--egyptian-earth);
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+}
+
+.media-frame::after {
+    content: "© Seedling Press"; /* Parody photo caption */
+    position: absolute;
+    bottom: 5px; right: 10px; font-size: 0.8rem; color: var(--egyptian-earth);
+}
+
+/* --- 5. FUNCTIONAL GARDEN STYLES --- */
+/* The Vine Progress Bar */
+.progress-container { width: 100%; height: 12px; background: var(--wasabi); border-radius: 12px; position: relative; overflow: visible; margin-bottom: 20px; }
+.vine-bar { width: 0%; height: 100%; background: var(--dusty-pink); border-radius: 12px; transition: width 0.8s ease; } /* Vine uses Pink accent */
+.vine-leaf { position: absolute; top: -12px; transition: left 0.8s ease; font-size: 1.6rem; }
+
+/* Kanban cards as seed packets */
+.garden-board .card {
+    background: #fff9c4 url('seed_packet_icon.png') no-repeat right 10px top 10px; /* Icon required */
+    background-size: 20px;
+    border-radius: 8px;
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
     padding: 15px;
-    border-radius: 10px;
-    font-family: 'Libre Baskerville', serif;
+    box-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+}
+/* --- FLASHCARD 3D LOGIC --- */
+.flashcard {
+    perspective: 1000px;
+    width: 400px;
+    height: 250px;
+    margin: 0 auto;
     cursor: pointer;
-    transition: 0.3s;
-    text-align: left;
 }
 
-.quiz-option-btn:hover { background: var(--dusty-pink); }
-.quiz-option-btn.correct { background: var(--emerald-green); color: white; }
-.quiz-option-btn.wrong { background: var(--egyptian-earth); color: white; }
-
-/* FLASHCARD STYLE */
-.flashcard-deck { perspective: 1000px; margin: 20px auto; width: 300px; height: 400px; }
 .flashcard-inner {
-    position: relative; width: 100%; height: 100%;
-    transition: transform 0.6s; transform-style: preserve-3d;
-    cursor: pointer;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
 }
-.flashcard-inner.flipped { transform: rotateY(180deg); }
+
+/* This class is toggled by JavaScript */
+.flashcard.flipped .flashcard-inner {
+    transform: rotateY(180deg);
+}
 
 .front, .back {
-    position: absolute; width: 100%; height: 100%;
-    backface-visibility: hidden; display: flex;
-    align-items: center; justify-content: center;
-    padding: 20px; border-radius: 15px; border: 4px solid var(--gold);
-    font-size: 1.2rem; text-align: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Hides the back when looking at front */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-size: 1.5rem;
+    box-sizing: border-box;
 }
-.front { background: var(--dusty-pink); color: var(--emerald-green); }
-.back { background: var(--creased-khaki); transform: rotateY(180deg); }
+
+.front {
+    background-color: var(--dusty-pink);
+    color: var(--emerald-green);
+    border: 4px solid var(--gold);
+    border-radius: 15px;
+}
+
+.back {
+    background-color: var(--creased-khaki);
+    color: var(--noir-de-vigne);
+    border: 4px solid var(--egyptian-earth);
+    border-radius: 15px;
+    transform: rotateY(180deg);
+}
+/* UI Elements and Buttons */
+.tool-box { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+.parchment.news-box { background: var(--parchment); border: 2px solid var(--noir-de-vigne); }
+
+.journey-btn { width: 100%; padding: 15px; background-color: var(--dusty-pink); color: var(--noir-de-vigne); border: 3px solid var(--gold); border-radius: 5px; font-family: 'Libre Baskerville', serif; cursor: pointer; }
+.journey-btn:hover { background-color: var(--emerald-green); color: white; }
+
+textarea { font-family: 'Caveat', cursive; font-size: 1.4rem; border: none; background: var(--bg-ground); width: 100%; height: 120px; resize: none; }
+#quiz-options .journey-btn {
+    background-color: #ffffff;
+    border: 2px solid var(--creased-khaki);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    color: var(--noir-de-vigne);
+    font-weight: bold;
+    text-align: center;
+}
+
+#quiz-options .journey-btn:hover {
+    border-color: var(--emerald-green);
+    background-color: var(--parchment);
+}
