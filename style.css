@@ -101,27 +101,66 @@ body {
     background: var(--emerald-green);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     padding: 20px 0;
     z-index: 100;
     transition: width 0.3s ease, left 0.3s ease;
     overflow: hidden;
 }
 
-.sidebar-vine:hover { width: 220px; } /* The Sprout expands */
+.sidebar-vine .logo {
+    align-self: center;
+}
+
+.sidebar-vine nav {
+    width: 100%;
+}
+
+.sidebar-vine:hover { width: 260px; } /* The Sprout expands to fit text */
 
 .sidebar-vine button {
     background: none;
     border: none;
     font-size: 2.2rem;
     color: var(--wasabi);
-    margin: 25px 0;
+    margin: 15px 0;
     cursor: pointer;
     filter: grayscale(1);
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-left: 15px;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-align: left;
 }
 
-.sidebar-vine button:hover { filter: grayscale(0); transform: scale(1.1); color: white; }
+.sidebar-vine button .icon {
+    min-width: 40px;
+    display: inline-block;
+    text-align: center;
+}
+
+.nav-text {
+    font-size: 1.2rem;
+    font-family: 'Libre Baskerville', serif;
+    margin-left: 15px;
+    opacity: 0;
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-vine:hover .nav-text {
+    opacity: 1;
+}
+
+.sidebar-vine button:hover { filter: grayscale(0); transform: scale(1.05); color: white; background-color: rgba(255,255,255,0.05); }
+
+#rank-badge {
+    align-self: center;
+    margin-top: auto;
+}
 
 /* The Crystal Newspaper Container */
 .content-area {
