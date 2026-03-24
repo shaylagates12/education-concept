@@ -1,4 +1,4 @@
-* --- KEEPING ALL YOUR ORIGINAL DATA --- */
+/* --- KEEPING ALL YOUR ORIGINAL DATA --- */
 const SUPABASE_URL = 'https://nxowmzxwckzswsqsnhih.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_uK3TDV-ERwEc1JIpxSy5KA_gBXRGEWZ';
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
