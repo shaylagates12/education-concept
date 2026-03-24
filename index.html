@@ -37,9 +37,18 @@
     <aside class="sidebar-vine">
         <div class="logo">🌱</div>
         <nav>
-            <button onclick="showPage('lesson-page')" title="The Grove (Lessons)">📖</button>
-            <button onclick="showPage('kanban-page')" title="The Drawing Board (Garden)">🏡</button>
-            <button onclick="showPage('quiz-page')" title="Harvest Quiz (Flashcards)">🍎</button>
+            <button onclick="showPage('library-page')" title="The Library (Categories & Paths)">
+                <span class="icon">🧭</span> <span class="nav-text">The Library</span>
+            </button>
+            <button onclick="showPage('lesson-page')" title="The Grove (Lessons)">
+                <span class="icon">📖</span> <span class="nav-text">The Grove</span>
+            </button>
+            <button onclick="showPage('kanban-page')" title="The Drawing Board (Garden)">
+                <span class="icon">🏡</span> <span class="nav-text">The Garden</span>
+            </button>
+            <button onclick="showPage('quiz-page')" title="Harvest Quiz (Flashcards)">
+                <span class="icon">🍎</span> <span class="nav-text">The Harvest</span>
+            </button>
         </nav>
         <div id="rank-badge">Novice</div>
     </aside>
@@ -47,6 +56,55 @@
     <main class="content-area">
         <div class="crystal-paper-box">
             
+            <!-- NEW LIBRARY PAGE -->
+            <section id="library-page" class="page newspaper-page">
+                <header class="news-head">
+                    <h2>Seedling Library: The Pathfinder</h2>
+                    <p class="masthead">Discover Domains, Subjects, and Learning Paths</p>
+                </header>
+                
+                <div class="library-search-container" style="text-align: center; margin-bottom: 30px;">
+                    <input type="text" id="library-search" class="vintage-input" placeholder="I want to learn..." style="width: 50%; max-width: 400px;" oninput="handleLibrarySearch()">
+                </div>
+
+                <div class="library-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                    <!-- Categories Column -->
+                    <div class="categories-column parody-ad" style="box-shadow: none;">
+                        <h4 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; border-bottom: 2px solid var(--emerald-green); padding-bottom: 10px; color: var(--emerald-green);">Categories</h4>
+                        <div id="categories-container" style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Subject Card Display Column -->
+                    <div class="subject-display-column" style="display: flex; align-items: center; justify-content: center;">
+                        <div id="subject-card-placeholder" style="font-family: 'Caveat', cursive; color: var(--egyptian-earth); font-size: 1.5rem; text-align: center;">
+                            Select a category or search for a subject to reveal its card.
+                        </div>
+                        
+                        <div id="library-subject-card" class="flashcard" onclick="this.classList.toggle('flipped')" style="display: none; width: 100%; height: 350px;">
+                            <div class="flashcard-inner">
+                                <div class="front" style="flex-direction: column;">
+                                    <h2 id="lib-card-title" style="font-size: 2.5rem; margin-bottom: 10px;">Subject Name</h2>
+                                    <p class="masthead" style="border: none; margin:0;" id="lib-card-category">Category</p>
+                                    <span style="font-size: 0.9rem; margin-top: auto; opacity: 0.7;">Click to flip and inspect</span>
+                                </div>
+                                <div class="back" style="flex-direction: column; justify-content: flex-start; align-items: flex-start; overflow-y: auto;">
+                                    <h3 style="border-bottom: 1px solid var(--noir-de-vigne); width:100%; text-align:left; padding-bottom: 5px; margin-top: 0;" id="lib-card-back-title">Overview</h3>
+                                    <p id="lib-card-desc" style="font-size: 1rem; text-align: left; margin-bottom: 15px;"></p>
+                                    
+                                    <h4 style="margin: 0 0 5px 0;">Learning Path / Topics:</h4>
+                                    <ul id="lib-card-topics" style="font-size: 0.9rem; text-align: left; margin: 0 0 20px 0; padding-left: 20px;">
+                                    </ul>
+
+                                    <button class="journey-btn" id="plant-lib-seed-btn" onclick="plantSubjectFromLibrary(event)" style="margin-top: auto;">Plant in Garden 🌿</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <section id="lesson-page" class="page active newspaper-page">
                 <header class="news-head">
                     <h2>Seedling: The Grove Edition</h2>
