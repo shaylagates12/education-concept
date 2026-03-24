@@ -7,6 +7,26 @@ let currentSubject = "";
 let currentLessonIndex = 0;
 let currentHarvestIndex = 0;
 
+/* --- NEW KNOWLEDGE BASE (TAXONOMY) --- */
+const knowledgeBase = {
+    categories: [
+        { id: "academic", name: "Academic Learning" },
+        { id: "career", name: "Career Pathways" },
+        { id: "life_skills", name: "Life Skills & Personal Dev" }
+    ],
+    subjects: [
+        // Existing Data mapped
+        { id: "life_insurance", name: "Life Insurance", categoryId: "life_skills", desc: "Understand policies, premiums, and beneficiaries.", dataKey: "Life Insurance" },
+        { id: "taxes", name: "Taxes", categoryId: "life_skills", desc: "Learn about income, deductions, and filing taxes.", dataKey: "Taxes" },
+        { id: "stock_market", name: "Stock Market", categoryId: "career", desc: "Basics of shares, portfolios, and investing.", dataKey: "Stock Market" },
+        // New Data for Phase 1
+        { id: "nursing", name: "Nursing & Health", categoryId: "career", desc: "Patient care, medical terms, and clinical skills.", dataKey: null },
+        { id: "cs", name: "Computer Science", categoryId: "academic", desc: "Programming, algorithms, and software design.", dataKey: null },
+        { id: "mental_health", name: "Mental Health", categoryId: "life_skills", desc: "Stress management, anxiety coping, and wellbeing.", dataKey: null },
+        { id: "business", name: "Business Management", categoryId: "career", desc: "Leadership, operations, and corporate strategy.", dataKey: null }
+    ]
+};
+
 const subjectData = {
     "Life Insurance": {
         lessons: [
@@ -90,6 +110,10 @@ function showPage(id) {
     const target = document.getElementById(id);
     target.classList.add('active');
     target.style.display = 'block';
+    
+    if (id === 'library-page') {
+        renderLibraryCategories();
+    }
 }
 
 function plantSeed() {
@@ -403,3 +427,132 @@ function askPip() {
         }, 500);
     }
 }
+
+/* --- LIBRARY LOGIC --- */
+function renderLibraryCategories() {
+    const container = document.getElementById('categories-container');
+    container.innerHTML = "";
+
+    knowledgeBase.categories.forEach(cat => {
+        const catHead = document.createElement('div');
+        catHead.style.fontWeight = 'bold';
+        catHead.style.marginTop = '15px';
+        catHead.style.color = 'var(--egyptian-earth)';
+        catHead.style.borderBottom = '1px solid var(--creased-khaki)';
+        catHead.style.paddingBottom = '5px';
+        catHead.innerText = cat.name;
+        container.appendChild(catHead);
+
+        const subjects = knowledgeBase.subjects.filter(s => s.categoryId === cat.id);
+        subjects.forEach(sub => {
+            const btn = document.createElement('button');
+            btn.className = "journey-btn";
+            btn.style.padding = "10px";
+            btn.style.marginTop = "8px";
+            btn.style.fontSize = "1rem";
+            btn.style.textAlign = "left";
+            btn.innerText = `📄 ${sub.name}`;
+            btn.onclick = () => showLibrarySubjectCard(sub.id);
+            container.appendChild(btn);
+        });
+    });
+}
+
+function handleLibrarySearch() {
+    const query = document.getElementById('library-search').value.toLowerCase();
+    const container = document.getElementById('categories-container');
+    container.innerHTML = "";
+
+    if (!query) {
+        renderLibraryCategories();
+        return;
+    }
+
+    const results = knowledgeBase.subjects.filter(s => 
+        s.name.toLowerCase().includes(query) || s.desc.toLowerCase().includes(query)
+    );
+    
+    if (results.length === 0) {
+        container.innerHTML = "<p style='font-family: Caveat, cursive; font-size: 1.2rem; color: var(--egyptian-earth);'>No paths discovered yet.</p>";
+        return;
+    }
+
+    results.forEach(sub => {
+        const btn = document.createElement('button');
+        btn.className = "journey-btn";
+        btn.style.padding = "10px";
+        btn.style.marginTop = "8px";
+        btn.style.fontSize = "1rem";
+        btn.style.textAlign = "left";
+        btn.innerText = `📄 ${sub.name}`;
+        btn.onclick = () => showLibrarySubjectCard(sub.id);
+        container.appendChild(btn);
+    });
+}
+
+let currentLibrarySubject = null;
+
+function showLibrarySubjectCard(subjectId) {
+    const sub = knowledgeBase.subjects.find(s => s.id === subjectId);
+    if (!sub) return;
+    
+    currentLibrarySubject = sub;
+    
+    document.getElementById('subject-card-placeholder').style.display = 'none';
+    const card = document.getElementById('library-subject-card');
+    card.style.display = 'block';
+    card.classList.remove('flipped');
+    
+    const cat = knowledgeBase.categories.find(c => c.id === sub.categoryId);
+    
+    // Front update
+    document.getElementById('lib-card-title').innerText = sub.name;
+    document.getElementById('lib-card-category').innerText = cat ? cat.name : "Uncategorized";
+    
+    // Back update
+    document.getElementById('lib-card-back-title').innerText = sub.name + " Overview";
+    document.getElementById('lib-card-desc').innerText = sub.desc;
+    
+    const topicsList = document.getElementById('lib-card-topics');
+    topicsList.innerHTML = "";
+    
+    if (sub.dataKey && subjectData[sub.dataKey]) {
+        const lessons = subjectData[sub.dataKey].lessons;
+        lessons.slice(0, 4).forEach(l => {
+            topicsList.innerHTML += `<li>${l.title}</li>`;
+        });
+        if (lessons.length > 4) topicsList.innerHTML += `<li>...and more in the Grove!</li>`;
+    } else {
+        topicsList.innerHTML = "<li>Beginner Roadmap</li><li>Core Concepts</li><li>Project Portfolio Ideas</li><li>Next Career Steps</li>";
+    }
+}
+
+function plantSubjectFromLibrary(event) {
+    event.stopPropagation(); // Stop card from flipping
+    if (!currentLibrarySubject) return;
+    
+    const nameToPlant = currentLibrarySubject.dataKey || currentLibrarySubject.name;
+    const input = document.getElementById('new-subject');
+    input.value = nameToPlant;
+    
+    showPage('kanban-page');
+    
+    if (subjectData[nameToPlant]) {
+        plantSeed();
+    } else {
+        // Mock planting for unavailable subjects
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.draggable = true;
+        card.innerText = nameToPlant;
+        card.id = 'seed-' + Date.now();
+        card.ondragstart = (e) => e.dataTransfer.setData("text", e.target.id);
+        
+        card.onclick = () => alert("Detailed lessons for " + nameToPlant + " will be added in Phase 2!");
+        
+        document.querySelector('#todo .zone').appendChild(card);
+        input.value = "";
+    }
+}
+
+  
