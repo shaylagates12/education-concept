@@ -120,21 +120,44 @@ function plantSeed() {
     const input = document.getElementById('new-subject');
     const rawName = input.value.trim();
     const name = Object.keys(subjectData).find(key => key.toLowerCase() === rawName.toLowerCase());
-    // FIXED: Added validation to ensure the subject exists in your data
     if (name) {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.draggable = true;
-        card.innerText = name;
-        card.id = 'seed-' + Date.now();
-        card.ondragstart = (e) => e.dataTransfer.setData("text", e.target.id);
-        card.onclick = () => loadLesson(name, 0);
-        
-        document.querySelector('#todo .zone').appendChild(card);
+        const card = createKanbanCard(name);
+        document.getElementById('zone-todo').appendChild(card);
         input.value = "";
+        updateKanbanCounts();
     } else {
         alert("Please enter: Life Insurance, Taxes, or Stock Market");
     }
+}
+
+function continueLearning() {
+    if (currentSubject) {
+        loadLesson(currentSubject, currentLessonIndex);
+    } else {
+        showPage('library-page');
+    }
+}
+
+function findCardBySubject(subjectName) {
+    const cards = document.querySelectorAll('.card');
+    for (let card of cards) {
+        if (card.querySelector('.card-title') && card.querySelector('.card-title').innerText === subjectName) {
+            return card;
+        } else if (card.innerText === subjectName) { // Fallback for legacy simple cards
+            return card;
+        }
+    }
+    return null;
+}
+
+function moveCardToZone(subjectName, zoneId) {
+    const card = findCardBySubject(subjectName);
+    const targetZone = document.getElementById(zoneId);
+    if (card && targetZone && card.parentElement !== targetZone) {
+        targetZone.appendChild(card);
+        updateKanbanCounts();
+    }
+    return card;
 }
 
 function loadLesson(name, index = 0) {
@@ -151,6 +174,14 @@ function loadLesson(name, index = 0) {
     // Update text
     document.getElementById('lesson-title').innerText = data.title;
     document.getElementById('lesson-text').innerText = data.text;
+    
+    // Update the "Today Focus" text
+    if(document.getElementById('focus-now-title')) {
+        document.getElementById('focus-now-title').innerText = name + ` (Lesson ${index + 1})`;
+    }
+    
+    // Auto Move Kanaban Card to "Doing"
+    moveCardToZone(name, 'zone-doing');
     
     // FIXED: Populating definitions box
     const defBox = document.getElementById('definitions-box');
@@ -180,6 +211,7 @@ function loadLesson(name, index = 0) {
     showPage('lesson-page');
     
     // Load note for this lesson
+    document.getElementById('save-status-text').innerText = "Loading...";
     loadNote(name, index);
 }
 
@@ -271,10 +303,13 @@ async function loadNote(subject, index) {
     if (error) {
         console.error("Error loading note:", error);
         notesArea.value = "";
+        document.getElementById('save-status-text').innerText = "Unsaved";
     } else if (data) {
         notesArea.value = data.note_text || "";
+        document.getElementById('save-status-text').innerText = "Loaded from cloud";
     } else {
         notesArea.value = "";
+        document.getElementById('save-status-text').innerText = "New blank note";
     }
 }
 
@@ -285,6 +320,9 @@ async function saveNote() {
     
     const notesArea = document.getElementById('field-notes');
     const noteText = notesArea.value;
+    const statusText = document.getElementById('save-status-text');
+    
+    statusText.innerText = "Saving...";
     
     const { error } = await supabaseClient
         .from('notes')
@@ -297,8 +335,13 @@ async function saveNote() {
         }, { onConflict: 'user_id,subject,lesson_index' });
         
     if (error) {
+        statusText.innerText = "Error saving";
+        statusText.style.color = "#e74c3c";
         console.error("Error saving note:", error);
     } else {
+        const timeStr = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        statusText.innerText = `Saved at ${timeStr}`;
+        statusText.style.color = "var(--emerald-green)";
         console.log("Note saved successfully.");
     }
 }
@@ -313,14 +356,79 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-/* --- KANBAN LOGIC --- */
-function allow(e) { e.preventDefault(); }
+/* --- KANBAN LOGIC & AUTOMATION --- */
+
+function dragStart(e) { e.dataTransfer.setData("text", e.target.id); e.target.classList.add('dragging'); }
+function dragEnd(e) { e.target.classList.remove('dragging'); updateKanbanCounts(); }
+function allow(e) { e.preventDefault(); e.target.closest('.kanban-col')?.classList.add('drag-over'); }
+function dragLeave(e) { e.target.closest('.kanban-col')?.classList.remove('drag-over'); }
+
 function drop(e) {
     e.preventDefault();
+    const col = e.target.closest('.kanban-col');
+    if (col) col.classList.remove('drag-over');
+    
     const data = e.dataTransfer.getData("text");
     const card = document.getElementById(data);
-    const zone = e.target.closest('.col').querySelector('.zone');
-    if (zone) zone.appendChild(card);
+    const zone = col?.querySelector('.zone');
+    if (zone && card) {
+        zone.appendChild(card);
+        updateKanbanCounts();
+    }
+}
+
+function updateKanbanCounts() {
+    ['todo', 'doing', 'done'].forEach(col => {
+        const zone = document.getElementById(`zone-${col}`);
+        const count = zone.querySelectorAll('.card').length;
+        document.getElementById(`count-${col}`).innerText = count;
+        
+        const empty = zone.querySelector('.empty-state');
+        if(empty) {
+            empty.style.display = count > 0 ? 'none' : 'block';
+        }
+    });
+    
+    // Increment lessons stat if cards in done just conceptually for the UI
+    const doneCount = document.getElementById('zone-done').querySelectorAll('.card').length;
+    if(document.getElementById('stat-lessons')) {
+        document.getElementById('stat-lessons').innerText = doneCount;
+    }
+}
+
+function createKanbanCard(subjectName) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.draggable = true;
+    card.id = 'seed-' + Date.now();
+    card.ondragstart = dragStart;
+    card.ondragend = dragEnd;
+    
+    let catName = "Subject";
+    const subObj = knowledgeBase.subjects.find(s => s.name.toLowerCase() === subjectName.toLowerCase() || s.dataKey === subjectName);
+    if (subObj) {
+        const catObj = knowledgeBase.categories.find(c => c.id === subObj.categoryId);
+        if (catObj) catName = catObj.name;
+    }
+    
+    let timeEst = subjectData[subjectName] ? (subjectData[subjectName].lessons.length * 5) + "m" : "20m";
+
+    card.innerHTML = `
+        <div class="card-content">
+            <span class="card-tag">${catName}</span>
+            <h4 class="card-title">${subjectName}</h4>
+            <div class="card-meta"><span>⏱️ ${timeEst}</span><span style="opacity:0.3">✔</span></div>
+        </div>
+    `;
+
+    card.onclick = () => {
+        if (!subjectData[subjectName]) {
+            alert("Detailed lessons for " + subjectName + " will be added in Phase 2!");
+            return;
+        }
+        loadLesson(subjectName, 0);
+    };
+    return card;
 }
 
 /* --- HARVEST / QUIZ LOGIC --- */
@@ -394,7 +502,14 @@ function loadQuiz() {
                         currentHarvestIndex++;
                         loadQuiz();
                     } else {
-                        alert("Harvest Complete!");
+                        // AUTO-MOVE KANBAN CARD
+                        const finishedCard = moveCardToZone(currentSubject, 'zone-done');
+                        if (finishedCard) {
+                            finishedCard.classList.add('pulse-animate');
+                            setTimeout(() => finishedCard.classList.remove('pulse-animate'), 600);
+                        }
+                        
+                        alert("Harvest Complete! The seed has bloomed in your Garden.");
                         backToChoice();
                     }
                 }, 600);
@@ -428,7 +543,71 @@ function askPip() {
     }
 }
 
-/* --- LIBRARY LOGIC --- */
+/* --- TIMER LOGIC --- */
+let timerInterval = null;
+let timeLeft = 0; // seconds
+let isTimerRunning = false;
+
+function formatTime(seconds) {
+    const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const s = (seconds % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+}
+
+function setTimer(minutes) {
+    clearInterval(timerInterval);
+    timeLeft = minutes * 60;
+    isTimerRunning = false;
+    if(document.getElementById('timer-display')) {
+        document.getElementById('timer-display').innerText = formatTime(timeLeft);
+        document.getElementById('timer-toggle-btn').innerText = "Start";
+        document.getElementById('timer-toggle-btn').style.background = "var(--dusty-pink)";
+    }
+}
+
+function startQuickTimer(minutes) {
+    showPage('lesson-page');
+    setTimer(minutes);
+    toggleTimer();
+}
+
+function toggleTimer() {
+    if (timeLeft <= 0) return;
+    const btn = document.getElementById('timer-toggle-btn');
+    if (isTimerRunning) {
+        clearInterval(timerInterval);
+        isTimerRunning = false;
+        btn.innerText = "Resume";
+        btn.style.background = "var(--dusty-pink)";
+    } else {
+        isTimerRunning = true;
+        btn.innerText = "Pause";
+        btn.style.background = "var(--emerald-green)";
+        btn.style.color = "white";
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            document.getElementById('timer-display').innerText = formatTime(timeLeft);
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+                btn.innerText = "Start";
+                btn.style.background = "var(--dusty-pink)";
+                btn.style.color = "var(--noir-de-vigne)";
+                alert("Time is up! Great session 🌿");
+            }
+        }, 1000);
+    }
+}
+
+function resetTimer() {
+    setTimer(15);
+}
+
+// Call on startup
+document.addEventListener('DOMContentLoaded', () => {
+    setTimer(15);
+    updateKanbanCounts();
+});
 function renderLibraryCategories() {
     const container = document.getElementById('categories-container');
     container.innerHTML = "";
@@ -540,19 +719,9 @@ function plantSubjectFromLibrary(event) {
     if (subjectData[nameToPlant]) {
         plantSeed();
     } else {
-        // Mock planting for unavailable subjects
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.draggable = true;
-        card.innerText = nameToPlant;
-        card.id = 'seed-' + Date.now();
-        card.ondragstart = (e) => e.dataTransfer.setData("text", e.target.id);
-        
-        card.onclick = () => alert("Detailed lessons for " + nameToPlant + " will be added in Phase 2!");
-        
-        document.querySelector('#todo .zone').appendChild(card);
+        const card = createKanbanCard(nameToPlant);
+        document.getElementById('zone-todo').appendChild(card);
         input.value = "";
+        updateKanbanCounts();
     }
 }
-
-  
