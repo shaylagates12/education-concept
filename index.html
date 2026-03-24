@@ -135,6 +135,25 @@
                         <div class="parody-ad field-notes-ad">
                             <h4>Field Notes</h4>
                             <textarea id="field-notes" placeholder="Write your thoughts..."></textarea>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
+                                <span id="save-status-text" style="font-family: 'Caveat', cursive; font-size: 1rem; color: var(--egyptian-earth);">Saved</span>
+                                <button onclick="saveNote()" style="background: none; border: 1px solid var(--wasabi); border-radius: 4px; cursor: pointer; color: var(--emerald-green);">Save manually</button>
+                            </div>
+                        </div>
+
+                        <!-- NEW HOURGLASS TIMER WIDGET -->
+                        <div class="parody-ad timer-ad" style="text-align: center;">
+                            <h4 style="margin-bottom: 5px;">⏳ The Hourglass</h4>
+                            <div id="timer-display" style="font-size: 2.2rem; font-family: 'Playfair Display', serif; color: var(--noir-de-vigne); margin: 10px 0;">00:00</div>
+                            <div style="display: flex; justify-content: center; gap: 5px; margin-bottom: 10px;">
+                                <button class="vintage-btn" onclick="setTimer(15)" style="padding: 5px 10px; font-size: 0.9rem;">15m</button>
+                                <button class="vintage-btn" onclick="setTimer(30)" style="padding: 5px 10px; font-size: 0.9rem;">30m</button>
+                                <button class="vintage-btn" onclick="setTimer(60)" style="padding: 5px 10px; font-size: 0.9rem;">60m</button>
+                            </div>
+                            <div style="display: flex; justify-content: center; gap: 10px;">
+                                <button class="journey-btn" id="timer-toggle-btn" onclick="toggleTimer()" style="padding: 5px 15px; width: auto;">Start</button>
+                                <button class="vintage-btn" onclick="resetTimer()" style="padding: 5px 15px;">Reset</button>
+                            </div>
                         </div>
                         <div class="parody-ad ask-pip-ad">
                             <h4>Ask Pip</h4>
@@ -153,18 +172,83 @@
                 </div>
             </section>
 
-            <section id="kanban-page" class="page newspaper-page">
-                <header class="news-head">
-                    <h2>Garden Layout: The Drawing Board</h2>
-                </header>
-                <div class="kanban-header">
-                    <input type="text" id="new-subject" placeholder="New subject name...">
-                    <button onclick="plantSeed()">Plant Seed</button>
+            <section id="kanban-page" class="page newspaper-page" style="padding: 0;">
+                <!-- KANBAN HERO SECTION -->
+                <div class="kanban-hero" style="background: var(--dusty-pink); padding: 40px; border-bottom: 4px solid var(--gold); display: flex; justify-content: space-between; align-items: center;">
+                    <div class="hero-left">
+                        <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--emerald-green); margin: 0 0 10px 0;">Welcome back <span id="user-name-display">Explorer</span> 👋</h2>
+                        <div class="quick-stats" style="font-family: 'Libre Baskerville', serif; font-size: 1rem; color: var(--noir-de-vigne); display: flex; gap: 20px;">
+                            <span>🔥 <span id="stat-streak">3</span> Day Streak</span>
+                            <span>📚 <span id="stat-lessons">0</span> Lessons Today</span>
+                            <span>⏱️ <span id="stat-time">0h 0m</span> Studied</span>
+                        </div>
+                    </div>
+                    <div class="hero-right">
+                        <button class="journey-btn continue-learning-btn" style="width: auto; padding: 15px 30px; font-size: 1.2rem; box-shadow: 4px 4px 0 var(--emerald-green);" onclick="continueLearning()">Continue Learning ➔</button>
+                    </div>
                 </div>
-                <div class="garden-board newspaper-columns">
-                    <div class="col" id="todo" ondrop="drop(event)" ondragover="allow(event)"><h3>The Packet</h3><div class="zone"></div></div>
-                    <div class="col" id="doing" ondrop="drop(event)" ondragover="allow(event)"><h3>Sprouting</h3><div class="zone"></div></div>
-                    <div class="col" id="done" ondrop="drop(event)" ondragover="allow(event)"><h3>Blooming</h3><div class="zone"></div></div>
+
+                <!-- TODAY FOCUS STRIP -->
+                <div class="today-focus-strip" style="background: rgba(255,255,255,0.5); padding: 15px 40px; border-bottom: 2px solid var(--creased-khaki); display: flex; gap: 30px; align-items: center; font-size: 0.9rem;">
+                    <div class="focus-item" style="flex: 1;">
+                        <span style="font-weight: bold; color: var(--emerald-green); margin-right: 10px;">NOW:</span>
+                        <span id="focus-now-title" style="font-family: 'Caveat', cursive; font-size: 1.3rem;">No active lesson</span>
+                    </div>
+                    <div class="focus-item" style="flex: 1; border-left: 2px solid var(--creased-khaki); padding-left: 30px;">
+                        <span style="font-weight: bold; color: var(--egyptian-earth); margin-right: 10px;">NEXT:</span>
+                        <span id="focus-next-title" style="font-family: 'Caveat', cursive; font-size: 1.3rem;">Explore the Library</span>
+                    </div>
+                    <div class="focus-item" style="display: flex; gap: 10px; align-items: center;">
+                        <span style="font-weight: bold; color: var(--noir-de-vigne);">QUICK TIMER:</span>
+                        <button class="vintage-btn" onclick="startQuickTimer(15)" style="padding: 2px 8px;">15m ⏱️</button>
+                        <button class="vintage-btn" onclick="startQuickTimer(5)" style="padding: 2px 8px;">5m Break ☕</button>
+                    </div>
+                </div>
+
+                <div class="kanban-header" style="padding: 20px 40px 0;">
+                    <!-- Filters and Plant tools -->
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div class="kanban-filters" style="display: flex; gap: 10px;">
+                            <select class="vintage-input" style="padding: 5px; font-size: 0.9rem;"><option>All Subjects</option></select>
+                            <select class="vintage-input" style="padding: 5px; font-size: 0.9rem;"><option>Due This Week</option></select>
+                        </div>
+                        <div>
+                            <input type="text" id="new-subject" class="vintage-input" placeholder="Legacy manual plant..." style="padding: 5px; margin-right: 10px;">
+                            <button class="vintage-btn" onclick="plantSeed()">Plant Seed</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MAIN BOARD -->
+                <div class="garden-board newspaper-columns" style="padding: 20px 40px; gap: 40px; align-items: flex-start;">
+                    
+                    <div class="col kanban-col" id="todo" ondrop="drop(event)" ondragover="allow(event)" ondragleave="dragLeave(event)">
+                        <div class="col-header sticky-header">
+                            <h3>The Packet <span class="card-count badge-todo" id="count-todo">0</span></h3>
+                        </div>
+                        <div class="zone" id="zone-todo">
+                            <div class="empty-state">No seeds here yet — pick one from the Library!</div>
+                        </div>
+                    </div>
+                    
+                    <div class="col kanban-col" id="doing" ondrop="drop(event)" ondragover="allow(event)" ondragleave="dragLeave(event)">
+                        <div class="col-header sticky-header">
+                            <h3>Sprouting <span class="card-count badge-doing" id="count-doing">0</span></h3>
+                        </div>
+                        <div class="zone" id="zone-doing">
+                            <div class="empty-state">Start a lesson to see it sprout!</div>
+                        </div>
+                    </div>
+                    
+                    <div class="col kanban-col" id="done" ondrop="drop(event)" ondragover="allow(event)" ondragleave="dragLeave(event)">
+                        <div class="col-header sticky-header">
+                            <h3>Blooming <span class="card-count badge-done" id="count-done">0</span></h3>
+                        </div>
+                        <div class="zone" id="zone-done">
+                            <div class="empty-state">Complete a harvest quiz to bloom!</div>
+                        </div>
+                    </div>
+
                 </div>
             </section>
 
